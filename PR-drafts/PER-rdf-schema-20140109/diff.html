@@ -1,0 +1,10131 @@
+<html lang="en" typeof="bibo:Document w3p:PER" about="" property="dcterms:language" content="en" prefix="bibo: http://purl.org/ontology/bibo/ w3p: http://www.w3.org/2001/02pd/rec54#" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>RDF Schema 1.1</title>
+
+<style type="text/css">
+/*<![CDATA[*/
+      figure { text-align: center; }
+      table td, table th { border: 1px solid #ddd; padding: 0.2em 0.5em; }
+/*]]>*/
+</style>
+
+<style type="text/css">
+/*<![CDATA[*/
+/*****************************************************************
+ * ReSpec 3 CSS
+ * Robin Berjon - http://berjon.com/
+ *****************************************************************/
+
+/* --- INLINES --- */
+em.rfc2119 { 
+    text-transform:     lowercase;
+    font-variant:       small-caps;
+    font-style:         normal;
+    color:              #900;
+}
+
+h1 acronym, h2 acronym, h3 acronym, h4 acronym, h5 acronym, h6 acronym, a acronym,
+h1 abbr, h2 abbr, h3 abbr, h4 abbr, h5 abbr, h6 abbr, a abbr {
+    border: none;
+}
+
+dfn {
+    font-weight:    bold;
+}
+
+a.internalDFN {
+    color:  inherit;
+    border-bottom:  1px solid #99c;
+    text-decoration:    none;
+}
+
+a.externalDFN {
+    color:  inherit;
+    border-bottom:  1px dotted #ccc;
+    text-decoration:    none;
+}
+
+a.bibref {
+    text-decoration:    none;
+}
+
+cite .bibref {
+    font-style: normal;
+}
+
+code {
+    color:  #ff4500;
+}
+
+/* --- TOC --- */
+.toc a, .tof a {
+    text-decoration:    none;
+}
+
+a .secno, a .figno {
+    color:  #000;
+}
+
+ul.tof, ol.tof {
+    list-style: none outside none;
+}
+
+.caption {
+    margin-top: 0.5em;
+    font-style:   italic;
+}
+
+/* --- TABLE --- */
+table.simple {
+    border-spacing: 0;
+    border-collapse:    collapse;
+    border-bottom:  3px solid #005a9c;
+}
+
+.simple th {
+    background: #005a9c;
+    color:  #fff;
+    padding:    3px 5px;
+    text-align: left;
+}
+
+.simple th[scope="row"] {
+    background: inherit;
+    color:  inherit;
+    border-top: 1px solid #ddd;
+}
+
+.simple td {
+    padding:    3px 10px;
+    border-top: 1px solid #ddd;
+}
+
+.simple tr:nth-child(even) {
+    background: #f0f6ff;
+}
+
+/* --- DL --- */
+.section dd > p:first-child {
+    margin-top: 0;
+}
+
+.section dd > p:last-child {
+    margin-bottom: 0;
+}
+
+.section dd {
+    margin-bottom:  1em;
+}
+
+.section dl.attrs dd, .section dl.eldef dd {
+    margin-bottom:  0;
+}
+/*]]>*/
+</style>
+
+<style type="text/css">
+/*<![CDATA[*/
+/* --- EXAMPLES --- */
+div.example-title {
+    min-width: 7.5em;
+    color: #b9ab2d;
+}
+div.example-title span {
+    text-transform: uppercase;   
+}
+aside.example, div.example, div.illegal-example {
+    padding: 0.5em;
+    margin: 1em 0;
+    position: relative;
+    clear: both;
+}
+div.illegal-example { color: red }
+div.illegal-example p { color: black }
+aside.example, div.example {
+    padding: .5em;
+    border-left-width: .5em;
+    border-left-style: solid;
+    border-color: #e0cb52;
+    background: #fcfaee;    
+}
+
+aside.example div.example {
+    border-left-width: .1em;
+    border-color: #999;
+    background: #fff;
+}
+aside.example div.example div.example-title {
+    color: #999;
+}
+/*]]>*/
+</style>
+
+<style type="text/css">
+/*<![CDATA[*/
+/* --- ISSUES/NOTES --- */
+div.issue-title, div.note-title {
+    padding-right:  1em;
+    min-width: 7.5em;
+    color: #b9ab2d;
+}
+div.issue-title { color: #e05252; }
+div.note-title { color: #2b2; }
+div.issue-title span, div.note-title span {
+    text-transform: uppercase;
+}
+div.note, div.issue {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+.note > p:first-child, .issue > p:first-child { margin-top: 0 }
+.issue, .note {
+    padding: .5em;
+    border-left-width: .5em;
+    border-left-style: solid;
+}
+div.issue, div.note {
+    padding: 1em 1.2em 0.5em;
+    margin: 1em 0;
+    position: relative;
+    clear: both;
+}
+span.note, span.issue { padding: .1em .5em .15em; }
+
+.issue {
+    border-color: #e05252;
+    background: #fbe9e9;
+}
+.note {
+    border-color: #52e052;
+    background: #e9fbe9;
+}
+
+
+/*]]>*/
+</style>
+<link rel="stylesheet" href="https://www.w3.org/StyleSheets/TR/W3C-PER" type="text/css" /><!--[if lt IE 9]><script src='https://www.w3.org/2008/site/js/html5shiv.js'></script><![endif]-->
+<style type='text/css'>
+.diff-old-a {
+  font-size: smaller;
+  color: red;
+}
+
+.diff-new { background-color: yellow; }
+.diff-chg { background-color: lime; }
+.diff-new:before,
+.diff-new:after
+    { content: "\2191" }
+.diff-chg:before, .diff-chg:after
+    { content: "\2195" }
+.diff-old { text-decoration: line-through; background-color: #FBB; }
+.diff-old:before,
+.diff-old:after
+    { content: "\2193" }
+:focus { border: thin red solid}
+</style>
+</head>
+<body class="h-entry" role="document" id="respecDocument">
+<div class="head" role="contentinfo" id="respecHeader">
+<p>
+<a href="http://www.w3.org/">
+<img width="72" height="48" alt="W3C" src="https://www.w3.org/Icons/w3c_home" />
+</a>
+</p>
+<del class="diff-old">RDF
+Vocabulary
+Description
+Language
+1.0:
+</del>
+<h1 property="dcterms:title" id="title" class="title p-name">
+RDF
+Schema
+<ins class="diff-new">1.1
+</ins>
+</h1>
+<h2 content="2014-01-08T23:00:00.000Z" datatype="xsd:dateTime" property="dcterms:issued" id="w3c-proposed-edited-recommendation-09-january-2014">
+<abbr title="World Wide Web Consortium">
+W3C
+</abbr>
+<ins class="diff-new">Proposed
+Edited
+</ins>
+Recommendation
+<del class="diff-old">10
+February
+2004
+</del>
+<time datetime="2014-01-09" class="dt-published">
+<ins class="diff-chg">09
+January
+2014
+</ins></time>
+</h2>
+<dl>
+<dt>
+This
+<del class="diff-old">Version:
+</del>
+<ins class="diff-chg">version:
+</ins>
+</dt>
+<dd>
+<del class="diff-old">http://www.w3.org/TR/2004/REC-rdf-schema-20040210/
+</del>
+<a href="http://www.w3.org/TR/2014/PER-rdf-schema-20140109/" class="u-url">
+<ins class="diff-chg">http://www.w3.org/TR/2014/PER-rdf-schema-20140109/
+</ins>
+</a>
+</dd>
+<dt>
+Latest
+<del class="diff-old">Version:
+</del>
+<ins class="diff-chg">published
+version:
+</ins>
+</dt>
+<dd>
+<a href="http://www.w3.org/TR/rdf-schema/">
+http://www.w3.org/TR/rdf-schema/
+</a>
+</dd>
+<dt>
+<ins class="diff-new">Latest
+editor's
+draft:
+</ins></dt><dd><a href="https://dvcs.w3.org/hg/rdf/raw-file/default/rdf-schema/index.html"><ins class="diff-new">
+https://dvcs.w3.org/hg/rdf/raw-file/default/rdf-schema/index.html
+</ins></a></dd><dt>
+Previous
+<del class="diff-old">Version:
+</del>
+<ins class="diff-chg">version:
+</ins>
+</dt>
+<dd>
+<del class="diff-old">http://www.w3.org/TR/2003/PR-rdf-schema-20031215/
+</del>
+<a href="http://www.w3.org/TR/2004/REC-rdf-schema-20040210/" rel="dcterms:replaces">
+<ins class="diff-chg">http://www.w3.org/TR/2004/REC-rdf-schema-20040210/
+</ins>
+</a>
+</dd>
+<dt>
+Editors:
+</dt>
+<dd inlist="" rel="bibo:editor" class="p-author h-card vcard">
+<span typeof="foaf:Person">
+<a href="http://danbri.org/" content="Dan Brickley" property="foaf:name" rel="foaf:homepage" class="u-url url p-name fn">
+Dan
+Brickley
+</a>,
+<del class="diff-old">W3C
+&lt;
+danbri@w3.org
+&gt;
+</del>
+<ins class="diff-chg">Google
+</ins></span>
+</dd>
+<dd inlist="" rel="bibo:editor" class="p-author h-card vcard">
+<span typeof="foaf:Person">
+<span class="p-name fn" property="foaf:name">
+R.V.
+<del class="diff-old">Guha,
+IBM
+&lt;
+rguha@us.ibm.com
+&gt;
+</del>
+<ins class="diff-chg">Guha
+</ins></span>,<ins class="diff-chg">
+Google
+</ins></span>
+</dd>
+<dt>
+<del class="diff-old">Series
+editor:
+</del>
+<ins class="diff-chg">Previous
+Editors:
+</ins>
+</dt>
+<dd>
+Brian
+McBride
+<del class="diff-old">(Hewlett
+Packard
+Labs)
+&lt;
+bwm@hplb.hpl.hp.com
+&gt;
+</del>
+</dd>
+</dl>
+<del class="diff-old">Acknowledgments
+</del>
+<p>
+<del class="diff-old">Please
+refer
+to
+the
+errata
+for
+this
+document,
+which
+may
+include
+some
+normative
+corrections.
+See
+</del>
+<ins class="diff-chg">This
+document
+is
+</ins>
+also
+<del class="diff-old">translations
+.
+</del>
+<ins class="diff-chg">available
+in
+this
+non-normative
+format:
+</ins><a href="diff.html" rel="alternate"><ins class="diff-chg">
+diff
+w.r.t.
+2004
+Recommendation
+</ins></a>
+</p>
+<p class="copyright">
+<a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">
+Copyright
+</a>
+<del class="diff-old">&#xa9;
+2004
+</del>
+<ins class="diff-chg">©
+2004-2014
+</ins>
+<a href="http://www.w3.org/">
+<abbr title="World Wide Web Consortium">
+W3C
+</abbr>
+</a>
+<sup>
+<del class="diff-old">&#xae;
+</del>
+<ins class="diff-chg">®
+</ins>
+</sup>
+(
+<a href="http://www.csail.mit.edu/">
+<abbr title="Massachusetts Institute of Technology">
+MIT
+</abbr>
+</a>,
+<a href="http://www.ercim.eu/">
+<abbr title="European Research Consortium for Informatics and Mathematics">
+ERCIM
+</abbr>
+</a>,
+<a href="http://www.keio.ac.jp/">
+Keio
+</a>,
+<a href="http://ev.buaa.edu.cn/">
+<ins class="diff-new">Beihang
+</ins>
+</a>
+),
+All
+Rights
+Reserved.
+<abbr title="World Wide Web Consortium">
+W3C
+</abbr>
+<a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">
+liability
+</a>,
+<a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">
+trademark
+<del class="diff-old">,
+</del>
+</a>
+<ins class="diff-chg">and
+</ins>
+<a href="http://www.w3.org/Consortium/Legal/copyright-documents">
+document
+use
+</a>
+<del class="diff-old">and
+software
+licensing
+</del>
+rules
+apply.
+</p>
+<hr />
+</div>
+<section id="abstract" class="introductory" property="dcterms:abstract" datatype="" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h2 aria-level="1" role="heading" id="h2_abstract">
+Abstract
+</h2>
+<p>
+The
+Resource
+Description
+Framework
+(RDF)
+is
+a
+<del class="diff-old">general-purpose
+</del>
+language
+for
+representing
+information
+<ins class="diff-new">about
+resources
+</ins>
+in
+the
+<ins class="diff-new">World
+Wide
+</ins>
+Web.
+<del class="diff-old">This
+specification
+describes
+how
+to
+use
+RDF
+to
+describe
+</del>
+RDF
+<del class="diff-old">vocabularies.
+This
+specification
+defines
+</del>
+<ins class="diff-chg">Schema
+provides
+</ins>
+a
+<ins class="diff-new">data-modelling
+</ins>
+vocabulary
+for
+<del class="diff-old">this
+purpose
+and
+defines
+other
+built-in
+</del>
+RDF
+<del class="diff-old">vocabulary
+initially
+specified
+in
+</del>
+<ins class="diff-chg">data.
+RDF
+Schema
+is
+an
+extension
+of
+</ins>
+the
+<ins class="diff-new">basic
+</ins>
+RDF
+<del class="diff-old">Model
+and
+Syntax
+Specification.
+</del>
+<ins class="diff-chg">vocabulary.
+</ins>
+</p>
+</section>
+<section class="introductory" id="sotd" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h2 aria-level="1" role="heading" id="h2_sotd">
+Status
+of
+<del class="diff-old">this
+</del>
+<ins class="diff-chg">This
+</ins>
+Document
+</h2>
+<p>
+<em>
+This
+<ins class="diff-new">section
+describes
+the
+status
+of
+this
+</ins>
+document
+<del class="diff-old">has
+been
+reviewed
+by
+W3C
+Members
+and
+other
+interested
+parties,
+and
+it
+has
+been
+endorsed
+by
+</del>
+<ins class="diff-chg">at
+</ins>
+the
+<del class="diff-old">Director
+as
+a
+</del>
+<ins class="diff-chg">time
+of
+its
+publication.
+Other
+documents
+may
+supersede
+this
+document.
+A
+list
+of
+current
+</ins><abbr title="World Wide Web Consortium">
+W3C
+<del class="diff-old">Recommendation
+.
+W3C's
+role
+in
+making
+the
+Recommendation
+is
+to
+draw
+attention
+to
+the
+specification
+</del>
+</abbr>
+<ins class="diff-chg">publications
+</ins>
+and
+<del class="diff-old">to
+promote
+its
+widespread
+deployment.
+This
+enhances
+</del>
+the
+<del class="diff-old">functionality
+and
+interoperability
+</del>
+<ins class="diff-chg">latest
+revision
+</ins>
+of
+<ins class="diff-new">this
+technical
+report
+can
+be
+found
+in
+</ins>
+the
+<del class="diff-old">Web.
+</del>
+<a href="http://www.w3.org/TR/">
+<abbr title="World Wide Web Consortium">
+<ins class="diff-chg">W3C
+</ins></abbr><ins class="diff-chg">
+technical
+reports
+index
+</ins></a><ins class="diff-chg">
+at
+http://www.w3.org/TR/.
+</ins></em>
+</p>
+<p>
+This
+<del class="diff-old">is
+one
+</del>
+document
+<del class="diff-old">in
+a
+set
+</del>
+<ins class="diff-chg">is
+an
+edited
+version
+</ins>
+of
+<del class="diff-old">six
+(
+Primer
+,
+Concepts
+,
+Syntax
+,
+Semantics
+,
+Vocabulary
+,
+and
+Test
+Cases
+)
+intended
+to
+jointly
+replace
+</del>
+the
+<del class="diff-old">original
+Resource
+Description
+Framework
+specifications,
+RDF
+Model
+and
+Syntax
+(1999
+Recommendation)
+and
+</del>
+<ins class="diff-chg">2004
+</ins>
+RDF
+Schema
+<del class="diff-old">(2000
+Candidate
+Recommendation)
+.
+It
+has
+been
+developed
+by
+the
+RDF
+Core
+Working
+Group
+</del>
+<ins class="diff-chg">Recommendation.
+The
+purpose
+of
+this
+revision
+is
+to
+make
+this
+document
+available
+</ins>
+as
+part
+of
+the
+<del class="diff-old">W3C
+Semantic
+Web
+Activity
+(
+Activity
+Statement
+,
+Group
+Charter
+)
+for
+publication
+on
+10
+February
+2004.
+</del>
+<ins class="diff-chg">RDF
+1.1
+document
+set.
+</ins>
+Changes
+<ins class="diff-new">are
+limited
+</ins>
+to
+<del class="diff-old">this
+</del>
+<ins class="diff-chg">revised
+references,
+terminology
+updates,
+and
+adaptations
+to
+the
+introduction.
+The
+title
+of
+the
+</ins>
+document
+<del class="diff-old">since
+</del>
+<ins class="diff-chg">was
+changed
+from
+"RDF
+Vocabulary
+Description
+Language
+1.0:
+RDF
+Schema"
+to
+"RDF
+Schema
+1.1".
+The
+technical
+content
+of
+</ins>
+the
+<del class="diff-old">Proposed
+Recommendation
+Working
+Draft
+</del>
+<ins class="diff-chg">document
+is
+unchanged.
+Details
+of
+the
+changes
+</ins>
+are
+<del class="diff-old">detailed
+</del>
+<ins class="diff-chg">listed
+</ins>
+in
+the
+<del class="diff-old">change
+log
+.
+</del>
+<a href="#PER-changes">
+<ins class="diff-chg">Changes
+</ins></a><ins class="diff-chg">
+section.
+</ins>
+</p>
+<p>
+The
+<del class="diff-old">public
+is
+</del>
+<abbr title="World Wide Web Consortium">
+<ins class="diff-chg">W3C
+</ins></abbr><ins class="diff-chg">
+Membership
+and
+other
+interested
+parties
+are
+</ins>
+invited
+to
+<ins class="diff-new">review
+the
+document
+and
+</ins>
+send
+comments
+to
+<del class="diff-old">www-rdf-comments@w3.org
+</del>
+<a rel="discussion" href="mailto:public-rdf-comments@w3.org">
+<ins class="diff-chg">public-rdf-comments@w3.org
+</ins>
+</a>
+(
+<del class="diff-old">archive
+</del>
+<a href="mailto:public-rdf-comments-request@w3.org?subject=subscribe">
+<ins class="diff-chg">subscribe
+</ins></a>,<a href="http://lists.w3.org/Archives/Public/public-rdf-comments/"><ins class="diff-chg">
+archives
+</ins>
+</a>
+)
+<del class="diff-old">and
+</del>
+<ins class="diff-chg">through
+09
+February
+2014.
+Advisory
+Committee
+Representatives
+should
+consult
+their
+</ins><a href="https://www.w3.org/2002/09/wbs/myQuestionnaires"><ins class="diff-chg">
+WBS
+questionnaires
+</ins></a>.</p><p><ins class="diff-chg">
+This
+document
+was
+published
+by
+the
+</ins><a href="http://www.w3.org/2011/rdf-wg/"><ins class="diff-chg">
+RDF
+Working
+Group
+</ins></a><ins class="diff-chg">
+as
+a
+Proposed
+Edited
+Recommendation.
+This
+document
+is
+intended
+</ins>
+to
+<del class="diff-old">participate
+in
+general
+discussion
+of
+related
+technology
+on
+www-rdf-interest@w3.org
+</del>
+<ins class="diff-chg">become
+a
+</ins><abbr title="World Wide Web Consortium"><ins class="diff-chg">
+W3C
+</ins></abbr><ins class="diff-chg">
+Recommendation.
+If
+you
+wish
+to
+make
+comments
+regarding
+this
+document,
+please
+send
+them
+to
+</ins><a href="mailto:public-rdf-comments@w3.org"><ins class="diff-chg">
+public-rdf-comments@w3.org
+</ins>
+</a>
+(
+<del class="diff-old">archive
+</del>
+<a href="mailto:public-rdf-comments-request@w3.org?subject=subscribe">
+<ins class="diff-chg">subscribe
+</ins></a>,<a href="http://lists.w3.org/Archives/Public/public-rdf-comments/"><ins class="diff-chg">
+archives
+</ins>
+</a>
+).
+<ins class="diff-new">All
+comments
+are
+welcome.
+</ins>
+</p>
+<p>
+<del class="diff-old">A
+list
+of
+implementations
+</del>
+<ins class="diff-chg">Publication
+as
+a
+Proposed
+Edited
+Recommendation
+does
+not
+imply
+endorsement
+by
+the
+</ins><abbr title="World Wide Web Consortium"><ins class="diff-chg">
+W3C
+</ins></abbr><ins class="diff-chg">
+Membership.
+This
+</ins>
+is
+<del class="diff-old">available.
+</del>
+<ins class="diff-chg">a
+draft
+document
+and
+may
+be
+updated,
+replaced
+or
+obsoleted
+by
+other
+documents
+at
+any
+time.
+It
+is
+inappropriate
+to
+cite
+this
+document
+as
+other
+than
+work
+in
+progress.
+</ins>
+</p>
+<p>
+<del class="diff-old">The
+</del>
+<ins class="diff-chg">This
+document
+was
+produced
+by
+a
+group
+operating
+under
+the
+</ins><a href="http://www.w3.org/Consortium/Patent-Policy-20040205/" rel="w3p:patentRules" about="" id="sotd_patent"><ins class="diff-chg">
+5
+February
+2004
+</ins><abbr title="World Wide Web Consortium"><ins class="diff-chg">
+W3C
+</ins></abbr><ins class="diff-chg">
+Patent
+Policy
+</ins></a>.<abbr title="World Wide Web Consortium">
+W3C
+</abbr>
+maintains
+a
+<a rel="disclosure" href="http://www.w3.org/2004/01/pp-impl/46168/status">
+<ins class="diff-new">public
+</ins>
+list
+of
+any
+patent
+disclosures
+<del class="diff-old">related
+to
+this
+work
+.
+This
+section
+describes
+</del>
+</a>
+<ins class="diff-chg">made
+in
+connection
+with
+</ins>
+the
+<del class="diff-old">status
+</del>
+<ins class="diff-chg">deliverables
+</ins>
+of
+<del class="diff-old">this
+document
+at
+</del>
+the
+<del class="diff-old">time
+of
+its
+publication.
+Other
+documents
+may
+supersede
+this
+document.
+A
+list
+</del>
+<ins class="diff-chg">group;
+that
+page
+also
+includes
+instructions
+for
+disclosing
+a
+patent.
+An
+individual
+who
+has
+actual
+knowledge
+</ins>
+of
+<del class="diff-old">current
+W3C
+publications
+and
+</del>
+<ins class="diff-chg">a
+patent
+which
+</ins>
+the
+<del class="diff-old">latest
+revision
+of
+this
+technical
+report
+can
+be
+found
+</del>
+<ins class="diff-chg">individual
+believes
+contains
+</ins><a href="http://www.w3.org/Consortium/Patent-Policy-20040205/#def-essential"><ins class="diff-chg">
+Essential
+Claim(s)
+</ins></a><ins class="diff-chg">
+must
+disclose
+the
+information
+</ins>
+in
+<ins class="diff-new">accordance
+with
+</ins><a href="http://www.w3.org/Consortium/Patent-Policy-20040205/#sec-Disclosure"><ins class="diff-new">
+section
+6
+of
+</ins>
+the
+<abbr title="World Wide Web Consortium">
+W3C
+<del class="diff-old">technical
+reports
+index
+at
+http://www.w3.org/TR/.
+</del>
+</abbr>
+<ins class="diff-chg">Patent
+Policy
+</ins></a>.
+</p>
+</section>
+<section id="toc">
+<h2 class="introductory" aria-level="1" role="heading" id="h2_toc">
+<ins class="diff-chg">Table
+of
+</ins>
+Contents
+</h2>
+<ul class="toc" role="directory" id="respecContents">
+<li class="tocline">
+<a href="#ch_introduction" class="tocxref">
+<span class="secno">
+1.
+</span>
+Introduction
+</a>
+</li>
+<li class="tocline">
+<a href="#ch_classes" class="tocxref">
+<span class="secno">
+2.
+</span>
+Classes
+</a>
+<ul class="toc">
+<li class="tocline">
+<del class="diff-old">&nbsp;
+&nbsp;
+</del>
+<a href="#ch_resource" class="tocxref">
+<span class="secno">
+2.1
+</span>
+rdfs:Resource
+</a>
+<del class="diff-old">&nbsp;
+&nbsp;
+</del>
+</li>
+<li class="tocline">
+<a href="#ch_class" class="tocxref">
+<span class="secno">
+2.2
+</span>
+rdfs:Class
+</a>
+<del class="diff-old">&nbsp;
+&nbsp;
+</del>
+</li>
+<li class="tocline">
+<a href="#ch_literal" class="tocxref">
+<span class="secno">
+2.3
+</span>
+rdfs:Literal
+</a>
+<del class="diff-old">&nbsp;
+&nbsp;
+</del>
+</li>
+<li class="tocline">
+<a href="#ch_datatype" class="tocxref">
+<span class="secno">
+2.4
+</span>
+rdfs:Datatype
+</a>
+<del class="diff-old">&nbsp;
+&nbsp;
+</del>
+</li>
+<li class="tocline">
+<a href="#ch_langstring" class="tocxref">
+<span class="secno">
+2.5
+<del class="diff-old">rdf:XMLLiteral
+</del>
+</span>
+<ins class="diff-chg">rdf:langString
+</ins>
+</a>
+<del class="diff-old">&nbsp;
+&nbsp;
+</del>
+</li>
+<li class="tocline">
+<a href="#ch_html" class="tocxref">
+<span class="secno">
+2.6
+</span>
+<ins class="diff-chg">rdf:HTML
+</ins></a></li><li class="tocline"><a href="#ch_xmlliteral" class="tocxref"><span class="secno"><ins class="diff-chg">
+2.7
+</ins></span><ins class="diff-chg">
+rdf:XMLLiteral
+</ins></a></li><li class="tocline"><a href="#ch_property" class="tocxref"><span class="secno"><ins class="diff-chg">
+2.8
+</ins></span>
+rdf:Property
+</a>
+</li>
+</ul>
+</li>
+<li class="tocline">
+<a href="#ch_properties" class="tocxref">
+<span class="secno">
+3.
+</span>
+Properties
+</a>
+<ul class="toc">
+<li class="tocline">
+<del class="diff-old">&nbsp;
+&nbsp;
+</del>
+<a href="#ch_range" class="tocxref">
+<span class="secno">
+3.1
+</span>
+rdfs:range
+</a>
+<del class="diff-old">&nbsp;
+&nbsp;
+</del>
+</li>
+<li class="tocline">
+<a href="#ch_domain" class="tocxref">
+<span class="secno">
+3.2
+</span>
+rdfs:domain
+</a>
+<del class="diff-old">&nbsp;
+&nbsp;
+</del>
+</li>
+<li class="tocline">
+<a href="#ch_type" class="tocxref">
+<span class="secno">
+3.3
+</span>
+rdf:type
+</a>
+<del class="diff-old">&nbsp;
+&nbsp;
+</del>
+</li>
+<li class="tocline">
+<a href="#ch_subclassof" class="tocxref">
+<span class="secno">
+3.4
+</span>
+rdfs:subClassOf
+</a>
+<del class="diff-old">&nbsp;
+&nbsp;
+</del>
+</li>
+<li class="tocline">
+<a href="#ch_subpropertyof" class="tocxref">
+<span class="secno">
+3.5
+</span>
+rdfs:subPropertyOf
+</a>
+<del class="diff-old">&nbsp;
+&nbsp;
+</del>
+</li>
+<li class="tocline">
+<a href="#ch_label" class="tocxref">
+<span class="secno">
+3.6
+</span>
+rdfs:label
+</a>
+<del class="diff-old">&nbsp;
+&nbsp;
+</del>
+</li>
+<li class="tocline">
+<a href="#ch_comment" class="tocxref">
+<span class="secno">
+3.7
+</span>
+rdfs:comment
+</a>
+</li>
+</ul>
+</li>
+<li class="tocline">
+<a href="#ch_domainrange" class="tocxref">
+<span class="secno">
+4.
+</span>
+Using
+the
+Domain
+and
+Range
+vocabulary
+<del class="diff-old">(Informative)
+</del>
+</a>
+</li>
+<li class="tocline">
+<a href="#ch_othervocab" class="tocxref">
+<span class="secno">
+5.
+</span>
+Other
+vocabulary
+</a>
+<ul class="toc">
+<li class="tocline">
+<del class="diff-old">&nbsp;
+&nbsp;
+</del>
+<a href="#ch_containervocab" class="tocxref">
+<span class="secno">
+5.1
+</span>
+Container
+Classes
+and
+Properties
+</a>
+<del class="diff-old">&nbsp;
+&nbsp;&nbsp;
+&nbsp;
+</del>
+<ul class="toc">
+<li class="tocline">
+<a href="#ch_container" class="tocxref">
+<span class="secno">
+5.1.1
+</span>
+rdfs:Container
+</a>
+<del class="diff-old">&nbsp;
+&nbsp;&nbsp;
+&nbsp;
+</del>
+</li>
+<li class="tocline">
+<a href="#ch_bag" class="tocxref">
+<span class="secno">
+5.1.2
+</span>
+rdf:Bag
+</a>
+<del class="diff-old">&nbsp;
+&nbsp;&nbsp;
+&nbsp;
+</del>
+</li>
+<li class="tocline">
+<a href="#ch_seq" class="tocxref">
+<span class="secno">
+5.1.3
+</span>
+rdf:Seq
+</a>
+<del class="diff-old">&nbsp;
+&nbsp;&nbsp;
+&nbsp;
+</del>
+</li>
+<li class="tocline">
+<a href="#ch_alt" class="tocxref">
+<span class="secno">
+5.1.4
+</span>
+rdf:Alt
+</a>
+<del class="diff-old">&nbsp;
+&nbsp;&nbsp;
+&nbsp;
+</del>
+</li>
+<li class="tocline">
+<a href="#ch_containermembershipproperty" class="tocxref">
+<span class="secno">
+5.1.5
+</span>
+rdfs:ContainerMembershipProperty
+</a>
+<del class="diff-old">&nbsp;
+&nbsp;&nbsp;
+&nbsp;
+</del>
+</li>
+<li class="tocline">
+<a href="#ch_member" class="tocxref">
+<span class="secno">
+5.1.6
+</span>
+rdfs:member
+</a>
+<del class="diff-old">&nbsp;
+&nbsp;
+</del>
+</li>
+</ul>
+</li>
+<li class="tocline">
+<a href="#ch_collectionvocab" class="tocxref">
+<span class="secno">
+5.2
+</span>
+RDF
+Collections
+</a>
+<ul class="toc">
+<li class="tocline">
+<del class="diff-old">&nbsp;
+&nbsp;&nbsp;
+&nbsp;
+</del>
+<a href="#ch_list" class="tocxref">
+<span class="secno">
+5.2.1
+</span>
+rdf:List
+</a>
+<del class="diff-old">&nbsp;
+&nbsp;&nbsp;
+&nbsp;
+</del>
+</li>
+<li class="tocline">
+<a href="#ch_first" class="tocxref">
+<span class="secno">
+5.2.2
+</span>
+rdf:first
+</a>
+<del class="diff-old">&nbsp;
+&nbsp;&nbsp;
+&nbsp;
+</del>
+</li>
+<li class="tocline">
+<a href="#ch_rest" class="tocxref">
+<span class="secno">
+5.2.3
+</span>
+rdf:rest
+</a>
+<del class="diff-old">&nbsp;
+&nbsp;&nbsp;
+&nbsp;
+</del>
+</li>
+<li class="tocline">
+<a href="#ch_nil" class="tocxref">
+<span class="secno">
+5.2.4
+</span>
+rdf:nil
+</a>
+<del class="diff-old">&nbsp;
+&nbsp;
+</del>
+</li>
+</ul>
+</li>
+<li class="tocline">
+<a href="#ch_reificationvocab" class="tocxref">
+<span class="secno">
+5.3
+</span>
+Reification
+Vocabulary
+</a>
+<ul class="toc">
+<li class="tocline">
+<del class="diff-old">&nbsp;
+&nbsp;&nbsp;
+&nbsp;
+</del>
+<a href="#ch_statement" class="tocxref">
+<span class="secno">
+5.3.1
+</span>
+rdf:Statement
+</a>
+<del class="diff-old">&nbsp;
+&nbsp;&nbsp;
+&nbsp;
+</del>
+</li>
+<li class="tocline">
+<a href="#ch_subject" class="tocxref">
+<span class="secno">
+5.3.2
+</span>
+rdf:subject
+</a>
+<del class="diff-old">&nbsp;
+&nbsp;&nbsp;
+&nbsp;
+</del>
+</li>
+<li class="tocline">
+<a href="#ch_predicate" class="tocxref">
+<span class="secno">
+5.3.3
+</span>
+rdf:predicate
+</a>
+<del class="diff-old">&nbsp;
+&nbsp;&nbsp;
+&nbsp;
+</del>
+</li>
+<li class="tocline">
+<a href="#ch_object" class="tocxref">
+<span class="secno">
+5.3.4
+</span>
+rdf:object
+</a>
+<del class="diff-old">&nbsp;
+&nbsp;
+</del>
+</li>
+</ul>
+</li>
+<li class="tocline">
+<a href="#ch_utilvocab" class="tocxref">
+<span class="secno">
+5.4
+</span>
+Utility
+Properties
+</a>
+<ul class="toc">
+<li class="tocline">
+<del class="diff-old">&nbsp;
+&nbsp;&nbsp;
+&nbsp;
+</del>
+<a href="#ch_seealso" class="tocxref">
+<span class="secno">
+5.4.1
+</span>
+rdfs:seeAlso
+</a>
+<del class="diff-old">&nbsp;
+&nbsp;&nbsp;
+&nbsp;
+</del>
+</li>
+<li class="tocline">
+<a href="#ch_isdefinedby" class="tocxref">
+<span class="secno">
+5.4.2
+</span>
+rdfs:isDefinedBy
+</a>
+<del class="diff-old">&nbsp;
+&nbsp;&nbsp;
+&nbsp;
+</del>
+</li>
+<li class="tocline">
+<a href="#ch_value" class="tocxref">
+<span class="secno">
+5.4.3
+</span>
+rdf:value
+</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="tocline">
+<a href="#ch_summary" class="tocxref">
+<span class="secno">
+6.
+</span>
+RDF
+Schema
+summary
+<del class="diff-old">(Informative)
+</del>
+</a>
+<del class="diff-old">&nbsp;
+&nbsp;
+</del>
+<ul class="toc">
+<li class="tocline">
+<a href="#ch_sumclasses" class="tocxref">
+<span class="secno">
+6.1
+<del class="diff-old">Classes
+</del>
+</span>
+<ins class="diff-chg">RDF
+classes
+</ins>
+</a>
+<del class="diff-old">&nbsp;
+&nbsp;
+</del>
+</li>
+<li class="tocline">
+<a href="#ch_sumproperties" class="tocxref">
+<span class="secno">
+6.2
+<del class="diff-old">Properties
+</del>
+</span>
+<ins class="diff-chg">RDF
+properties
+</ins>
+</a>
+<del class="diff-old">7.
+References
+</del>
+</li>
+</ul>
+</li>
+<li class="tocline">
+<a href="#ch_acknowledgements" class="tocxref">
+<span class="secno">
+<ins class="diff-chg">A.
+</ins></span><ins class="diff-chg">
+Acknowledgments
+</ins>
+</a>
+<del class="diff-old">&nbsp;
+&nbsp;
+7.1
+Normative
+References
+</del>
+</li>
+<li class="tocline">
+<a href="#changes" class="tocxref">
+<span class="secno">
+<ins class="diff-chg">B.
+</ins></span><ins class="diff-chg">
+Change
+history
+</ins>
+</a>
+<ul class="toc">
+<li class="tocline">
+<del class="diff-old">&nbsp;
+&nbsp;
+7.2
+Informational
+References
+</del>
+<a href="#PER-changes" class="tocxref">
+<span class="secno">
+<ins class="diff-chg">B.1
+</ins></span><ins class="diff-chg">
+Changes
+for
+Proposed
+Edited
+Recommendation
+in
+2013
+</ins>
+</a>
+<del class="diff-old">8.
+Acknowledgments
+</del>
+</li>
+<li class="tocline">
+<a href="#2004-changes" class="tocxref">
+<span class="secno">
+<ins class="diff-chg">B.2
+</ins></span><ins class="diff-chg">
+Changes
+history
+of
+the
+2004
+Recommendation
+</ins>
+</a>
+<del class="diff-old">Appendix
+A
+RDF
+Schema
+as
+RDF/XML
+</del>
+</li>
+</ul>
+</li>
+<li class="tocline">
+<a href="#references" class="tocxref">
+<span class="secno">
+<ins class="diff-chg">C.
+</ins></span><ins class="diff-chg">
+References
+</ins>
+</a>
+<ul class="toc">
+<li class="tocline">
+<a href="#normative-references" class="tocxref">
+<span class="secno">
+<ins class="diff-chg">C.1
+</ins></span><ins class="diff-chg">
+Normative
+references
+</ins></a>
+</li>
+<li class="tocline">
+<a href="#informative-references" class="tocxref">
+<span class="secno">
+<ins class="diff-new">C.2
+</ins></span><ins class="diff-new">
+Informative
+references
+</ins>
+</a>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="ch_introduction" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h2 aria-level="1" role="heading" id="h2_ch_introduction">
+<span class="secno">
+1.
+</span>
+Introduction
+</h2>
+<p>
+The
+Resource
+Description
+Framework
+(RDF)
+is
+a
+general-purpose
+language
+for
+representing
+information
+in
+the
+Web.
+</p>
+<p>
+<del class="diff-old">This
+specification
+is
+one
+of
+several
+[
+RDF-PRIMER
+]
+[
+RDF-SYNTAX
+]
+[
+RDF-CONCEPTS
+]
+[
+RDF-SEMANTICS
+]
+[
+RDF-TESTS
+]
+related
+to
+RDF.
+The
+reader
+is
+referred
+to
+the
+</del>
+RDF
+<del class="diff-old">schema
+chapter
+in
+the
+RDF
+Primer
+[
+RDF-PRIMER
+]
+for
+an
+informal
+introduction
+and
+examples
+of
+the
+use
+of
+the
+concepts
+specified
+in
+this
+document.
+This
+specification
+introduces
+RDF's
+</del>
+<ins class="diff-chg">Schema
+provides
+a
+data-modelling
+</ins>
+vocabulary
+<del class="diff-old">description
+language,
+</del>
+<ins class="diff-chg">for
+</ins>
+RDF
+<del class="diff-old">Schema.
+</del>
+<ins class="diff-chg">data.
+</ins>
+It
+is
+complemented
+by
+several
+companion
+documents
+which
+describe
+<del class="diff-old">RDF's
+XML
+encoding
+</del>
+<ins class="diff-chg">the
+basic
+concepts
+and
+abstract
+stntax
+of
+RDF
+</ins>
+[
+<del class="diff-old">RDF-SYNTAX
+</del>
+<cite>
+<a class="bibref" href="#bib-RDF11-CONCEPTS">
+<ins class="diff-chg">RDF11-CONCEPTS
+</ins>
+</a>
+</cite>
+],
+<del class="diff-old">mathematical
+foundations
+</del>
+<ins class="diff-chg">the
+formal
+semantics
+of
+RDF
+</ins>
+[
+<del class="diff-old">RDF-SEMANTICS
+</del>
+<cite>
+<a class="bibref" href="#bib-RDF11-MT">
+<ins class="diff-chg">RDF11-MT
+</ins>
+</a>
+<del class="diff-old">]
+</del>
+</cite>
+<ins class="diff-chg">],
+</ins>
+and
+<del class="diff-old">Resource
+Description
+Framework
+(RDF):
+Concepts
+</del>
+<ins class="diff-chg">various
+concrete
+syntaxes
+for
+RDF,
+such
+as
+Turtle
+[
+</ins><cite><a class="bibref" href="#bib-TURTLE"><ins class="diff-chg">
+TURTLE
+</ins></a></cite><ins class="diff-chg">
+],
+TriG,
+[
+</ins><cite><a class="bibref" href="#bib-TRIG"><ins class="diff-chg">
+TRIG
+</ins></a></cite><ins class="diff-chg">
+],
+</ins>
+and
+<del class="diff-old">Abstract
+Syntax
+</del>
+<ins class="diff-chg">JSON-LD
+</ins>
+[
+<del class="diff-old">RDF-CONCEPTS
+</del>
+<cite>
+<a class="bibref" href="#bib-JSON-LD">
+<ins class="diff-chg">JSON-LD
+</ins>
+</a>
+</cite>
+].
+The
+RDF
+Primer
+[
+<del class="diff-old">RDF-PRIMER
+</del>
+<cite>
+<a class="bibref" href="#bib-RDF11-PRIMER">
+<ins class="diff-chg">RDF11-PRIMER
+</ins>
+</a>
+</cite>
+]
+provides
+an
+informal
+introduction
+and
+examples
+of
+the
+use
+of
+the
+concepts
+specified
+in
+this
+document.
+</p>
+<p>
+This
+document
+is
+intended
+to
+provide
+a
+clear
+specification
+of
+<del class="diff-old">the
+</del>
+RDF
+<del class="diff-old">vocabulary
+description
+language
+</del>
+<ins class="diff-chg">Schema
+</ins>
+to
+those
+who
+find
+the
+formal
+semantics
+<del class="diff-old">specification,
+RDF
+Semantics
+</del>
+<ins class="diff-chg">specification
+</ins>
+[
+<del class="diff-old">RDF-SEMANTICS
+</del>
+<cite>
+<a class="bibref" href="#bib-RDF11-MT">
+<ins class="diff-chg">RDF11-MT
+</ins>
+</a>
+</cite>
+]
+daunting.
+Thus,
+this
+document
+duplicates
+material
+also
+specified
+in
+the
+RDF
+Semantics
+<del class="diff-old">specification
+.
+</del>
+<ins class="diff-chg">specification.
+</ins>
+Where
+there
+is
+disagreement
+between
+this
+document
+and
+the
+RDF
+Semantics
+specification,
+the
+RDF
+Semantics
+specification
+should
+be
+taken
+to
+be
+correct.
+</p>
+<p>
+RDF
+<del class="diff-old">properties
+may
+be
+thought
+of
+as
+attributes
+of
+resources
+and
+in
+this
+sense
+correspond
+to
+traditional
+attribute-value
+pairs.
+RDF
+properties
+also
+represent
+relationships
+between
+resources.
+RDF
+however,
+provides
+no
+mechanisms
+for
+describing
+these
+properties,
+nor
+does
+it
+provide
+any
+mechanisms
+for
+describing
+the
+relationships
+between
+these
+properties
+and
+other
+resources.
+That
+is
+the
+role
+of
+the
+RDF
+vocabulary
+description
+language,
+RDF
+Schema.
+RDF
+</del>
+Schema
+<del class="diff-old">defines
+classes
+and
+properties
+that
+may
+be
+used
+to
+describe
+classes,
+properties
+and
+other
+resources.
+This
+document
+does
+not
+specify
+a
+vocabulary
+of
+descriptive
+properties
+such
+as
+"author".
+Instead
+it
+specifies
+mechanisms
+that
+may
+be
+used
+to
+name
+and
+describe
+properties
+and
+the
+classes
+of
+resource
+they
+describe.
+RDF's
+vocabulary
+description
+language,
+RDF
+Schema,
+</del>
+is
+a
+<a href="http://www.w3.org/TR/rdf11-mt/#semantic-extensions-and-entailment-regimes">
+semantic
+extension
+<del class="diff-old">(as
+defined
+in
+[
+RDF-SEMANTICS
+</del>
+</a>
+<del class="diff-old">])
+</del>
+of
+RDF.
+It
+provides
+mechanisms
+for
+describing
+groups
+of
+related
+resources
+and
+the
+relationships
+between
+these
+resources.
+RDF
+Schema
+<del class="diff-old">vocabulary
+descriptions
+are
+</del>
+<ins class="diff-chg">is
+</ins>
+written
+in
+RDF
+using
+the
+terms
+described
+in
+this
+document.
+These
+resources
+are
+used
+to
+determine
+characteristics
+of
+other
+resources,
+such
+as
+the
+<a href="#ch_domain">
+domains
+</a>
+and
+<a href="#ch_range">
+ranges
+</a>
+of
+properties.
+</p>
+<p>
+The
+RDF
+<del class="diff-old">vocabulary
+description
+language
+</del>
+<ins class="diff-chg">Schema
+</ins>
+class
+and
+property
+system
+is
+similar
+to
+the
+type
+systems
+of
+object-oriented
+programming
+languages
+such
+as
+Java.
+RDF
+<ins class="diff-new">Schema
+</ins>
+differs
+from
+many
+such
+systems
+in
+that
+instead
+of
+defining
+a
+class
+in
+terms
+of
+the
+properties
+its
+instances
+may
+have,
+<del class="diff-old">the
+</del>
+RDF
+<del class="diff-old">vocabulary
+description
+language
+</del>
+<ins class="diff-chg">Schema
+</ins>
+describes
+properties
+in
+terms
+of
+the
+classes
+of
+resource
+to
+which
+they
+apply.
+This
+is
+the
+role
+of
+the
+<a href="#ch_domain">
+domain
+</a>
+and
+<a href="#ch_range">
+range
+</a>
+mechanisms
+described
+in
+this
+specification.
+For
+example,
+we
+could
+define
+the
+<code>
+eg:author
+</code>
+property
+to
+have
+a
+domain
+of
+<code>
+eg:Document
+</code>
+and
+a
+range
+of
+<code>
+eg:Person
+</code>,
+whereas
+a
+classical
+object
+oriented
+system
+might
+typically
+define
+a
+class
+<code>
+eg:Book
+</code>
+with
+an
+attribute
+called
+<code>
+eg:author
+</code>
+of
+type
+<code>
+eg:Person
+</code>.
+Using
+the
+RDF
+approach,
+it
+is
+easy
+for
+others
+to
+subsequently
+define
+additional
+properties
+with
+a
+domain
+of
+eg:
+<code>
+Document
+</code>
+or
+a
+range
+of
+<code>
+eg:Person
+</code>.
+This
+can
+be
+done
+without
+the
+need
+to
+re-define
+the
+original
+description
+of
+these
+classes.
+One
+benefit
+of
+the
+RDF
+property-centric
+approach
+is
+that
+it
+allows
+anyone
+to
+extend
+the
+description
+of
+existing
+resources,
+one
+of
+the
+architectural
+principles
+of
+the
+Web
+[
+<cite>
+<a class="bibref" href="#bib-BERNERS-LEE98">
+BERNERS-LEE98
+</a>
+</cite>
+].
+</p>
+<p>
+This
+specification
+does
+not
+attempt
+to
+enumerate
+all
+the
+possible
+forms
+of
+<del class="diff-old">vocabulary
+description
+that
+are
+useful
+for
+</del>
+representing
+the
+meaning
+of
+RDF
+classes
+and
+properties.
+Instead,
+the
+RDF
+<del class="diff-old">vocabulary
+description
+</del>
+<ins class="diff-chg">Schema
+</ins>
+strategy
+is
+to
+acknowledge
+that
+there
+are
+many
+techniques
+through
+which
+the
+meaning
+of
+classes
+and
+properties
+can
+be
+described.
+Richer
+vocabulary
+or
+'ontology'
+languages
+such
+as
+<del class="diff-old">DAML+OIL,
+W3C's
+[
+</del>
+OWL
+<ins class="diff-new">[
+</ins><cite><a class="bibref" href="#bib-OWL2-OVERVIEW"><ins class="diff-new">
+OWL2-OVERVIEW
+</ins>
+</a>
+<del class="diff-old">]
+language,
+</del>
+</cite>
+<ins class="diff-chg">],
+</ins>
+inference
+rule
+languages
+and
+other
+formalisms
+(for
+example
+temporal
+logics)
+will
+each
+contribute
+to
+our
+ability
+to
+capture
+meaningful
+generalizations
+about
+data
+in
+the
+Web.
+<del class="diff-old">RDF
+vocabulary
+designers
+can
+create
+and
+deploy
+Semantic
+Web
+applications
+using
+the
+RDF
+vocabulary
+description
+language
+1.0
+facilities,
+while
+exploring
+richer
+vocabulary
+description
+languages
+that
+share
+this
+general
+approach.
+</del>
+</p>
+<p>
+The
+language
+defined
+in
+this
+specification
+consists
+of
+a
+collection
+of
+RDF
+resources
+that
+can
+be
+used
+to
+describe
+<del class="diff-old">properties
+of
+</del>
+other
+RDF
+resources
+<del class="diff-old">(including
+properties)
+</del>
+in
+application-specific
+RDF
+vocabularies.
+The
+core
+vocabulary
+is
+defined
+in
+a
+namespace
+informally
+called
+<del class="diff-old">'rdfs'
+</del>
+<code>
+<ins class="diff-chg">rdfs
+</ins></code>
+here.
+That
+namespace
+is
+identified
+by
+the
+<del class="diff-old">URI-Reference
+</del>
+<ins class="diff-chg">IRI
+</ins></p><blockquote><code>
+http://www.w3.org/2000/01/rdf-schema#
+</code>
+</blockquote>
+and
+is
+<ins class="diff-new">conventionally
+</ins>
+associated
+with
+the
+prefix
+<del class="diff-old">'rdfs'.
+</del>
+<code>
+<ins class="diff-chg">rdfs:
+</ins></code>.
+This
+specification
+also
+uses
+the
+prefix
+<del class="diff-old">'rdf'
+</del>
+<code>
+<ins class="diff-chg">rdf:
+</ins></code>
+to
+refer
+to
+the
+RDF
+namespace
+<del class="diff-old">http://www.w3.org/1999/02/22-rdf-syntax-ns#.
+</del>
+<p>
+</p>
+<blockquote>
+<code>
+<ins class="diff-new">http://www.w3.org/1999/02/22-rdf-syntax-ns#
+</ins></code></blockquote>
+<p>
+For
+convenience
+and
+readability,
+this
+specification
+uses
+an
+abbreviated
+form
+to
+represent
+<del class="diff-old">URI-References.
+</del>
+<ins class="diff-chg">IRIs.
+</ins>
+A
+name
+of
+the
+form
+prefix:suffix
+should
+be
+interpreted
+as
+a
+<del class="diff-old">URI-Reference
+</del>
+<ins class="diff-chg">IRI
+</ins>
+consisting
+of
+the
+<del class="diff-old">URI-Reference
+</del>
+<ins class="diff-chg">IRI
+</ins>
+associated
+with
+the
+prefix
+concatenated
+with
+the
+suffix.
+</p>
+</section>
+<section id="ch_classes" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h2 aria-level="1" role="heading" id="h2_ch_classes">
+<span class="secno">
+2.
+</span>
+Classes
+</h2>
+<p>
+Resources
+may
+be
+divided
+into
+groups
+called
+classes.
+The
+members
+of
+a
+class
+are
+known
+as
+<em>
+instances
+</em>
+of
+the
+class.
+Classes
+are
+themselves
+resources.
+They
+are
+often
+identified
+by
+<del class="diff-old">RDF
+URI
+References
+</del>
+<a href="http://www.w3.org/TR/rdf11-concepts/#section-IRIs">
+<ins class="diff-chg">IRIs
+</ins>
+</a>
+and
+may
+be
+described
+using
+RDF
+properties.
+The
+<code>
+<a href="#ch_type">
+rdf:type
+</a>
+</code>
+property
+may
+be
+used
+to
+state
+that
+a
+resource
+is
+an
+instance
+of
+a
+class.
+</p>
+<p>
+RDF
+distinguishes
+between
+a
+class
+and
+the
+set
+of
+its
+instances.
+Associated
+with
+each
+class
+is
+a
+set,
+called
+the
+class
+extension
+of
+the
+class,
+which
+is
+the
+set
+of
+the
+instances
+of
+the
+class.
+Two
+classes
+may
+have
+the
+same
+set
+of
+instances
+but
+be
+different
+classes.
+For
+example,
+the
+tax
+office
+may
+define
+the
+class
+of
+people
+living
+at
+the
+same
+address
+as
+the
+editor
+of
+this
+document.
+The
+Post
+Office
+may
+define
+the
+class
+of
+people
+whose
+address
+has
+the
+same
+zip
+code
+as
+the
+address
+of
+the
+author.
+It
+is
+possible
+for
+these
+classes
+to
+have
+exactly
+the
+same
+instances,
+yet
+to
+have
+different
+properties.
+Only
+one
+of
+the
+classes
+has
+the
+property
+that
+it
+was
+defined
+by
+the
+tax
+office,
+and
+only
+the
+other
+has
+the
+property
+that
+it
+was
+defined
+by
+the
+Post
+Office.
+</p>
+<p>
+A
+class
+may
+be
+a
+member
+of
+its
+own
+class
+extension
+and
+may
+be
+an
+instance
+of
+itself.
+</p>
+<p>
+The
+group
+of
+resources
+that
+are
+RDF
+Schema
+classes
+is
+itself
+a
+class
+called
+<a href="#ch_class">
+<code>
+rdfs:Class
+</code>
+</a>.
+</p>
+<p id="def-subclass">
+If
+a
+class
+C
+is
+a
+<em>
+subclass
+</em>
+of
+a
+class
+C',
+then
+all
+instances
+of
+C
+will
+also
+be
+instances
+of
+C'.
+The
+<a href="#ch_subclassof">
+<code>
+rdfs:subClassOf
+</code>
+</a>
+property
+may
+be
+used
+to
+state
+that
+one
+class
+is
+a
+subclass
+of
+another.
+The
+term
+super-class
+is
+used
+as
+the
+inverse
+of
+subclass.
+If
+a
+class
+C'
+is
+a
+super-class
+of
+a
+class
+C,
+then
+all
+instances
+of
+C
+are
+also
+instances
+of
+C'.
+</p>
+<p>
+The
+RDF
+Concepts
+and
+Abstract
+Syntax
+[
+<del class="diff-old">RDF-CONCEPTS
+</del>
+<cite>
+<a class="bibref" href="#bib-RDF11-CONCEPTS">
+<ins class="diff-chg">RDF11-CONCEPTS
+</ins>
+</a>
+</cite>
+]
+specification
+defines
+the
+RDF
+concept
+of
+an
+<a href="http://www.w3.org/TR/rdf11-concepts/#section-Datatypes">
+RDF
+datatype
+</a>.
+All
+datatypes
+are
+classes.
+The
+instances
+of
+a
+class
+that
+is
+a
+datatype
+are
+the
+members
+of
+the
+value
+space
+of
+the
+datatype.
+</p>
+<section id="ch_resource" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h3 aria-level="2" role="heading" id="h3_ch_resource">
+<span class="secno">
+2.1
+</span>
+rdfs:Resource
+</h3>
+<p>
+All
+things
+described
+by
+RDF
+are
+called
+<em>
+resources
+</em>,
+and
+are
+instances
+of
+the
+class
+<code>
+rdfs:Resource
+</code>.
+This
+is
+the
+class
+of
+everything.
+All
+other
+classes
+are
+<a href="#def-subclass">
+subclasses
+</a>
+of
+this
+class.
+<code>
+rdfs:Resource
+</code>
+is
+an
+instance
+of
+<a href="#ch_class">
+<code>
+rdfs:Class
+</code>
+</a>.
+</p>
+</section>
+<section id="ch_class" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h3 aria-level="2" role="heading" id="h3_ch_class">
+<span class="secno">
+2.2
+</span>
+rdfs:Class
+</h3>
+<p>
+This
+is
+the
+class
+of
+resources
+that
+are
+RDF
+classes.
+<code>
+rdfs:Class
+</code>
+is
+an
+instance
+of
+<code>
+rdfs:Class.
+</code>
+</p>
+</section>
+<section id="ch_literal" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h3 aria-level="2" role="heading" id="h3_ch_literal">
+<span class="secno">
+2.3
+</span>
+rdfs:Literal
+</h3>
+<p>
+The
+class
+<code>
+rdfs:Literal
+</code>
+is
+the
+class
+of
+<a href="http://www.w3.org/TR/rdf11-concepts/#section-Graph-Literal">
+literal
+</a>
+values
+such
+as
+strings
+and
+integers.
+Property
+values
+such
+as
+textual
+strings
+are
+examples
+of
+RDF
+literals.
+<del class="diff-old">Literals
+may
+be
+plain
+or
+typed
+.
+A
+typed
+literal
+is
+an
+instance
+of
+a
+datatype
+class.
+This
+specification
+does
+not
+define
+the
+class
+of
+plain
+literals.
+</del>
+</p>
+<p>
+<code>
+rdfs:Literal
+</code>
+is
+an
+instance
+of
+<a href="#ch_class">
+<code>
+rdfs:Class
+</code>
+</a>.
+rdfs:Literal
+is
+a
+<a href="#def-subclass">
+subclass
+</a>
+of
+<a href="#ch_resource">
+rdfs:Resource
+</a>.
+</p>
+</section>
+<section id="ch_datatype" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h3 aria-level="2" role="heading" id="h3_ch_datatype">
+<span class="secno">
+2.4
+</span>
+rdfs:Datatype
+</h3>
+<p>
+<code>
+rdfs:Datatype
+</code>
+is
+the
+class
+of
+datatypes.
+All
+instances
+of
+<code>
+rdfs:Datatype
+</code>
+correspond
+to
+the
+<a href="http://www.w3.org/TR/rdf11-concepts/#section-Datatypes">
+RDF
+model
+of
+a
+datatype
+</a>
+described
+in
+the
+RDF
+Concepts
+specification
+[
+<del class="diff-old">RDF-CONCEPTS
+</del>
+<cite>
+<a class="bibref" href="#bib-RDF11-CONCEPTS">
+<ins class="diff-chg">RDF11-CONCEPTS
+</ins>
+</a>
+</cite>
+].
+<code>
+rdfs:Datatype
+</code>
+is
+both
+an
+instance
+of
+and
+a
+<a href="#def-subclass">
+subclass
+</a>
+of
+<a href="#ch_class">
+<code>
+rdfs:Class
+</code>
+</a>.
+Each
+instance
+of
+<code>
+rdfs:Datatype
+</code>
+is
+a
+<a href="#def-subclass">
+subclass
+</a>
+of
+rdfs:Literal.
+</p>
+</section>
+<section id="ch_langstring" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h3 aria-level="2" role="heading" id="h3_ch_langstring">
+<span class="secno">
+<ins class="diff-chg">2.5
+</ins></span><ins class="diff-chg">
+rdf:langString
+</ins></h3><p><ins class="diff-chg">
+The
+class
+</ins><code><ins class="diff-chg">
+rdf:langString
+</ins></code><ins class="diff-chg">
+is
+the
+class
+of
+</ins><a href="http://www.w3.org/TR/rdf11-concepts/#dfn-language-tagged-string"><ins class="diff-chg">
+language-tagged
+string
+values
+</ins></a>.<code><ins class="diff-chg">
+rdf:langString
+</ins></code><ins class="diff-chg">
+is
+an
+instance
+of
+</ins><code><ins class="diff-chg">
+rdfs:Datatype
+</ins></code><ins class="diff-chg">
+and
+a
+</ins><a href="#def-subclass"><ins class="diff-chg">
+subclass
+</ins></a><ins class="diff-chg">
+of
+</ins><a href="#ch_literal">
+<code>
+<ins class="diff-new">rdfs:Literal
+</ins></code></a>.</p></section><section class="informative" id="ch_html" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter"><h3 aria-level="2" role="heading" id="h3_ch_html"><span class="secno"><ins class="diff-new">
+2.6
+</ins></span><ins class="diff-new">
+rdf:HTML
+</ins></h3><p><em><ins class="diff-new">
+This
+section
+is
+non-normative.
+</ins></em></p><p><ins class="diff-new">
+The
+class
+</ins><code><ins class="diff-new">
+rdf:HTML
+</ins></code><ins class="diff-new">
+is
+the
+class
+of
+</ins><a href="http://www.w3.org/TR/rdf11-concepts/#section-html"><ins class="diff-new">
+HTML
+literal
+values
+</ins></a>.<code><ins class="diff-new">
+rdf:HTML
+</ins></code><ins class="diff-new">
+is
+an
+instance
+of
+</ins><code><ins class="diff-new">
+rdfs:Datatype
+</ins></code><ins class="diff-new">
+and
+a
+</ins><a href="#def-subclass"><ins class="diff-new">
+subclass
+</ins>
+</a>
+<del class="diff-old">2.5
+</del>
+<ins class="diff-chg">of
+</ins><a href="#ch_literal"><code><ins class="diff-chg">
+rdfs:Literal
+</ins></code></a>.</p></section><section class="informative" id="ch_xmlliteral" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter"><h3 aria-level="2" role="heading" id="h3_ch_xmlliteral"><span class="secno"><ins class="diff-chg">
+2.7
+</ins></span>
+rdf:XMLLiteral
+</h3>
+<p>
+<em>
+<ins class="diff-chg">This
+section
+is
+non-normative.
+</ins></em></p>
+<p>
+The
+class
+<code>
+rdf:XMLLiteral
+</code>
+is
+the
+class
+of
+<a href="http://www.w3.org/TR/rdf11-concepts/#section-XMLLiteral">
+XML
+literal
+values
+</a>.
+<code>
+rdf:XMLLiteral
+</code>
+is
+an
+instance
+of
+<code>
+rdfs:Datatype
+</code>
+and
+a
+<a href="#def-subclass">
+subclass
+</a>
+of
+<a href="#ch_literal">
+<code>
+rdfs:Literal
+</code>
+</a>.
+</p>
+</section>
+<section id="ch_property" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h3 aria-level="2" role="heading" id="h3_ch_property">
+<del class="diff-old">2.6
+</del>
+<span class="secno">
+<ins class="diff-chg">2.8
+</ins></span>
+rdf:Property
+</h3>
+<p>
+<code>
+rdf:Property
+</code>
+is
+the
+class
+of
+RDF
+properties.
+<code>
+rdf:Property
+</code>
+is
+an
+instance
+of
+<a href="#ch_class">
+<code>
+rdfs:Class
+</code>
+</a>.
+</p>
+</section>
+</section>
+<section id="ch_properties" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h2 aria-level="1" role="heading" id="h2_ch_properties">
+<span class="secno">
+3.
+</span>
+Properties
+</h2>
+<p>
+The
+RDF
+Concepts
+and
+Abstract
+Syntax
+specification
+[
+<del class="diff-old">RDF-CONCEPTS
+</del>
+<cite>
+<a class="bibref" href="#bib-RDF11-CONCEPTS">
+<ins class="diff-chg">RDF11-CONCEPTS
+</ins>
+</a>
+</cite>
+]
+describes
+the
+concept
+of
+an
+RDF
+property
+as
+a
+relation
+between
+subject
+resources
+and
+object
+resources.
+</p>
+<p id="def-subproperty">
+This
+specification
+defines
+the
+concept
+of
+subproperty.
+The
+<a href="#ch_subclassof">
+<code>
+rdfs:subPropertyOf
+</code>
+</a>
+property
+may
+be
+used
+to
+state
+that
+one
+property
+is
+a
+subproperty
+of
+another.
+If
+a
+property
+P
+is
+a
+subproperty
+of
+property
+P',
+then
+all
+pairs
+of
+resources
+which
+are
+related
+by
+P
+are
+also
+related
+by
+P'.
+The
+term
+super-property
+is
+often
+used
+as
+the
+inverse
+of
+subproperty.
+If
+a
+property
+P'
+is
+a
+super-property
+of
+a
+property
+P,
+then
+all
+pairs
+of
+resources
+which
+are
+related
+by
+P
+are
+also
+related
+by
+P'.
+This
+specification
+does
+not
+define
+a
+top
+property
+that
+is
+the
+super-property
+of
+all
+properties.
+</p>
+<div class="note">
+<div class="note-title" aria-level="2" role="heading" id="h_note_1">
+<span>
+Note
+<del class="diff-old">:
+</del>
+</span>
+</div>
+<p class="">
+The
+basic
+facilities
+provided
+by
+<a href="#ch_domain">
+<code>
+rdfs:domain
+</code>
+</a>
+and
+<a href="#ch_range">
+<code>
+rdfs:range
+</code>
+</a>
+do
+not
+provide
+any
+direct
+way
+to
+indicate
+property
+restrictions
+that
+are
+local
+to
+a
+class.
+Although
+it
+is
+possible
+to
+combine
+use
+<a href="#ch_domain">
+<code>
+rdfs:domain
+</code>
+</a>
+and
+<a href="#ch_range">
+<code>
+rdfs:range
+</code>
+</a>
+with
+sub-property
+hierarchies,
+direct
+support
+for
+such
+declarations
+are
+provided
+by
+richer
+Web
+Ontology
+languages
+such
+as
+<del class="diff-old">[
+</del>
+OWL
+<ins class="diff-new">[
+</ins><cite><a class="bibref" href="#bib-OWL2-OVERVIEW"><ins class="diff-new">
+OWL2-OVERVIEW
+</ins>
+</a>
+</cite>
+].
+</p>
+</div>
+<section id="ch_range" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h3 aria-level="2" role="heading" id="h3_ch_range">
+<span class="secno">
+3.1
+</span>
+rdfs:range
+</h3>
+<p>
+<code>
+rdfs:range
+</code>
+is
+an
+instance
+of
+<a href="#ch_property">
+<code>
+rdf:Property
+</code>
+</a>
+that
+is
+used
+to
+state
+that
+the
+values
+of
+a
+property
+are
+instances
+of
+one
+or
+more
+classes.
+</p>
+<p>
+The
+triple
+</p>
+<blockquote>
+<code>
+P
+rdfs:range
+C
+</code>
+</blockquote>
+<p>
+states
+that
+P
+is
+an
+instance
+of
+the
+class
+<a href="#ch_property">
+<code>
+rdf:Property
+</code>
+</a>,
+that
+C
+is
+an
+instance
+of
+the
+class
+<a href="#ch_class">
+<code>
+rdfs:Class
+</code>
+</a>
+and
+that
+the
+resources
+denoted
+by
+the
+objects
+of
+triples
+whose
+predicate
+is
+P
+are
+instances
+of
+the
+class
+C.
+</p>
+<p>
+Where
+P
+has
+more
+than
+one
+rdfs:range
+property,
+then
+the
+resources
+denoted
+by
+the
+objects
+of
+triples
+with
+predicate
+P
+are
+instances
+of
+all
+the
+classes
+stated
+by
+the
+<code>
+rdfs:range
+</code>
+properties.
+</p>
+<p>
+The
+<code>
+rdfs:range
+</code>
+property
+can
+be
+applied
+to
+itself.
+The
+rdfs:range
+of
+<code>
+rdfs:range
+</code>
+is
+the
+class
+<a href="#ch_class">
+<code>
+rdfs:Class
+</code>
+</a>.
+This
+states
+that
+any
+resource
+that
+is
+the
+value
+of
+an
+<code>
+rdfs:range
+</code>
+property
+is
+an
+instance
+of
+<a href="#ch_class">
+<code>
+rdfs:Class
+</code>
+</a>.
+</p>
+<p>
+The
+<code>
+rdfs:range
+</code>
+property
+is
+applied
+to
+properties.
+This
+can
+be
+represented
+in
+RDF
+using
+the
+<a href="#ch_domain">
+<code>
+rdfs:domain
+</code>
+</a>
+property.
+The
+<a href="#ch_domain">
+<code>
+rdfs:domain
+</code>
+</a>
+of
+<code>
+rdfs:range
+</code>
+is
+the
+class
+<a href="#ch_property">
+<code>
+rdf:Property
+</code>
+</a>.
+This
+states
+that
+any
+resource
+with
+an
+<code>
+rdfs:range
+</code>
+property
+is
+an
+instance
+of
+<code>
+<a href="#ch_property">
+rdf:Property
+</a>
+</code>.
+</p>
+</section>
+<section id="ch_domain" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h3 aria-level="2" role="heading" id="h3_ch_domain">
+<span class="secno">
+3.2
+</span>
+rdfs:domain
+</h3>
+<p>
+<code>
+rdfs:domain
+</code>
+is
+an
+instance
+of
+<a href="#ch_property">
+<code>
+rdf:Property
+</code>
+</a>
+that
+is
+used
+to
+state
+that
+any
+resource
+that
+has
+a
+given
+property
+is
+an
+instance
+of
+one
+or
+more
+classes.
+</p>
+<p>
+A
+triple
+of
+the
+form:
+</p>
+<blockquote>
+<code>
+P
+rdfs:domain
+C
+</code>
+</blockquote>
+<p>
+states
+that
+P
+is
+an
+instance
+of
+the
+class
+<code>
+<a href="#ch_property">
+rdf:Property
+</a>
+</code>,
+that
+C
+is
+a
+instance
+of
+the
+class
+<code>
+<a href="#ch_class">
+rdfs:Class
+</a>
+</code>
+and
+that
+the
+resources
+denoted
+by
+the
+subjects
+of
+triples
+whose
+predicate
+is
+P
+are
+instances
+of
+the
+class
+C.
+</p>
+<p>
+Where
+a
+property
+P
+has
+more
+than
+one
+rdfs:domain
+property,
+then
+the
+resources
+denoted
+by
+subjects
+of
+triples
+with
+predicate
+P
+are
+instances
+of
+all
+the
+classes
+stated
+by
+the
+<code>
+rdfs:domain
+</code>
+properties.
+</p>
+<p>
+The
+<code>
+rdfs:domain
+</code>
+property
+may
+be
+applied
+to
+itself.
+The
+rdfs:domain
+of
+<code>
+rdfs:domain
+</code>
+is
+the
+class
+<a href="#ch_property">
+<code>
+rdf:Property
+</code>
+</a>.
+This
+states
+that
+any
+resource
+with
+an
+<code>
+rdfs:domain
+</code>
+property
+is
+an
+instance
+of
+<code>
+<a href="#ch_property">
+rdf:Property
+</a>
+</code>.
+</p>
+<p>
+The
+<a href="#ch_range">
+<code>
+rdfs:range
+</code>
+</a>
+of
+<code>
+rdfs:domain
+</code>
+is
+the
+class
+<code>
+<a href="#ch_class">
+rdfs:Class
+</a>
+</code>.
+This
+states
+that
+any
+resource
+that
+is
+the
+value
+of
+an
+<code>
+rdfs:domain
+</code>
+property
+is
+an
+instance
+of
+<code>
+<a href="#ch_class">
+rdfs:Class
+</a>
+</code>.
+</p>
+</section>
+<section id="ch_type" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h3 aria-level="2" role="heading" id="h3_ch_type">
+<span class="secno">
+3.3
+</span>
+rdf:type
+</h3>
+<p>
+<code>
+rdf:type
+</code>
+is
+an
+instance
+of
+<a href="#ch_property">
+<code>
+rdf:Property
+</code>
+</a>
+that
+is
+used
+to
+state
+that
+a
+resource
+is
+an
+instance
+of
+a
+class.
+</p>
+<p>
+A
+triple
+of
+the
+form:
+</p>
+<blockquote>
+<code>
+R
+rdf:type
+C
+</code>
+</blockquote>
+<p>
+states
+that
+C
+is
+an
+instance
+of
+<a href="#ch_class">
+<code>
+rdfs:Class
+</code>
+</a>
+and
+R
+is
+an
+instance
+of
+C.
+</p>
+<p>
+The
+<code>
+<a href="#ch_domain">
+rdfs:domain
+</a>
+</code>
+of
+<code>
+rdf:type
+</code>
+is
+<a href="#ch_resource">
+rdfs:Resource
+</a>.
+The
+<a href="#ch_range">
+<code>
+rdfs:range
+</code>
+</a>
+of
+rdf:type
+is
+<a href="#ch_class">
+<code>
+rdfs:Class
+</code>
+</a>.
+</p>
+</section>
+<section id="ch_subclassof" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h3 aria-level="2" role="heading" id="h3_ch_subclassof">
+<span class="secno">
+3.4
+</span>
+rdfs:subClassOf
+</h3>
+<p>
+The
+property
+<code>
+rdfs:subClassOf
+</code>
+is
+an
+instance
+of
+<code>
+<a href="#ch_property">
+rdf:Property
+</a>
+</code>
+that
+is
+used
+to
+state
+that
+all
+the
+instances
+of
+one
+class
+are
+instances
+of
+another.
+</p>
+<p>
+A
+triple
+of
+the
+form:
+</p>
+<blockquote>
+<code>
+C1
+rdfs:subClassOf
+C2
+</code>
+</blockquote>
+<p>
+states
+that
+C1
+is
+an
+instance
+of
+<code>
+<a href="#ch_class">
+rdfs:Class
+</a>
+</code>,
+C2
+is
+an
+instance
+of
+<code>
+<a href="#ch_class">
+rdfs:Class
+</a>
+</code>
+and
+C1
+is
+a
+<a href="#def-subclass">
+subclass
+</a>
+of
+C2.
+The
+<code>
+rdfs:subClassOf
+</code>
+property
+is
+transitive.
+</p>
+<p>
+The
+<a href="#ch_domain">
+<code>
+rdfs:domain
+</code>
+</a>
+of
+<code>
+rdfs:subClassOf
+</code>
+is
+<code>
+<a href="#ch_class">
+rdfs:Class
+</a>
+</code>.
+The
+<a href="#ch_range">
+<code>
+rdfs:range
+</code>
+</a>
+of
+<code>
+rdfs:subClassOf
+</code>
+is
+<a href="#ch_class">
+<code>
+rdfs:Class
+</code>
+</a>.
+</p>
+</section>
+<section id="ch_subpropertyof" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h3 aria-level="2" role="heading" id="h3_ch_subpropertyof">
+<span class="secno">
+3.5
+</span>
+rdfs:subPropertyOf
+</h3>
+<p>
+The
+property
+<code>
+rdfs:subPropertyOf
+</code>
+is
+an
+instance
+of
+<code>
+<a href="#ch_property">
+rdf:Property
+</a>
+</code>
+that
+is
+used
+to
+state
+that
+all
+resources
+related
+by
+one
+property
+are
+also
+related
+by
+another.
+</p>
+<p>
+A
+triple
+of
+the
+form:
+</p>
+<blockquote>
+<code>
+P1
+rdfs:subPropertyOf
+P2
+</code>
+</blockquote>
+<p>
+states
+that
+P1
+is
+an
+instance
+of
+<code>
+<a href="#ch_property">
+rdf:Property
+</a>
+</code>,
+P2
+is
+an
+instance
+of
+<code>
+<a href="#ch_property">
+rdf:Property
+</a>
+</code>
+and
+P1
+is
+a
+<a href="#def-subproperty">
+subproperty
+</a>
+of
+P2.
+The
+<code>
+rdfs:subPropertyOf
+</code>
+property
+is
+transitive.
+</p>
+<p>
+The
+<a href="#ch_domain">
+<code>
+rdfs:domain
+</code>
+</a>
+of
+<code>
+rdfs:subPropertyOf
+</code>
+is
+<code>
+<a href="#ch_property">
+rdf:Property
+</a>
+</code>.
+The
+<a href="#ch_range">
+<code>
+rdfs:range
+</code>
+</a>
+of
+rdfs:subPropertyOf
+is
+<a href="#ch_property">
+<code>
+rdf:Property
+</code>
+</a>.
+</p>
+</section>
+<section id="ch_label" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h3 aria-level="2" role="heading" id="h3_ch_label">
+<span class="secno">
+3.6
+</span>
+rdfs:label
+</h3>
+<p>
+<code>
+rdfs:label
+</code>
+is
+an
+instance
+of
+<a href="#ch_property">
+<code>
+rdf:Property
+</code>
+</a>
+that
+may
+be
+used
+to
+provide
+a
+human-readable
+version
+of
+a
+resource's
+name.
+</p>
+<p>
+A
+triple
+of
+the
+form:
+</p>
+<blockquote>
+<code>
+R
+rdfs:label
+L
+</code>
+</blockquote>
+<p>
+states
+that
+L
+is
+a
+human
+readable
+label
+for
+R.
+</p>
+<p>
+The
+<a href="#ch_domain">
+<code>
+rdfs:domain
+</code>
+</a>
+of
+<code>
+rdfs:label
+</code>
+is
+<code>
+<a href="#ch_resource">
+rdfs:Resource
+</a>
+</code>.
+The
+<a href="#ch_range">
+<code>
+rdfs:range
+</code>
+</a>
+of
+rdfs:label
+is
+<a href="#ch_literal">
+<code>
+rdfs:Literal
+</code>
+</a>.
+</p>
+<p>
+Multilingual
+labels
+are
+supported
+using
+the
+<a href="http://www.w3.org/TR/rdf11-concepts/#section-Graph-Literal">
+language
+tagging
+</a>
+facility
+of
+RDF
+literals.
+</p>
+</section>
+<section id="ch_comment" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h3 aria-level="2" role="heading" id="h3_ch_comment">
+<span class="secno">
+3.7
+</span>
+rdfs:comment
+</h3>
+<p>
+<code>
+rdfs:comment
+</code>
+is
+an
+instance
+of
+<code>
+<a href="#ch_property">
+rdf:Property
+</a>
+</code>
+that
+may
+be
+used
+to
+provide
+a
+human-readable
+description
+of
+a
+resource.
+</p>
+<p>
+A
+triple
+of
+the
+form:
+</p>
+<blockquote>
+<code>
+R
+rdfs:comment
+L
+</code>
+</blockquote>
+<p>
+states
+that
+L
+is
+a
+human
+readable
+description
+of
+R.
+</p>
+<p>
+The
+<a href="#ch_domain">
+<code>
+rdfs:domain
+</code>
+</a>
+of
+<code>
+rdfs:comment
+</code>
+is
+<code>
+<a href="#ch_resource">
+rdfs:Resource
+</a>
+</code>.
+The
+<a href="#ch_range">
+<code>
+rdfs:range
+</code>
+</a>
+of
+rdfs:comment
+is
+<a href="#ch_literal">
+<code>
+rdfs:Literal
+</code>
+</a>.
+</p>
+<p>
+A
+textual
+comment
+helps
+clarify
+the
+meaning
+of
+RDF
+classes
+and
+properties.
+Such
+in-line
+documentation
+complements
+the
+use
+of
+both
+formal
+techniques
+(Ontology
+and
+rule
+languages)
+and
+informal
+(prose
+documentation,
+examples,
+test
+cases).
+A
+variety
+of
+documentation
+forms
+can
+be
+combined
+to
+indicate
+the
+intended
+meaning
+of
+the
+classes
+and
+properties
+described
+in
+an
+RDF
+vocabulary.
+Since
+RDF
+vocabularies
+are
+expressed
+as
+RDF
+graphs,
+vocabularies
+defined
+in
+other
+namespaces
+may
+be
+used
+to
+provide
+richer
+documentation.
+</p>
+<p>
+Multilingual
+documentation
+is
+supported
+through
+use
+of
+the
+<a href="http://www.w3.org/TR/rdf11-concepts/#section-Graph-Literal">
+language
+tagging
+</a>
+facility
+of
+RDF
+literals.
+</p>
+</section>
+</section>
+<section id="ch_domainrange" class="informative" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h2 aria-level="1" role="heading" id="h2_ch_domainrange">
+<span class="secno">
+4.
+</span>
+Using
+the
+Domain
+and
+Range
+<del class="diff-old">Vocabulary
+(Informative)
+</del>
+<ins class="diff-chg">vocabulary
+</ins>
+</h2>
+<p>
+<em>
+<ins class="diff-new">This
+section
+is
+non-normative.
+</ins></em></p><p>
+This
+specification
+introduces
+an
+RDF
+vocabulary
+for
+describing
+the
+meaningful
+use
+of
+properties
+and
+classes
+in
+RDF
+data.
+For
+example,
+an
+RDF
+vocabulary
+might
+describe
+limitations
+on
+the
+types
+of
+values
+that
+are
+appropriate
+for
+some
+property,
+or
+on
+the
+classes
+to
+which
+it
+makes
+sense
+to
+ascribe
+such
+properties.
+</p>
+<p>
+<del class="diff-old">The
+</del>
+RDF
+<del class="diff-old">Vocabulary
+Description
+language
+</del>
+<ins class="diff-chg">Schema
+</ins>
+provides
+a
+mechanism
+for
+describing
+this
+information,
+but
+does
+not
+say
+whether
+or
+how
+an
+application
+should
+use
+it.
+For
+example,
+while
+an
+RDF
+vocabulary
+can
+assert
+that
+an
+<code>
+author
+</code>
+property
+is
+used
+to
+indicate
+resources
+that
+are
+instances
+of
+the
+class
+<code>
+Person
+</code>,
+it
+does
+not
+say
+whether
+or
+how
+an
+application
+should
+act
+in
+processing
+that
+range
+information.
+Different
+applications
+will
+use
+this
+information
+in
+different
+ways.
+For
+example,
+data
+checking
+tools
+might
+use
+this
+to
+help
+discover
+errors
+in
+some
+data
+set,
+an
+interactive
+editor
+might
+suggest
+appropriate
+values,
+and
+a
+reasoning
+application
+might
+use
+it
+to
+infer
+additional
+information
+from
+instance
+data.
+</p>
+<p>
+RDF
+vocabularies
+can
+describe
+relationships
+between
+vocabulary
+items
+from
+multiple
+independently
+developed
+vocabularies.
+Since
+<del class="diff-old">URI-References
+</del>
+<ins class="diff-chg">IRIs
+</ins>
+are
+used
+to
+identify
+classes
+and
+properties
+<del class="diff-old">in
+</del>
+<ins class="diff-chg">on
+</ins>
+the
+Web,
+it
+is
+possible
+to
+create
+new
+properties
+that
+have
+a
+<code>
+domain
+</code>
+or
+<code>
+range
+</code>
+whose
+value
+is
+a
+class
+defined
+in
+another
+namespace.
+</p>
+</section>
+<section id="ch_othervocab" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h2 aria-level="1" role="heading" id="h2_ch_othervocab">
+<span class="secno">
+5.
+</span>
+Other
+vocabulary
+</h2>
+<p>
+Additional
+classes
+and
+properties,
+including
+constructs
+for
+representing
+containers
+and
+RDF
+statements,
+and
+for
+deploying
+RDF
+vocabulary
+descriptions
+in
+the
+World
+Wide
+<del class="diff-old">Web
+</del>
+<ins class="diff-chg">Web,
+</ins>
+are
+defined
+in
+this
+section.
+</p>
+<section class="informative" id="ch_containervocab" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h3 aria-level="2" role="heading" id="h3_ch_containervocab">
+<span class="secno">
+5.1
+</span>
+Container
+Classes
+and
+Properties
+</h3>
+<p>
+<em>
+<ins class="diff-new">This
+section
+is
+non-normative.
+</ins></em></p><p>
+RDF
+containers
+are
+resources
+that
+are
+used
+to
+represent
+collections.
+<del class="diff-old">An
+introduction
+to
+RDF
+containers
+with
+examples
+may
+be
+found
+in
+the
+RDF
+Primer
+[
+RDF-PRIMER
+].
+</del>
+The
+same
+resource
+may
+appear
+in
+a
+container
+more
+than
+once.
+Unlike
+containment
+in
+the
+physical
+world,
+a
+container
+may
+be
+contained
+in
+itself.
+</p>
+<p>
+Three
+different
+kinds
+of
+container
+are
+defined.
+Whilst
+the
+formal
+semantics
+[
+<del class="diff-old">RDF-SEMANTICS
+</del>
+<cite>
+<a class="bibref" href="#bib-RDF11-MT">
+<ins class="diff-chg">RDF11-MT
+</ins>
+</a>
+</cite>
+]
+of
+all
+three
+classes
+of
+container
+are
+identical,
+different
+classes
+may
+be
+used
+to
+indicate
+informally
+further
+information.
+An
+rdf:Bag
+is
+used
+to
+indicate
+that
+the
+container
+is
+intended
+to
+be
+unordered.
+An
+rdf:Seq
+is
+used
+to
+indicate
+that
+the
+order
+indicated
+by
+the
+numerical
+order
+of
+the
+<a href="#ch_containermembershipproperty">
+container
+<del class="diff-old">member
+ship
+</del>
+<ins class="diff-chg">membership
+</ins>
+properties
+</a>
+of
+the
+container
+is
+intended
+to
+be
+significant.
+An
+rdf:Alt
+container
+is
+used
+to
+indicate
+that
+typical
+processing
+of
+the
+container
+will
+be
+to
+select
+one
+of
+the
+members.
+</p>
+<p>
+Just
+as
+a
+hen
+house
+may
+have
+the
+property
+that
+it
+is
+made
+of
+wood,
+that
+does
+not
+mean
+that
+all
+the
+hens
+it
+contains
+are
+made
+of
+wood,
+a
+property
+of
+a
+container
+is
+not
+necessarily
+a
+property
+of
+all
+of
+its
+members.
+</p>
+<p>
+RDF
+containers
+are
+defined
+by
+the
+following
+classes
+and
+properties.
+</p>
+<section id="ch_container" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h4 aria-level="3" role="heading" id="h4_ch_container">
+<span class="secno">
+5.1.1
+</span>
+rdfs:Container
+</h4>
+<p>
+The
+<code>
+rdfs:Container
+</code>
+class
+is
+a
+super-class
+of
+the
+RDF
+Container
+classes,
+i.e.
+<code>
+<a href="#ch_bag">
+rdf:Bag
+</a>
+</code>,
+<code>
+<a href="#ch_seq">
+rdf:Seq
+</a>
+</code>,
+<code>
+<a href="#ch_alt">
+rdf:Alt
+</a>
+</code>.
+</p>
+</section>
+<section id="ch_bag" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h4 aria-level="3" role="heading" id="h4_ch_bag">
+<span class="secno">
+5.1.2
+</span>
+rdf:Bag
+</h4>
+<p>
+The
+<code>
+rdf:Bag
+</code>
+class
+is
+the
+class
+of
+RDF
+'Bag'
+containers.
+It
+is
+a
+<a href="#def-subclass">
+subclass
+</a>
+of
+<code>
+<a href="#ch_container">
+rdfs:Container
+</a>
+</code>.
+Whilst
+formally
+it
+is
+no
+different
+from
+an
+<code>
+<a href="#ch_seq">
+rdf:Seq
+</a>
+</code>
+or
+an
+<code>
+<a href="#ch_alt">
+rdf:Alt
+</a>
+</code>,
+the
+<code>
+rdf:Bag
+</code>
+class
+is
+used
+conventionally
+to
+indicate
+to
+a
+human
+reader
+that
+the
+container
+is
+intended
+to
+be
+unordered.
+</p>
+</section>
+<section id="ch_seq" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h4 aria-level="3" role="heading" id="h4_ch_seq">
+<span class="secno">
+5.1.3
+</span>
+rdf:Seq
+</h4>
+<p>
+The
+<code>
+rdf:Seq
+</code>
+class
+is
+the
+class
+of
+RDF
+'Sequence'
+containers.
+It
+is
+a
+<a href="#def-subclass">
+subclass
+</a>
+of
+<code>
+<a href="#ch_container">
+rdfs:Container
+</a>
+</code>.
+Whilst
+formally
+it
+is
+no
+different
+from
+an
+<code>
+<a href="#ch_bag">
+rdf:Bag
+</a>
+</code>
+or
+an
+<code>
+<a href="#ch_alt">
+rdf:Alt
+</a>
+</code>,
+the
+<code>
+rdf:Seq
+</code>
+class
+is
+used
+conventionally
+to
+indicate
+to
+a
+human
+reader
+that
+the
+numerical
+ordering
+of
+the
+<a href="#ch_containermembershipproperty">
+container
+membership
+properties
+</a>
+of
+the
+container
+is
+intended
+to
+be
+significant.
+</p>
+</section>
+<section id="ch_alt" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h4 aria-level="3" role="heading" id="h4_ch_alt">
+<span class="secno">
+5.1.4
+</span>
+rdf:Alt
+</h4>
+<p>
+The
+<code>
+rdf:Alt
+</code>
+class
+is
+the
+class
+of
+RDF
+'Alternative'
+containers.
+It
+is
+a
+<a href="#def-subclass">
+subclass
+</a>
+of
+<code>
+<a href="#ch_container">
+rdfs:Container
+</a>
+</code>.
+Whilst
+formally
+it
+is
+no
+different
+from
+an
+<code>
+<a href="#ch_seq">
+rdf:Seq
+</a>
+</code>
+or
+an
+<code>
+<a href="#ch_bag">
+rdf:Bag
+</a>
+</code>,
+the
+<code>
+rdf:Alt
+</code>
+class
+is
+used
+conventionally
+to
+indicate
+to
+a
+human
+reader
+that
+typical
+processing
+will
+be
+to
+select
+one
+of
+the
+members
+of
+the
+container.
+The
+first
+member
+of
+the
+container,
+i.e.
+the
+value
+of
+the
+<code>
+<a href="#ch_containermembershipproperty">
+rdf:_1
+</a>
+</code>
+property,
+is
+the
+default
+choice.
+</p>
+</section>
+<section id="ch_containermembershipproperty" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h4 aria-level="3" role="heading" id="h4_ch_containermembershipproperty">
+<span class="secno">
+5.1.5
+</span>
+rdfs:ContainerMembershipProperty
+</h4>
+<p>
+The
+<code>
+rdfs:ContainerMembershipProperty
+</code>
+class
+has
+as
+instances
+the
+properties
+<code>
+rdf:_1,
+rdf:_2,
+rdf:_3
+...
+</code>
+that
+are
+used
+to
+state
+that
+a
+resource
+is
+a
+member
+of
+a
+container.
+<code>
+rdfs:ContainerMembershipProperty
+</code>
+is
+a
+<a href="#def-subclass">
+subclass
+</a>
+of
+<a href="#ch_property">
+<code>
+rdf:Property
+</code>
+</a>.
+Each
+instance
+of
+<code>
+rdfs:ContainerMembershipProperty
+</code>
+is
+an
+<a href="#ch_subpropertyof">
+<code>
+rdfs:subPropertyOf
+</code>
+</a>
+the
+<code>
+<a href="#ch_member">
+rdfs:member
+</a>
+</code>
+property.
+</p>
+<p>
+Given
+a
+container
+C,
+a
+triple
+of
+the
+form:
+</p>
+<blockquote>
+<code>
+C
+rdf:_nnn
+O
+</code>
+</blockquote>
+<p>
+where
+<code>
+nnn
+</code>
+is
+the
+decimal
+representation
+of
+an
+integer
+greater
+than
+0
+with
+no
+leading
+zeros,
+states
+that
+O
+is
+a
+member
+of
+the
+container
+C.
+</p>
+<p>
+Container
+membership
+properties
+may
+be
+applied
+to
+resources
+other
+than
+containers.
+</p>
+</section>
+<section id="ch_member" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h4 aria-level="3" role="heading" id="h4_ch_member">
+<span class="secno">
+5.1.6
+</span>
+rdfs:member
+</h4>
+<p>
+<code>
+rdfs:member
+</code>
+is
+an
+instance
+of
+<code>
+<a href="#ch_property">
+rdf:Property
+</a>
+</code>
+that
+is
+a
+super-property
+of
+all
+the
+container
+membership
+properties
+i.e.
+each
+container
+membership
+property
+has
+an
+<a href="#ch_subpropertyof">
+<code>
+rdfs:subPropertyOf
+</code>
+</a>
+relationship
+to
+the
+property
+<code>
+rdfs:member
+</code>.
+</p>
+<p>
+The
+<a href="#ch_domain">
+<code>
+rdfs:domain
+</code>
+</a>
+of
+<code>
+rdfs:member
+</code>
+is
+<code>
+<a href="#ch_resource">
+rdfs:Resource
+</a>
+</code>.
+The
+<a href="#ch_range">
+<code>
+rdfs:range
+</code>
+</a>
+of
+<code>
+rdfs:member
+</code>
+is
+<code>
+<a href="#ch_resource">
+rdfs:Resource
+</a>
+</code>.
+</p>
+</section>
+</section>
+<section class="informative" id="ch_collectionvocab" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h3 aria-level="2" role="heading" id="h3_ch_collectionvocab">
+<span class="secno">
+5.2
+</span>
+RDF
+Collections
+</h3>
+<p>
+<em>
+<ins class="diff-new">This
+section
+is
+non-normative.
+</ins></em></p><p>
+RDF
+containers
+are
+open
+in
+the
+sense
+that
+the
+core
+RDF
+specifications
+define
+no
+mechanism
+to
+state
+that
+there
+are
+no
+more
+members.
+The
+RDF
+Collection
+vocabulary
+of
+classes
+and
+properties
+can
+describe
+a
+closed
+collection,
+i.e.
+one
+that
+can
+have
+no
+more
+members.
+<del class="diff-old">The
+reader
+is
+referred
+to
+the
+collections
+section
+of
+the
+RDF
+primer
+for
+an
+informal
+introduction
+to
+collections
+with
+examples.
+</del>
+</p>
+<p>
+A
+collection
+is
+represented
+as
+a
+list
+of
+items,
+a
+representation
+that
+will
+be
+familiar
+to
+those
+with
+experience
+of
+Lisp
+and
+similar
+programming
+languages.
+There
+is
+a
+<a href="http://www.w3.org/TR/turtle/#collections">
+shorthand
+notation
+</a>
+in
+the
+<del class="diff-old">RDF/XML
+</del>
+<ins class="diff-chg">Turtle
+</ins>
+syntax
+specification
+<del class="diff-old">[
+RDF-SYNTAX
+]
+</del>
+for
+representing
+collections.
+</p>
+<div class="note">
+<div class="note-title" aria-level="3" role="heading" id="h_note_2">
+<span>
+Note
+<del class="diff-old">:
+</del>
+</span>
+</div>
+<p class="">
+RDFS
+does
+not
+require
+that
+there
+be
+only
+one
+first
+element
+of
+a
+list-like
+structure,
+or
+even
+that
+a
+list-like
+structure
+have
+a
+first
+element.
+</p>
+</div>
+<section id="ch_list" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h4 aria-level="3" role="heading" id="h4_ch_list">
+<span class="secno">
+5.2.1
+</span>
+rdf:List
+</h4>
+<p>
+<code>
+rdf:List
+</code>
+is
+an
+instance
+of
+<a href="#ch_class">
+<code>
+rdfs:Class
+</code>
+</a>
+that
+can
+be
+used
+to
+build
+descriptions
+of
+lists
+and
+other
+list-like
+structures.
+</p>
+</section>
+<section id="ch_first" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h4 aria-level="3" role="heading" id="h4_ch_first">
+<span class="secno">
+5.2.2
+</span>
+rdf:first
+</h4>
+<p>
+<code>
+rdf:first
+</code>
+is
+an
+instance
+of
+<a href="#ch_property">
+<code>
+rdf:Property
+</code>
+</a>
+that
+can
+be
+used
+to
+build
+descriptions
+of
+lists
+and
+other
+list-like
+structures.
+</p>
+<p>
+A
+triple
+of
+the
+form:
+</p>
+<blockquote>
+<code>
+L
+rdf:first
+O
+</code>
+</blockquote>
+<p>
+states
+that
+there
+is
+a
+first-element
+relationship
+between
+L
+and
+O.
+</p>
+<p>
+The
+<a href="#ch_domain">
+<code>
+rdfs:domain
+</code>
+</a>
+of
+<code>
+rdf:first
+</code>
+is
+<code>
+<a href="#ch_list">
+rdf:List
+</a>
+</code>.
+The
+<a href="#ch_range">
+<code>
+rdfs:range
+</code>
+</a>
+of
+<code>
+rdf:first
+</code>
+is
+<code>
+<a href="#ch_resource">
+rdfs:Resource
+</a>
+</code>.
+</p>
+</section>
+<section id="ch_rest" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h4 aria-level="3" role="heading" id="h4_ch_rest">
+<span class="secno">
+5.2.3
+</span>
+rdf:rest
+</h4>
+<p>
+<code>
+rdf:rest
+</code>
+is
+an
+instance
+of
+<a href="#ch_property">
+<code>
+rdf:Property
+</code>
+</a>
+that
+can
+be
+used
+to
+build
+descriptions
+of
+lists
+and
+other
+list-like
+structures.
+</p>
+<p>
+A
+triple
+of
+the
+form:
+</p>
+<blockquote>
+<code>
+L
+rdf:rest
+O
+</code>
+</blockquote>
+<p>
+states
+that
+there
+is
+a
+rest-of-list
+relationship
+between
+L
+and
+O.
+</p>
+<p>
+The
+<a href="#ch_domain">
+<code>
+rdfs:domain
+</code>
+</a>
+of
+<code>
+rdf:rest
+</code>
+is
+<code>
+<a href="#ch_list">
+rdf:List
+</a>
+</code>.
+The
+<a href="#ch_range">
+<code>
+rdfs:range
+</code>
+</a>
+of
+<code>
+rdf:rest
+</code>
+is
+<code>
+<a href="#ch_list">
+rdf:List
+</a>
+</code>.
+</p>
+</section>
+<section id="ch_nil" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h4 aria-level="3" role="heading" id="h4_ch_nil">
+<span class="secno">
+5.2.4
+</span>
+rdf:nil
+</h4>
+<p>
+The
+resource
+<code>
+rdf:nil
+</code>
+is
+an
+instance
+of
+<code>
+<a href="#ch_list">
+rdf:List
+</a>
+</code>
+that
+can
+be
+used
+to
+represent
+an
+empty
+list
+or
+other
+list-like
+structure.
+</p>
+<p>
+A
+triple
+of
+the
+form:
+</p>
+<blockquote>
+<code>
+L
+rdf:rest
+rdf:nil
+</code>
+</blockquote>
+<p>
+states
+that
+L
+is
+an
+instance
+of
+<code>
+<a href="#ch_list">
+rdf:List
+</a>
+</code>
+that
+has
+one
+item;
+that
+item
+can
+be
+indicated
+using
+the
+<code>
+<a href="#ch_first">
+rdf:first
+</a>
+</code>
+property.
+</p>
+</section>
+</section>
+<section class="informative" id="ch_reificationvocab" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<ins class="diff-chg">&gt;
+</ins><h3 aria-level="2" role="heading" id="h3_ch_reificationvocab">
+<span class="secno">
+5.3
+</span>
+Reification
+Vocabulary
+</h3>
+<p>
+<del class="diff-old">The
+original
+RDF
+Model
+and
+Syntax
+Specification
+[
+RDFMS
+]
+defined
+a
+vocabulary
+for
+describing
+RDF
+statements
+without
+stating
+them.
+[
+RDFMS
+]
+did
+not
+provide
+a
+formal
+semantics
+for
+this
+vocabulary,
+and
+the
+informal
+definition
+that
+was
+provided
+was
+somewhat
+inconsistent.
+The
+current
+RDF
+specification
+does
+not
+assign
+a
+normative
+formal
+semantics
+to
+this
+vocabulary.
+However,
+an
+intended
+meaning
+of
+this
+vocabulary
+(which
+generally
+clarifies
+the
+intent
+of
+the
+[
+RDFMS
+]
+definition)
+</del>
+<em>
+<ins class="diff-chg">This
+section
+</ins>
+is
+<del class="diff-old">described
+here.
+An
+informal
+introduction
+to
+the
+reification
+vocabulary,
+with
+examples,
+may
+be
+found
+in
+the
+RDF
+Primer
+[
+RDF-PRIMER
+].
+</del>
+<ins class="diff-chg">non-normative.
+</ins></em>
+</p>
+<section id="ch_statement" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h4 aria-level="3" role="heading" id="h4_ch_statement">
+<span class="secno">
+5.3.1
+</span>
+rdf:Statement
+</h4>
+<p>
+<code>
+rdf:Statement
+</code>
+is
+an
+instance
+of
+<code>
+<a href="#ch_class">
+rdfs:Class.
+</a>
+</code>
+It
+is
+intended
+to
+represent
+the
+class
+of
+RDF
+statements.
+An
+RDF
+statement
+is
+the
+statement
+made
+by
+a
+token
+of
+an
+RDF
+<del class="diff-old">triple
+.
+</del>
+<ins class="diff-chg">triple.
+</ins>
+The
+subject
+of
+an
+RDF
+statement
+is
+the
+instance
+of
+<code>
+<a href="#ch_resource">
+rdfs:Resource
+</a>
+</code>
+identified
+by
+the
+subject
+of
+the
+triple.
+The
+predicate
+of
+an
+RDF
+statement
+is
+the
+instance
+of
+<code>
+<a href="#ch_property">
+rdf:Property
+</a>
+</code>
+identified
+by
+the
+predicate
+of
+the
+triple.
+The
+object
+of
+an
+RDF
+statement
+is
+the
+instance
+of
+<code>
+<a href="#ch_resource">
+rdfs:Resource
+</a>
+</code>
+identified
+by
+the
+object
+of
+the
+triple.
+<code>
+rdf:Statement
+</code>
+is
+in
+the
+domain
+of
+the
+properties
+<code>
+<a href="#ch_predicate">
+rdf:predicate
+</a>
+</code>,
+<code>
+<a href="#ch_subject">
+rdf:subject
+</a>
+</code>
+and
+<code>
+<a href="#ch_object">
+rdf:object
+</a>
+</code>.
+Different
+individual
+<code>
+rdf:Statement
+</code>
+instances
+may
+have
+the
+same
+values
+for
+their
+<code>
+<a href= "#ch_predicate">
+rdf:predicate
+</a>
+</code>,
+<code>
+<a href="#ch_subject">
+rdf:subject
+</a>
+</code>
+and
+<code>
+<a href="#ch_object">
+rdf:object
+</a>
+</code>
+properties.
+</p>
+</section>
+<section id="ch_subject" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h4 aria-level="3" role="heading" id="h4_ch_subject">
+<span class="secno">
+5.3.2
+</span>
+rdf:subject
+</h4>
+<p>
+<code>
+rdf:subject
+</code>
+is
+an
+instance
+of
+<a href="#ch_property">
+<code>
+rdf:Property
+</code>
+</a>
+that
+is
+used
+to
+state
+the
+subject
+of
+a
+statement.
+</p>
+<p>
+A
+triple
+of
+the
+form:
+</p>
+<blockquote>
+<code>
+S
+rdf:subject
+R
+</code>
+</blockquote>
+<p>
+states
+that
+S
+is
+an
+instance
+of
+<code>
+<a href="#ch_statement">
+rdf:Statement
+</a>
+</code>
+and
+that
+the
+subject
+of
+S
+is
+R.
+</p>
+<p class="schemacomment">
+The
+<a href="#ch_domain">
+<code>
+rdfs:domain
+</code>
+</a>
+of
+<code>
+rdf:subject
+</code>
+is
+<code>
+<a href="#ch_statement">
+rdf:Statement
+</a>
+</code>.
+The
+<a href="#ch_range">
+<code>
+rdfs:range
+</code>
+</a>
+of
+<code>
+rdf:subject
+</code>
+is
+<code>
+<a href="#ch_resource">
+rdfs:Resource
+</a>
+</code>.
+</p>
+</section>
+<section id="ch_predicate" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h4 aria-level="3" role="heading" id="h4_ch_predicate">
+<span class="secno">
+5.3.3
+</span>
+rdf:predicate
+</h4>
+<p>
+rdf:predicate
+is
+an
+instance
+of
+<a href="#ch_property">
+<code>
+rdf:Property
+</code>
+</a>
+that
+is
+used
+to
+state
+the
+predicate
+of
+a
+statement.
+</p>
+<p>
+A
+triple
+of
+the
+form:
+</p>
+<blockquote>
+<code>
+S
+rdf:predicate
+P
+</code>
+</blockquote>
+<p>
+states
+that
+S
+is
+an
+instance
+of
+<code>
+<a href="#ch_statement">
+rdf:Statement
+</a>
+</code>,
+that
+P
+is
+an
+instance
+of
+<code>
+<a href="#ch_property">
+rdf:Property
+</a>
+</code>
+and
+that
+the
+predicate
+of
+S
+is
+P.
+</p>
+<p>
+The
+<a href="#ch_domain">
+<code>
+rdfs:domain
+</code>
+</a>
+of
+<code>
+rdf:predicate
+</code>
+is
+<code>
+<a href="#ch_statement">
+rdf:Statement
+</a>
+</code>
+and
+the
+<a href="#ch_range">
+<code>
+rdfs:range
+</code>
+</a>
+is
+<a href="#ch_resource">
+<code>
+rdfs:Resource
+</code>
+</a>.
+</p>
+</section>
+<section id="ch_object" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h4 aria-level="3" role="heading" id="h4_ch_object">
+<span class="secno">
+5.3.4
+</span>
+rdf:object
+</h4>
+<p>
+rdf:object
+is
+an
+instance
+of
+<a href="#ch_property">
+<code>
+rdf:Property
+</code>
+</a>
+that
+is
+used
+to
+state
+the
+object
+of
+a
+statement.
+</p>
+<p>
+A
+triple
+of
+the
+form:
+</p>
+<blockquote>
+<code>
+S
+rdf:object
+O
+</code>
+</blockquote>
+<p>
+states
+that
+S
+is
+an
+instance
+of
+<code>
+<a href="#ch_statement">
+rdf:Statement
+</a>
+</code>
+and
+that
+the
+object
+of
+S
+is
+O.
+</p>
+<p>
+The
+<a href="#ch_domain">
+<code>
+rdfs:domain
+</code>
+</a>
+of
+<code>
+rdf:object
+</code>
+is
+<code>
+<a href="#ch_statement">
+rdf:Statement
+</a>
+</code>.
+The
+<a href="#ch_range">
+<code>
+rdfs:range
+</code>
+</a>
+of
+<code>
+rdf:object
+</code>
+is
+<code>
+<a href="#ch_resource">
+rdfs:Resource
+</a>
+</code>.
+</p>
+</section>
+</section>
+<section id="ch_utilvocab" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h3 aria-level="2" role="heading" id="h3_ch_utilvocab">
+<span class="secno">
+5.4
+</span>
+Utility
+Properties
+</h3>
+<p>
+The
+following
+utility
+classes
+and
+properties
+are
+defined
+in
+the
+RDF
+core
+namespaces.
+</p>
+<section id="ch_seealso" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h4 aria-level="3" role="heading" id="h4_ch_seealso">
+<span class="secno">
+5.4.1
+</span>
+rdfs:seeAlso
+</h4>
+<p>
+<code>
+rdfs:seeAlso
+</code>
+is
+an
+instance
+of
+<a href="#ch_property">
+<code>
+rdf:Property
+</code>
+</a>
+that
+is
+used
+to
+indicate
+a
+resource
+that
+might
+provide
+additional
+information
+about
+the
+subject
+resource.
+</p>
+<p>
+A
+triple
+of
+the
+form:
+</p>
+<blockquote>
+<code>
+S
+rdfs:seeAlso
+O
+</code>
+</blockquote>
+<p>
+states
+that
+the
+resource
+O
+may
+provide
+additional
+information
+about
+S.
+It
+may
+be
+possible
+to
+retrieve
+representations
+of
+O
+from
+the
+Web,
+but
+this
+is
+not
+required.
+When
+such
+representations
+may
+be
+retrieved,
+no
+constraints
+are
+placed
+on
+the
+format
+of
+those
+representations.
+</p>
+<p>
+The
+<code>
+<a href="#ch_domain">
+rdfs:domain
+</a>
+</code>
+of
+<code>
+rdfs:seeAlso
+</code>
+is
+<code>
+<a href="#ch_resource">
+rdfs:Resource
+</a>
+</code>.
+The
+<code>
+<a href="#ch_range">
+rdfs:range
+</a>
+</code>
+of
+<code>
+rdfs:seeAlso
+</code>
+is
+<code>
+<a href="#ch_resource">
+rdfs:Resource
+</a>
+</code>.
+</p>
+</section>
+<section id="ch_isdefinedby" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h4 aria-level="3" role="heading" id="h4_ch_isdefinedby">
+<span class="secno">
+5.4.2
+</span>
+rdfs:isDefinedBy
+</h4>
+<p>
+<code>
+rdfs:isDefinedBy
+</code>
+is
+an
+instance
+of
+<a href="#ch_property">
+<code>
+rdf:Property
+</code>
+</a>
+that
+is
+used
+to
+indicate
+a
+resource
+defining
+the
+subject
+resource.
+This
+property
+may
+be
+used
+to
+indicate
+an
+RDF
+vocabulary
+in
+which
+a
+resource
+is
+described.
+</p>
+<p>
+A
+triple
+of
+the
+form:
+</p>
+<blockquote>
+<code>
+S
+rdfs:isDefinedBy
+O
+</code>
+</blockquote>
+<p>
+states
+that
+the
+resource
+O
+defines
+S.
+It
+may
+be
+possible
+to
+retrieve
+representations
+of
+O
+from
+the
+Web,
+but
+this
+is
+not
+required.
+When
+such
+representations
+may
+be
+retrieved,
+no
+constraints
+are
+placed
+on
+the
+format
+of
+those
+representations.
+<code>
+rdfs:isDefinedBy
+</code>
+is
+a
+<a href="#def-subproperty">
+subproperty
+</a>
+of
+<code>
+<a href="#ch_seealso">
+rdfs:seeAlso
+</a>
+</code>.
+</p>
+<p>
+The
+<code>
+<a href="#ch_domain">
+rdfs:domain
+</a>
+</code>
+of
+<code>
+rdfs:isDefinedBy
+</code>
+is
+<code>
+<a href="#ch_resource">
+rdfs:Resource
+</a>
+</code>.
+The
+<code>
+<a href="#ch_range">
+rdfs:range
+</a>
+</code>
+of
+<code>
+rdfs:isDefinedBy
+</code>
+is
+<code>
+<a href="#ch_resource">
+rdfs:Resource
+</a>
+</code>.
+</p>
+</section>
+<section id="ch_value" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h4 aria-level="3" role="heading" id="h4_ch_value">
+<span class="secno">
+5.4.3
+</span>
+rdf:value
+</h4>
+<p>
+<code>
+rdf:value
+</code>
+is
+an
+instance
+of
+<a href="#ch_property">
+<code>
+rdf:Property
+</code>
+</a>
+that
+may
+be
+used
+in
+describing
+structured
+values.
+</p>
+<p>
+rdf:value
+has
+no
+meaning
+on
+its
+own.
+It
+is
+provided
+as
+a
+piece
+of
+vocabulary
+that
+may
+be
+used
+in
+idioms
+such
+as
+illustrated
+in
+example
+<del class="diff-old">16
+of
+the
+RDF
+primer
+[
+RDF-PRIMER
+].
+</del>
+<ins class="diff-chg">below:
+</ins></p><div class="example"><div class="example-title"><span><ins class="diff-chg">
+Example
+1
+</ins></span></div><pre class="example"><ins class="diff-chg">
+&lt;http://www.example.com/2002/04/products#item10245&gt;
+    &lt;http://www.example.org/terms/weight&gt; [
+       rdf:value 2.4 ;
+       &lt;http://www.example.org/terms/units&gt; &lt;http://www.example.org/units/kilograms&gt;
+       ] .
+</ins></pre></div><p>
+Despite
+the
+lack
+of
+formal
+specification
+of
+the
+meaning
+of
+this
+property,
+there
+is
+value
+in
+defining
+it
+to
+encourage
+the
+use
+of
+a
+common
+idiom
+in
+examples
+of
+this
+kind.
+</p>
+<p>
+The
+<code>
+<a href="#ch_domain">
+rdfs:domain
+</a>
+</code>
+of
+<code>
+rdf:value
+</code>
+is
+<code>
+<a href="#ch_resource">
+rdfs:Resource
+</a>
+</code>.
+The
+<code>
+<a href="#ch_range">
+rdfs:range
+</a>
+</code>
+of
+<code>
+rdf:value
+</code>
+is
+<code>
+<a href="#ch_resource">
+rdfs:Resource
+</a>
+</code>.
+</p>
+</section>
+</section>
+</section>
+<section id="ch_summary" class="informative" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h2 aria-level="1" role="heading" id="h2_ch_summary">
+<span class="secno">
+6.
+</span>
+RDF
+Schema
+summary
+<del class="diff-old">(Informative)
+</del>
+</h2>
+<p>
+<em>
+This
+<del class="diff-old">table
+presents
+</del>
+<ins class="diff-chg">section
+is
+non-normative.
+</ins></em></p><p><ins class="diff-chg">
+The
+tables
+in
+this
+section
+provide
+</ins>
+an
+overview
+of
+the
+<del class="diff-old">vocabulary
+of
+RDF,
+drawing
+together
+vocabulary
+originally
+defined
+in
+the
+RDF
+Model
+and
+Syntax
+specification
+with
+classes
+and
+properties
+that
+originate
+with
+</del>
+RDF
+<del class="diff-old">Schema.
+</del>
+<ins class="diff-chg">Schema
+vocabulary.
+</ins>
+</p>
+<section id="ch_sumclasses" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h3 aria-level="2" role="heading" id="h3_ch_sumclasses">
+<span class="secno">
+6.1
+</span>
+RDF
+classes
+</h3>
+<table border="1">
+<tbody>
+<tr>
+<th>
+Class
+name
+</th>
+<th>
+comment
+</th>
+</tr>
+<tr>
+<td>
+<a href="#ch_resource">
+rdfs:Resource
+</a>
+</td>
+<td>
+The
+class
+resource,
+everything.
+</td>
+</tr>
+<tr>
+<td>
+<a href="#ch_literal">
+rdfs:Literal
+</a>
+</td>
+<td>
+The
+class
+of
+literal
+values,
+e.g.
+textual
+strings
+and
+integers.
+</td>
+</tr>
+<tr>
+<td>
+<a href="#ch_langstring">
+<ins class="diff-new">rdf:langString
+</ins></a></td><td><ins class="diff-new">
+The
+class
+of
+language-tagged
+string
+literal
+values.
+</ins></td></tr><tr><td><a href="#ch_html"><ins class="diff-new">
+rdf:HTML
+</ins></a></td><td><ins class="diff-new">
+The
+class
+of
+HTML
+literal
+values.
+</ins></td></tr><tr><td><a href="#ch_xmlliteral">
+rdf:XMLLiteral
+</a>
+</td>
+<td>
+The
+class
+of
+XML
+<del class="diff-old">literals
+</del>
+<ins class="diff-chg">literal
+</ins>
+values.
+</td>
+</tr>
+<tr>
+<td>
+<a href="#ch_class">
+rdfs:Class
+</a>
+</td>
+<td>
+The
+class
+of
+classes.
+</td>
+</tr>
+<tr>
+<td>
+<a href="#ch_property">
+rdf:Property
+</a>
+</td>
+<td>
+The
+class
+of
+RDF
+properties.
+</td>
+</tr>
+<tr>
+<td>
+<a href="#ch_datatype">
+rdfs:Datatype
+</a>
+</td>
+<td>
+The
+class
+of
+RDF
+datatypes.
+</td>
+</tr>
+<tr>
+<td>
+<a href="#ch_statement">
+rdf:Statement
+</a>
+</td>
+<td>
+The
+class
+of
+RDF
+statements.
+</td>
+</tr>
+<tr>
+<td>
+<a href="#ch_bag">
+rdf:Bag
+</a>
+</td>
+<td>
+The
+class
+of
+unordered
+containers.
+</td>
+</tr>
+<tr>
+<td>
+<a href="#ch_seq">
+rdf:Seq
+</a>
+</td>
+<td>
+The
+class
+of
+ordered
+containers.
+</td>
+</tr>
+<tr>
+<td>
+<a href="#ch_alt">
+rdf:Alt
+</a>
+</td>
+<td>
+The
+class
+of
+containers
+of
+alternatives.
+</td>
+</tr>
+<tr>
+<td>
+<a href="#ch_container">
+rdfs:Container
+</a>
+</td>
+<td>
+The
+class
+of
+RDF
+containers.
+</td>
+</tr>
+<tr>
+<td>
+<a href="#ch_containermembershipproperty">
+rdfs:ContainerMembershipProperty
+</a>
+</td>
+<td>
+The
+class
+of
+container
+membership
+properties,
+rdf:_1,
+rdf:_2,
+...,
+all
+of
+which
+are
+sub-properties
+of
+'member'.
+</td>
+</tr>
+<tr>
+<td>
+<a href="#ch_list">
+rdf:List
+</a>
+</td>
+<td>
+The
+class
+of
+RDF
+Lists.
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="ch_sumproperties" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h3 aria-level="2" role="heading" id="h3_ch_sumproperties">
+<span class="secno">
+6.2
+</span>
+RDF
+properties
+</h3>
+<table border="1">
+<tbody>
+<tr>
+<th>
+Property
+name
+</th>
+<th>
+comment
+</th>
+<th>
+domain
+</th>
+<th>
+range
+</th>
+</tr>
+<tr>
+<td>
+<a href="#ch_type">
+rdf:type
+</a>
+</td>
+<td>
+The
+subject
+is
+an
+instance
+of
+a
+class.
+</td>
+<td>
+rdfs:Resource
+</td>
+<td>
+rdfs:Class
+</td>
+</tr>
+<tr>
+<td>
+<a href="#ch_subclassof">
+rdfs:subClassOf
+</a>
+</td>
+<td>
+The
+subject
+is
+a
+subclass
+of
+a
+class.
+</td>
+<td>
+rdfs:Class
+</td>
+<td>
+rdfs:Class
+</td>
+</tr>
+<tr>
+<td>
+<a href="#ch_subpropertyof">
+rdfs:subPropertyOf
+</a>
+</td>
+<td>
+The
+subject
+is
+a
+subproperty
+of
+a
+property.
+</td>
+<td>
+rdf:Property
+</td>
+<td>
+rdf:Property
+</td>
+</tr>
+<tr>
+<td>
+<a href="#ch_domain">
+rdfs:domain
+</a>
+</td>
+<td>
+A
+domain
+of
+the
+subject
+property.
+</td>
+<td>
+rdf:Property
+</td>
+<td>
+rdfs:Class
+</td>
+</tr>
+<tr>
+<td>
+<a href="#ch_range">
+rdfs:range
+</a>
+</td>
+<td>
+A
+range
+of
+the
+subject
+property.
+</td>
+<td>
+rdf:Property
+</td>
+<td>
+rdfs:Class
+</td>
+</tr>
+<tr>
+<td>
+<a href="#ch_label">
+rdfs:label
+</a>
+</td>
+<td>
+A
+human-readable
+name
+for
+the
+subject.
+</td>
+<td>
+rdfs:Resource
+</td>
+<td>
+rdfs:Literal
+</td>
+</tr>
+<tr>
+<td>
+<a href="#ch_comment">
+rdfs:comment
+</a>
+</td>
+<td>
+A
+description
+of
+the
+subject
+resource.
+</td>
+<td>
+rdfs:Resource
+</td>
+<td>
+rdfs:Literal
+</td>
+</tr>
+<tr>
+<td>
+<a href="#ch_member">
+rdfs:member
+</a>
+</td>
+<td>
+A
+member
+of
+the
+subject
+resource.
+</td>
+<td>
+rdfs:Resource
+</td>
+<td>
+rdfs:Resource
+</td>
+</tr>
+<tr>
+<td>
+<a href="#ch_first">
+rdf:first
+</a>
+</td>
+<td>
+The
+first
+item
+in
+the
+subject
+RDF
+list.
+</td>
+<td>
+rdf:List
+</td>
+<td>
+rdfs:Resource
+</td>
+</tr>
+<tr>
+<td>
+<a href="#ch_rest">
+rdf:rest
+</a>
+</td>
+<td>
+The
+rest
+of
+the
+subject
+RDF
+list
+after
+the
+first
+item.
+</td>
+<td>
+rdf:List
+</td>
+<td>
+rdf:List
+</td>
+</tr>
+<tr>
+<td>
+<a href="#ch_seealso">
+rdfs:seeAlso
+</a>
+</td>
+<td>
+Further
+information
+about
+the
+subject
+resource.
+</td>
+<td>
+rdfs:Resource
+</td>
+<td>
+rdfs:Resource
+</td>
+</tr>
+<tr>
+<td>
+<a href="#ch_isdefinedby">
+rdfs:isDefinedBy
+</a>
+</td>
+<td>
+The
+definition
+of
+the
+subject
+resource.
+</td>
+<td>
+rdfs:Resource
+</td>
+<td>
+rdfs:Resource
+</td>
+</tr>
+<tr>
+<td>
+<a href="#ch_value">
+rdf:value
+</a>
+</td>
+<td>
+Idiomatic
+property
+used
+for
+structured
+<del class="diff-old">values
+(see
+the
+RDF
+Primer
+for
+an
+example
+of
+its
+usage).
+</del>
+<ins class="diff-chg">values.
+</ins>
+</td>
+<td>
+rdfs:Resource
+</td>
+<td>
+rdfs:Resource
+</td>
+</tr>
+<tr>
+<td>
+<a href="#ch_subject">
+rdf:subject
+</a>
+</td>
+<td>
+The
+subject
+of
+the
+subject
+RDF
+statement.
+</td>
+<td>
+rdf:Statement
+</td>
+<td>
+rdfs:Resource
+</td>
+</tr>
+<tr>
+<td>
+<a href="#ch_predicate">
+rdf:predicate
+</a>
+</td>
+<td>
+The
+predicate
+of
+the
+subject
+RDF
+statement.
+</td>
+<td>
+rdf:Statement
+</td>
+<td>
+rdfs:Resource
+</td>
+</tr>
+<tr>
+<td>
+<a href="#ch_object">
+rdf:object
+</a>
+</td>
+<td>
+The
+object
+of
+the
+subject
+RDF
+statement.
+</td>
+<td>
+rdf:Statement
+</td>
+<td>
+rdfs:Resource
+</td>
+</tr>
+</tbody>
+</table>
+<p>
+In
+addition
+to
+these
+classes
+and
+properties,
+RDF
+also
+uses
+properties
+called
+<code>
+rdf:_1
+</code>,
+<code>
+rdf:_2
+</code>,
+<code>
+rdf:_3
+</code>...
+etc.,
+each
+of
+which
+is
+both
+a
+sub-property
+of
+<code>
+rdfs:member
+</code>
+and
+an
+instance
+of
+the
+class
+<code>
+rdfs:ContainerMembershipProperty
+</code>.
+There
+is
+also
+an
+instance
+of
+<code>
+rdf:List
+</code>
+called
+<code>
+rdf:nil
+</code>
+that
+is
+an
+empty
+<code>
+rdf:List
+</code>.
+</p>
+</section>
+</section>
+<section id="ch_acknowledgements" class="appendix informative" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h2 aria-level="1" role="heading" id="h2_ch_acknowledgements">
+<del class="diff-old">7.
+References
+</del>
+<span class="secno">
+<ins class="diff-chg">A.
+</ins></span><ins class="diff-chg">
+Acknowledgments
+</ins>
+</h2>
+<del class="diff-old">7.1
+Normative
+References
+[RDF-CONCEPTS]
+Resource
+Description
+Framework
+(RDF):
+Concepts
+and
+Abstract
+Syntax
+,
+Graham
+Klyne
+and
+Jeremy
+J.
+Carroll,
+Editors,
+W3C
+Recommendation,
+10
+February
+2004,
+http://www.w3.org/TR/2004/REC-rdf-concepts-20040210/
+.
+Latest
+version
+available
+at
+http://www.w3.org/TR/rdf-concepts/
+.
+[RDF-SEMANTICS]
+RDF
+Semantics
+,
+Patrick
+Hayes,
+Editor,
+W3C
+Recommendation,
+10
+February
+2004,
+http://www.w3.org/TR/2004/REC-rdf-mt-20040210/
+.
+Latest
+version
+available
+at
+http://www.w3.org/TR/rdf-mt/
+.
+[RDF-SYNTAX]
+RDF/XML
+Syntax
+Specification
+(Revised)
+,
+Dave
+Beckett,
+Editor,
+W3C
+Recommendation,
+10
+February
+2004,
+http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/
+.
+Latest
+version
+available
+at
+http://www.w3.org/TR/rdf-syntax-grammar/
+.
+[RDF-TESTS]
+RDF
+Test
+Cases
+,
+Jan
+Grant
+and
+Dave
+Beckett,
+Editors,
+W3C
+Recommendation,
+10
+February
+2004,
+http://www.w3.org/TR/2004/REC-rdf-testcases-20040210/
+.
+Latest
+version
+available
+at
+http://www.w3.org/TR/rdf-testcases/
+.
+[RDFMS]
+Resource
+Description
+Framework
+(RDF)
+Model
+and
+Syntax
+,
+W3C
+Recommendation,
+22
+February
+1999
+http://www.w3.org/TR/1999/REC-rdf-syntax-19990222/
+[XMLNS]
+Namespaces
+in
+XML
+;
+W3C
+Recommendation,
+14
+January
+1999
+http://www.w3.org/TR/1999/REC-xml-names-19990114/
+7.2
+Informational
+References
+[RDF-PRIMER]
+RDF
+Primer
+,
+Frank
+Manola
+and
+Eric
+Miller,
+Editors,
+W3C
+Recommendation,
+10
+February
+2004,
+http://www.w3.org/TR/2004/REC-rdf-primer-20040210/
+.
+Latest
+version
+available
+at
+http://www.w3.org/TR/rdf-primer/
+.
+[BERNERS-LEE98]
+What
+the
+Semantic
+Web
+can
+represent
+,
+Tim
+Berners-Lee,
+1998
+http://www.w3.org/DesignIssues/RDFnot.html
+[EXTWEB]
+Web
+Architecture:
+Extensible
+Languages
+,
+Tim
+Berners-Lee
+and
+Dan
+Connolly,
+1998
+http://www.w3.org/TR/1998/NOTE-webarch-extlang-19980210
+[DCMI]
+Dublin
+Core
+Metadata
+Initiative
+http://www.dublincore.org/
+[OWL]
+OWL
+Web
+Ontology
+Language
+Reference
+,
+Mike
+Dean
+and
+Guus
+Schreiber,
+Editors,
+W3C
+Recommendation,
+10
+February
+2004,
+http://www.w3.org/TR/2004/REC-owl-ref-20040210/
+.
+Latest
+version
+available
+at
+http://www.w3.org/TR/owl-ref/
+.
+[SCHEMA-ARCH]
+The
+Cambridge
+Communiqué
+,
+W3C
+NOTE,
+7
+October
+1999,
+Swick
+and
+Thompson
+http://www.w3.org/TR/1999/NOTE-schema-arch-19991007
+[XML]
+Extensible
+Markup
+Language
+(XML)
+1.0
+,
+W3C
+Recommendation,
+10-February-1988,
+Section
+3.2
+Element
+Type
+Declarations
+http://www.w3.org/TR/1998/REC-xml-19980210.html#elemdecls
+</del>
+<p>
+<em>
+<ins class="diff-chg">This
+section
+is
+non-normative.
+</ins></em>
+<del class="diff-old">8.
+Acknowledgments
+</del>
+</p>
+<p>
+The
+RDF
+Schema
+design
+was
+originally
+produced
+by
+the
+RDF
+Schema
+Working
+Group
+(1997-2000).
+The
+current
+specification
+is
+largely
+an
+editorial
+clarification
+of
+that
+design,
+and
+has
+benefited
+greatly
+from
+the
+hard
+work
+of
+the
+<a href="http://www.w3.org/2001/sw/RDFCore/">
+RDF
+Core
+Working
+Group
+</a>
+<a href="http://www.w3.org/2001/sw/RDFCore/#Membership">
+members
+</a>,
+and
+from
+implementation
+feedback
+from
+many
+members
+of
+the
+<a href="http://www.w3.org/RDF/Interest/">
+RDF
+Interest
+Group
+</a>.
+<ins class="diff-new">In
+2013-2014
+Guus
+Schreiber
+edited
+this
+document
+on
+behalf
+of
+the
+</ins><a href="http://www.w3.org/2011/rdf-wg/"><ins class="diff-new">
+RDF
+Working
+Group
+</ins></a><ins class="diff-new">
+to
+bring
+it
+in
+line
+with
+the
+RDF
+1.1
+specifications.
+</ins>
+</p>
+<p>
+David
+Singer
+of
+IBM
+was
+the
+chair
+of
+the
+original
+RDF
+Schema
+group
+throughout
+most
+of
+the
+development
+of
+this
+specification;
+we
+thank
+David
+for
+his
+efforts
+and
+thank
+IBM
+for
+supporting
+him
+and
+us
+in
+this
+endeavor.
+Particular
+thanks
+are
+also
+due
+to
+Andrew
+Layman
+for
+his
+editorial
+work
+on
+early
+versions
+of
+this
+specification.
+</p>
+<p>
+The
+original
+RDF
+Schema
+Working
+Group
+membership
+included:
+</p>
+<p>
+Nick
+Arnett
+(Verity),
+Dan
+Brickley
+(ILRT
+/
+University
+of
+Bristol),
+Walter
+Chang
+(Adobe),
+Sailesh
+Chutani
+(Oracle),
+Ron
+Daniel
+(DATAFUSION),
+Charles
+Frankston
+(Microsoft),
+Joe
+Lapp
+(webMethods
+Inc.),
+Patrick
+Gannon
+(CommerceNet),
+RV
+Guha
+(Epinions,
+previously
+of
+Netscape
+Communications),
+Tom
+Hill
+(Apple
+Computer),
+Renato
+Iannella
+(DSTC),
+Sandeep
+Jain
+(Oracle),
+Kevin
+Jones,
+(InterMind),
+Emiko
+Kezuka
+(Digital
+Vision
+Laboratories),
+Ora
+Lassila
+(Nokia
+Research
+Center),
+Andrew
+Layman
+(Microsoft),
+John
+McCarthy
+(Lawrence
+Berkeley
+National
+Laboratory),
+Michael
+Mealling
+(Network
+Solutions),
+Norbert
+Mikula
+(DataChannel),
+Eric
+Miller
+(OCLC),
+Frank
+Olken
+(Lawrence
+Berkeley
+National
+Laboratory),
+Sri
+Raghavan
+(Digital/Compaq),
+Lisa
+Rein
+(webMethods
+Inc.),
+Tsuyoshi
+Sakata
+(Digital
+Vision
+Laboratories),
+Leon
+Shklar
+(Pencom
+Web
+Works),
+David
+Singer
+(IBM),
+Wei
+(William)
+Song
+(SISU),
+Neel
+Sundaresan
+(IBM),
+Ralph
+Swick
+<del class="diff-old">(W3C),
+</del>
+<ins class="diff-chg">(
+</ins><abbr title="World Wide Web Consortium"><ins class="diff-chg">
+W3C
+</ins></abbr><ins class="diff-chg">
+),
+</ins>
+Naohiko
+Uramoto
+(IBM),
+Charles
+Wicksteed
+(Reuters
+Ltd.),
+Misha
+Wolf
+(Reuters
+Ltd.)
+</p>
+</section>
+<section id="changes" class="appendix informative" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h2 aria-level="1" role="heading" id="h2_changes">
+<span class="secno">
+<ins class="diff-chg">B.
+</ins></span><ins class="diff-chg">
+Change
+history
+</ins></h2><p>
+<em>
+<ins class="diff-chg">This
+section
+is
+non-normative.
+</ins></em>
+</p>
+<section id="PER-changes" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h3 aria-level="2" role="heading" id="h3_PER-changes">
+<span class="secno">
+<ins class="diff-chg">B.1
+</ins></span><ins class="diff-chg">
+Changes
+for
+Proposed
+Edited
+Recommendation
+in
+2013
+</ins></h3><ul><li><ins class="diff-chg">
+Conversion
+to
+ResPec,
+inclduing
+formatting
+of
+examples
+and
+notes.
+</ins></li><li><ins class="diff-chg">
+Refereces
+and
+anchors
+to
+RDF
+1.0
+documents
+where
+appropriate
+replaced
+by
+references
+and
+anchors
+to
+RDF
+1.1
+documents.
+</ins></li><li><ins class="diff-chg">
+Replaced
+the
+term
+"URI
+Reference"
+with
+the
+term
+"IRI".
+</ins></li><li><ins class="diff-chg">
+Removed
+discussion
+about
+distinction
+between
+plain
+and
+typed
+literals,
+as
+this
+distinction
+is
+absent
+in
+RDF
+1.1
+and
+has
+no
+technical
+bearing
+on
+RDF
+Schema.
+</ins></li><li><ins class="diff-chg">
+Fixed
+incorrect
+pointer
+to
+RDF
+Primer
+example
+16
+to
+example
+21.
+</ins></li><li><ins class="diff-chg">
+Removed
+the
+introductory
+paragraph
+of
+Sec.
+</ins><a href="#ch_reificationvocab"><ins class="diff-chg">
+"Reification
+Vocabulary"
+</ins></a>,<ins class="diff-chg">
+as
+this
+discussion
+is
+not
+related
+to
+the
+technical
+content
+and
+is
+irrelevant
+and
+confusing
+now.
+</ins></li><li><ins class="diff-chg">
+Update
+of
+affiliation
+of
+the
+editors.
+</ins></li><li><ins class="diff-chg">
+Added
+RDF
+WG
+to
+the
+Acknowledgements
+section.
+</ins></li><li><ins class="diff-chg">
+Renamed
+the
+document
+from
+"RDF
+Vocabulary
+Description
+Language
+1.0:
+RDF
+Schema"
+to
+"RDF
+Schema
+1.1",
+as
+the
+term
+Vocabulary
+Description
+Language
+has
+led
+to
+confusion.
+</ins></li><li><ins class="diff-chg">
+Three
+paragraphs
+of
+the
+Introduction
+were
+left
+out.
+These
+paragraphs
+described
+the
+things
+that
+RDF
+Schema
+does
+not
+do
+and
+are
+now
+much
+less
+relevant
+than
+in
+2004.
+</ins></li><li><ins class="diff-chg">
+Added
+the
+datatypes
+</ins><code><ins class="diff-chg">
+rdf:langString
+</ins></code><ins class="diff-chg">
+and
+</ins><code><ins class="diff-chg">
+rdf:HTML
+</ins></code>.</li><li><ins class="diff-chg">
+Removed
+Appendix
+"RDF
+Schema
+in
+RDF/XML".
+It
+was
+informative,
+but
+now
+out
+of
+date,
+in
+terms
+of
+content
+and
+in
+terms
+of
+syntax.
+</ins></li><li><ins class="diff-chg">
+Marked
+</ins><code><ins class="diff-chg">
+rdf:HTML
+</ins></code><ins class="diff-chg">
+and
+</ins><code><ins class="diff-chg">
+rdf:XMLLiteral
+</ins></code><ins class="diff-chg">
+as
+non-normative.
+</ins></li><li><ins class="diff-chg">
+Removed
+references
+to
+2004
+Primer
+from
+Secs.
+5.1,
+5.2
+and
+5.4.3.
+In
+the
+latter
+case
+the
+example
+referred
+to
+was
+moved
+into
+this
+document
+for
+readability
+purposes.
+</ins></li></ul></section><section id="2004-changes" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter"><h3 aria-level="2" role="heading" id="h3_2004-changes">
+<span class="secno">
+<ins class="diff-chg">B.2
+</ins></span>
+Changes
+<ins class="diff-chg">history
+of
+the
+2004
+Recommendation
+</ins></h3>
+<p>
+The
+following
+is
+an
+outline
+of
+the
+main
+changes
+made
+to
+<del class="diff-old">this
+</del>
+<ins class="diff-chg">the
+2004
+</ins>
+specification,
+latest
+first,
+since
+the
+Last
+Call
+Working
+Draft
+of
+<a href="http://www.w3.org/TR/2003/WD-rdf-schema-20030123/">
+23
+January
+2003
+</a>.
+See
+the
+<a href="http://www.w3.org/2001/sw/RDFCore/20030123-issues/#schema">
+Last
+Call
+issue
+tracking
+document
+</a>
+for
+details
+of
+the
+specific
+issues
+raised
+regarding
+this
+specification.
+</p>
+<ul>
+<li>
+Amended
+Appendix
+A
+to
+note
+that
+the
+RDF/XML
+description
+of
+RDF
+and
+RDFS
+terms
+is
+not
+directly
+published
+at
+the
+RDFS
+namespace,
+but
+split
+between
+the
+'rdf:'
+and
+'rdfs:'
+namespace
+documents.
+Also
+removed
+the
+pre-REC
+warning
+that
+the
+WG
+might
+choose
+to
+change
+the
+namespace
+URI
+prior
+to
+Recommendation.
+</li>
+<li>
+Amended
+rdfs:range
+specification
+for
+rdf:predicate
+for
+consistency
+with
+the
+Semantics
+document
+(previously
+rdf:Property;
+now,
+rdfs:Resource)
+</li>
+<li>
+Removed
+reference
+to
+RDF
+mimetypes
+doc,
+as
+the
+IETF
+draft
+has
+expired
+and
+is
+404
+missing
+on
+their
+site.
+</li>
+<li>
+Reification
+vocabulary
+redescribed
+(
+<a href="http://lists.w3.org/Archives/Public/w3c-rdfcore-wg/2003Aug/0161.html">
+details
+</a>
+).
+</li>
+<li>
+Reworded
+rdfs:comment
+for
+rdfs:member,
+changing
+"container"
+to
+"resource"
+</li>
+<li>
+Reworded
+lead-in
+to
+Appendix
+A
+per
+<a href="http://lists.w3.org/Archives/Public/www-rdf-comments/2003JulSep/0170.html">
+0170.html
+</a>.
+</li>
+<li>
+OWL
+references
+now
+go
+to
+OWL
+specs
+rather
+than
+WebOnt
+homepage.
+Fixed
+minor
+typos
+per
+<a href="http://lists.w3.org/Archives/Public/www-rdf-comments/2003JanMar/0373.html">
+0373.html
+</a>
+)
+</li>
+<li>
+Reworded
+rdf:nil
+to
+tone
+down
+the
+imperative
+style.
+</li>
+<li>
+Added
+note
+to
+Properties
+section
+warning
+about
+over-use
+of
+sub-property,
+and
+referencing
+OWL,
+an
+editorial
+suggestion
+from
+Bijan
+Parsia.
+(
+<a href="http://lists.w3.org/Archives/Public/www-rdf-comments/2003AprJun/0177.html">
+details
+</a>
+).
+</li>
+<li>
+Regarding
+<a href="http://www.w3.org/2001/sw/RDFCore/20030123-issues/#pfps-12">
+pfps-12
+</a>,
+<a href="http://lists.w3.org/Archives/Public/www-rdf-comments/2003AprJun/0277.html">
+discussion
+</a>
+led
+to
+rdf:first/rest/List/nil
+rewritten
+per
+Peter
+Patel-Schneider's
+suggestion.
+</li>
+<li>
+Change
+to
+description
+of
+subProperty
+and
+subClass,
+to
+match
+<a href="http://www.w3.org/TR/2004/REC-rdf-mt-20040210/#change">
+changes
+to
+RDF
+Semantics
+</a>.
+See
+<a href="http://lists.w3.org/Archives/Public/w3c-rdfcore-wg/2003Jul/0161.html">
+discussion
+</a>
+for
+details.
+</li>
+<li>
+Edits
+<a href="http://lists.w3.org/Archives/Public/www-rdf-comments/2003AprJun/0099.html">
+closing
+</a>
+'what
+is
+rdf
+schema'
+issue
+by
+clarifying
+that
+RDFS
+is
+a
+semantic
+extension
+of
+RDF,
+as
+defined
+in
+the
+RDF
+Semantics
+document.
+This
+closes
+rdfcore
+last
+call
+issue
+pfps-24.
+</li>
+</ul>
+</section>
+</section>
+<section class="appendix" id="references" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h2 aria-level="1" role="heading" id="h2_references">
+<span class="secno">
+<ins class="diff-chg">C.
+</ins></span><ins class="diff-chg">
+References
+</ins></h2><section id="normative-references" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter"><h3 aria-level="2" role="heading" id="h3_normative-references"><span class="secno"><ins class="diff-chg">
+C.1
+</ins></span><ins class="diff-chg">
+Normative
+references
+</ins></h3><dl class="bibliography" about=""><dt id="bib-JSON-LD"><ins class="diff-chg">
+[JSON-LD]
+</ins></dt><dd rel="dcterms:requires"><ins class="diff-chg">
+Manu
+Sporny,
+Gregg
+Kellogg,
+Markus
+Lanthaler,
+Editors.
+</ins><cite>
+<a href="http://www.w3.org/TR/2013/PR-json-ld-20131105/">
+<ins class="diff-new">JSON-LD
+1.0
+</ins></a>.</cite><ins class="diff-new">
+5
+November
+2013.
+W3C
+Proposed
+Recommendation.
+URL:
+</ins><a href="http://www.w3.org/TR/2013/PR-json-ld-20131105/"><ins class="diff-new">
+http://www.w3.org/TR/2013/PR-json-ld-20131105/
+</ins></a>.<ins class="diff-new">
+The
+latest
+edition
+is
+available
+at
+</ins><a href="http://www.w3.org/TR/json-ld/"><ins class="diff-new">
+http://www.w3.org/TR/json-ld/
+</ins>
+</a>
+<del class="diff-old">Appendix
+A:
+RDF
+Schema
+as
+RDF/XML
+An
+RDFS
+description
+of
+the
+</del>
+</dd>
+<dt id="bib-RDF11-CONCEPTS">
+<ins class="diff-chg">[RDF11-CONCEPTS]
+</ins></dt><dd rel="dcterms:requires"><ins class="diff-chg">
+Richard
+Cyganiak,
+David
+Wood,
+Markus
+Lanthaler,
+Editors.
+</ins><cite><a href="http://www.w3.org/TR/2014/PR-rdf11-concepts-20140109/">
+RDF
+<del class="diff-old">vocabulary
+</del>
+<ins class="diff-chg">1.1
+Concepts
+</ins>
+and
+<del class="diff-old">RDFS
+vocabulary
+</del>
+<ins class="diff-chg">Abstract
+Syntax.
+</ins>
+</a>
+<del class="diff-old">is
+given
+here
+in
+RDF/XML
+syntax.
+It
+includes
+statements
+describing
+RDF
+resources
+originally
+introduced
+by
+the
+1999
+RDF
+Model
+and
+Syntax
+specification,
+as
+well
+as
+definitions
+for
+resources
+introduced
+</del>
+</cite>
+<ins class="diff-chg">9
+January
+2014.
+W3C
+Proposed
+Recommendation
+(work
+</ins>
+in
+<del class="diff-old">the
+RDF
+Core
+Schema
+vocabulary.
+This
+material
+</del>
+<ins class="diff-chg">progress).
+URL:
+</ins><a href="http://www.w3.org/TR/2014/PR-rdf11-concepts-20140109/"><ins class="diff-chg">
+http://www.w3.org/TR/2014/PR-rdf11-concepts-20140109/
+</ins></a>.<ins class="diff-chg">
+The
+latest
+edition
+</ins>
+is
+<del class="diff-old">also
+</del>
+available
+<del class="diff-old">as
+a
+separate
+RDF/XML
+document
+.
+It
+does
+not
+necessarily
+match
+the
+content
+published
+</del>
+at
+<del class="diff-old">the
+RDF
+namespace
+URI
+</del>
+<a href="http://www.w3.org/TR/rdf11-concepts/">
+<ins class="diff-chg">http://www.w3.org/TR/rdf11-concepts/
+</ins>
+</a>
+<del class="diff-old">or
+the
+RDFS
+namespace
+URI
+,
+which
+may
+evolve
+over
+time.
+        
+&lt;rdf:RDF
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"&gt;
+&lt;owl:Ontology rdf:about="http://www.w3.org/2000/01/rdf-schema#"/&gt;
+&lt;rdfs:Class rdf:about="http://www.w3.org/2000/01/rdf-schema#Resource"&gt;
+  &lt;rdfs:isDefinedBy rdf:resource="http://www.w3.org/2000/01/rdf-schema#"/&gt;
+  &lt;rdfs:label&gt;Resource&lt;/rdfs:label&gt;
+  &lt;rdfs:comment&gt;The class resource, everything.&lt;/rdfs:comment&gt;
+&lt;/rdfs:Class&gt;
+&lt;rdf:Property rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#type"&gt;
+  &lt;rdfs:isDefinedBy rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/&gt;
+  &lt;rdfs:label&gt;type&lt;/rdfs:label&gt;
+  &lt;rdfs:comment&gt;The subject is an instance of a class.&lt;/rdfs:comment&gt;
+  &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/&gt;
+  &lt;rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;
+&lt;/rdf:Property&gt;
+</del>
+<del class="diff-old">&lt;rdfs:Class rdf:about="http://www.w3.org/2000/01/rdf-schema#Class"&gt;
+  &lt;rdfs:isDefinedBy rdf:resource="http://www.w3.org/2000/01/rdf-schema#"/&gt;
+  &lt;rdfs:label&gt;Class&lt;/rdfs:label&gt;
+  &lt;rdfs:comment&gt;The class of classes.&lt;/rdfs:comment&gt;
+  &lt;rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;
+&lt;/rdfs:Class&gt;
+&lt;rdf:Property rdf:about="http://www.w3.org/2000/01/rdf-schema#subClassOf"&gt;
+  &lt;rdfs:isDefinedBy rdf:resource="http://www.w3.org/2000/01/rdf-schema#"/&gt;
+  &lt;rdfs:label&gt;subClassOf&lt;/rdfs:label&gt;
+  &lt;rdfs:comment&gt;The subject is a subclass of a class.&lt;/rdfs:comment&gt;
+  &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/&gt;
+  &lt;rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/&gt;
+&lt;/rdf:Property&gt;
+&lt;rdf:Property rdf:about="http://www.w3.org/2000/01/rdf-schema#subPropertyOf"&gt;
+  &lt;rdfs:isDefinedBy rdf:resource="http://www.w3.org/2000/01/rdf-schema#"/&gt;
+  &lt;rdfs:label&gt;subPropertyOf&lt;/rdfs:label&gt;
+  &lt;rdfs:comment&gt;The subject is a subproperty of a property.&lt;/rdfs:comment&gt;
+  &lt;rdfs:range rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;
+  &lt;rdfs:domain rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;
+&lt;/rdf:Property&gt;
+&lt;rdfs:Class rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"&gt;
+  &lt;rdfs:isDefinedBy rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/&gt;
+  &lt;rdfs:label&gt;Property&lt;/rdfs:label&gt;
+  &lt;rdfs:comment&gt;The class of RDF properties.&lt;/rdfs:comment&gt;
+  &lt;rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;
+&lt;/rdfs:Class&gt;
+&lt;rdf:Property rdf:about="http://www.w3.org/2000/01/rdf-schema#comment"&gt;
+  &lt;rdfs:isDefinedBy rdf:resource="http://www.w3.org/2000/01/rdf-schema#"/&gt;
+  &lt;rdfs:label&gt;comment&lt;/rdfs:label&gt;
+  &lt;rdfs:comment&gt;A description of the subject resource.&lt;/rdfs:comment&gt;
+  &lt;rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;
+  &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/&gt;
+&lt;/rdf:Property&gt;
+&lt;rdf:Property rdf:about="http://www.w3.org/2000/01/rdf-schema#label"&gt;
+  &lt;rdfs:isDefinedBy rdf:resource="http://www.w3.org/2000/01/rdf-schema#"/&gt;
+  &lt;rdfs:label&gt;label&lt;/rdfs:label&gt;
+  &lt;rdfs:comment&gt;A human-readable name for the subject.&lt;/rdfs:comment&gt;
+  &lt;rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;
+  &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/&gt;
+&lt;/rdf:Property&gt;
+&lt;rdf:Property rdf:about="http://www.w3.org/2000/01/rdf-schema#domain"&gt;
+  &lt;rdfs:isDefinedBy rdf:resource="http://www.w3.org/2000/01/rdf-schema#"/&gt;
+  &lt;rdfs:label&gt;domain&lt;/rdfs:label&gt;
+  &lt;rdfs:comment&gt;A domain of the subject property.&lt;/rdfs:comment&gt;
+ &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/&gt;
+  &lt;rdfs:domain rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;
+&lt;/rdf:Property&gt;
+&lt;rdf:Property rdf:about="http://www.w3.org/2000/01/rdf-schema#range"&gt;
+  &lt;rdfs:isDefinedBy rdf:resource="http://www.w3.org/2000/01/rdf-schema#"/&gt;
+  &lt;rdfs:label&gt;range&lt;/rdfs:label&gt;
+  &lt;rdfs:comment&gt;A range of the subject property.&lt;/rdfs:comment&gt;
+  &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/&gt;
+  &lt;rdfs:domain rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;
+&lt;/rdf:Property&gt;
+&lt;rdf:Property rdf:about="http://www.w3.org/2000/01/rdf-schema#seeAlso"&gt;
+  &lt;rdfs:isDefinedBy rdf:resource="http://www.w3.org/2000/01/rdf-schema#"/&gt;
+  &lt;rdfs:label&gt;seeAlso&lt;/rdfs:label&gt;
+  &lt;rdfs:comment&gt;Further information about the subject resource.&lt;/rdfs:comment&gt;
+  &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;
+  &lt;rdfs:domain   rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;
+&lt;/rdf:Property&gt;
+&lt;rdf:Property rdf:about="http://www.w3.org/2000/01/rdf-schema#isDefinedBy"&gt;
+  &lt;rdfs:isDefinedBy rdf:resource="http://www.w3.org/2000/01/rdf-schema#"/&gt;
+  &lt;rdfs:subPropertyOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#seeAlso"/&gt;
+  &lt;rdfs:label&gt;isDefinedBy&lt;/rdfs:label&gt;
+  &lt;rdfs:comment&gt;The defininition of the subject resource.&lt;/rdfs:comment&gt;
+  &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;
+  &lt;rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;
+&lt;/rdf:Property&gt;
+&lt;rdfs:Class rdf:about="http://www.w3.org/2000/01/rdf-schema#Literal"&gt;
+  &lt;rdfs:isDefinedBy rdf:resource="http://www.w3.org/2000/01/rdf-schema#"/&gt;
+  &lt;rdfs:label&gt;Literal&lt;/rdfs:label&gt;
+  &lt;rdfs:comment&gt;The class of literal values, eg. textual strings and integers.&lt;/rdfs:comment&gt;
+  &lt;rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;
+&lt;/rdfs:Class&gt;
+&lt;rdfs:Class rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement"&gt;
+  &lt;rdfs:isDefinedBy rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/&gt;
+  &lt;rdfs:label&gt;Statement&lt;/rdfs:label&gt;
+  &lt;rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;
+  &lt;rdfs:comment&gt;The class of RDF statements.&lt;/rdfs:comment&gt;
+&lt;/rdfs:Class&gt;
+&lt;rdf:Property rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#subject"&gt;
+  &lt;rdfs:isDefinedBy rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/&gt;
+  &lt;rdfs:label&gt;subject&lt;/rdfs:label&gt;
+  &lt;rdfs:comment&gt;The subject of the subject RDF statement.&lt;/rdfs:comment&gt;
+  &lt;rdfs:domain rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement"/&gt;
+  &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;
+&lt;/rdf:Property&gt;
+&lt;rdf:Property rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#predicate"&gt;
+  &lt;rdfs:isDefinedBy rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/&gt;
+  &lt;rdfs:label&gt;predicate&lt;/rdfs:label&gt;
+  &lt;rdfs:comment&gt;The predicate of the subject RDF statement.&lt;/rdfs:comment&gt;
+  &lt;rdfs:domain rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement"/&gt;
+  &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;
+&lt;/rdf:Property&gt;
+&lt;rdf:Property rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#object"&gt;
+  &lt;rdfs:isDefinedBy rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/&gt;
+  &lt;rdfs:label&gt;object&lt;/rdfs:label&gt;
+  &lt;rdfs:comment&gt;The object of the subject RDF statement.&lt;/rdfs:comment&gt;
+  &lt;rdfs:domain rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Statement"/&gt;
+  &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;
+&lt;/rdf:Property&gt;
+&lt;rdfs:Class rdf:about="http://www.w3.org/2000/01/rdf-schema#Container"&gt;
+  &lt;rdfs:isDefinedBy rdf:resource="http://www.w3.org/2000/01/rdf-schema#"/&gt;
+  &lt;rdfs:label&gt;Container&lt;/rdfs:label&gt;
+  &lt;rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;
+  &lt;rdfs:comment&gt;The class of RDF containers.&lt;/rdfs:comment&gt;
+&lt;/rdfs:Class&gt;
+&lt;rdfs:Class rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Bag"&gt;
+  &lt;rdfs:isDefinedBy rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/&gt;
+  &lt;rdfs:label&gt;Bag&lt;/rdfs:label&gt;
+  &lt;rdfs:comment&gt;The class of unordered containers.&lt;/rdfs:comment&gt;
+  &lt;rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Container"/&gt;
+&lt;/rdfs:Class&gt;
+&lt;rdfs:Class rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq"&gt;
+  &lt;rdfs:isDefinedBy rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/&gt;
+  &lt;rdfs:label&gt;Seq&lt;/rdfs:label&gt;
+  &lt;rdfs:comment&gt;The class of ordered containers.&lt;/rdfs:comment&gt;
+  &lt;rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Container"/&gt;
+&lt;/rdfs:Class&gt;
+</del>
+</dd>
+<dt id="bib-RDF11-MT">
+<ins class="diff-chg">[RDF11-MT]
+</ins></dt><dd rel="dcterms:requires"><ins class="diff-chg">
+Patrick
+J.
+Hayes,
+Peter
+F.
+Patel-Schneider,
+Editors.
+</ins><cite>
+<del class="diff-old">&lt;rdfs:Class rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Alt"&gt;
+  &lt;rdfs:isDefinedBy rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/&gt;
+  &lt;rdfs:label&gt;Alt&lt;/rdfs:label&gt;
+  &lt;rdfs:comment&gt;The class of containers of alternatives.&lt;/rdfs:comment&gt;
+  &lt;rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Container"/&gt;
+&lt;/rdfs:Class&gt;
+</del>
+<a href="http://www.w3.org/TR/2014/PR-rdf11-mt-20140109/">
+<ins class="diff-chg">RDF
+1.1
+Semantics.
+</ins></a>
+<del class="diff-old">&lt;rdfs:Class rdf:about="http://www.w3.org/2000/01/rdf-schema#ContainerMembershipProperty"&gt;
+  &lt;rdfs:isDefinedBy rdf:resource="http://www.w3.org/2000/01/rdf-schema#"/&gt;
+  &lt;rdfs:label&gt;ContainerMembershipProperty&lt;/rdfs:label&gt;
+  &lt;rdfs:comment&gt;The class of container membership properties, rdf:_1, rdf:_2, ...,
+                    all of which are sub-properties of 'member'.&lt;/rdfs:comment&gt;
+  &lt;rdfs:subClassOf rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/&gt;
+&lt;/rdfs:Class&gt;
+</del>
+</cite>
+<ins class="diff-chg">9
+January
+2014.
+W3C
+Proposed
+Recommendation
+(work
+in
+progress).
+URL:
+</ins><a href="http://www.w3.org/TR/2014/PR-rdf11-mt-20140109/"><ins class="diff-chg">
+http://www.w3.org/TR/2014/PR-rdf11-mt-20140109/
+</ins></a>.<ins class="diff-chg">
+The
+latest
+edition
+is
+available
+at
+</ins><a href="http://www.w3.org/TR/rdf11-mt/"><ins class="diff-chg">
+http://www.w3.org/TR/rdf11-mt/
+</ins></a>
+<del class="diff-old">&lt;rdf:Property rdf:about="http://www.w3.org/2000/01/rdf-schema#member"&gt;
+  &lt;rdfs:isDefinedBy rdf:resource="http://www.w3.org/2000/01/rdf-schema#"/&gt;
+  &lt;rdfs:label&gt;member&lt;/rdfs:label&gt;
+  &lt;rdfs:comment&gt;A member of the subject resource.&lt;/rdfs:comment&gt;
+  &lt;rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;
+  &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;
+&lt;/rdf:Property&gt;
+</del>
+</dd>
+<dt id="bib-TRIG">
+<ins class="diff-chg">[TRIG]
+</ins></dt><dd rel="dcterms:requires"><ins class="diff-chg">
+Gavin
+Carothers,
+Andy
+Seaborne,
+Editors.
+</ins><cite>
+<del class="diff-old">&lt;rdf:Property rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#value"&gt;
+  &lt;rdfs:isDefinedBy rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/&gt;
+  &lt;rdfs:label&gt;value&lt;/rdfs:label&gt;
+  &lt;rdfs:comment&gt;Idiomatic property used for structured values.&lt;/rdfs:comment&gt;
+  &lt;rdfs:domain rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;
+  &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;
+&lt;/rdf:Property&gt;
+</del>
+<a href="http://www.w3.org/TR/2014/PR-trig-20140109/">
+<ins class="diff-chg">TriG:
+RDF
+Dataset
+Language
+</ins></a>
+<del class="diff-old">&lt;!-- the following are new additions, Nov 2002 --&gt;
+</del>
+</cite>.
+<ins class="diff-chg">9
+January
+2014.
+W3C
+Proposed
+Recommendation
+(work
+in
+progress).
+URL:
+</ins><a href="http://www.w3.org/TR/2014/PR-trig-20140109/"><ins class="diff-chg">
+http://www.w3.org/TR/2014/PR-trig-20140109/
+</ins></a>.<ins class="diff-chg">
+The
+latest
+edition
+is
+available
+at
+</ins><a href="http://www.w3.org/TR/trig/"><ins class="diff-chg">
+http://www.w3.org/TR/trig/
+</ins></a>
+<del class="diff-old">&lt;rdfs:Class rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"&gt;
+  &lt;rdfs:isDefinedBy rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/&gt;
+  &lt;rdfs:label&gt;List&lt;/rdfs:label&gt;
+  &lt;rdfs:comment&gt;The class of RDF Lists.&lt;/rdfs:comment&gt;
+  &lt;rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;&lt;/rdfs:Class&gt;
+</del>
+</dd>
+<dt id="bib-TURTLE">
+<ins class="diff-chg">[TURTLE]
+</ins></dt><dd rel="dcterms:requires"><ins class="diff-chg">
+Eric
+Prud'hommeaux,
+Gavin
+Carothers,
+Editors.
+</ins><cite>
+<del class="diff-old">&lt;rdf:List rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"&gt;
+  &lt;rdfs:isDefinedBy rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/&gt;
+  &lt;rdfs:label&gt;nil&lt;/rdfs:label&gt;
+  &lt;rdfs:comment&gt;The empty list, with no items in it. If the rest of a list is nil then the list has no more items in it.&lt;/rdfs:comment&gt;
+&lt;/rdf:List&gt;
+</del>
+<a href="http://www.w3.org/TR/2014/PR-turtle-20140109/">
+<ins class="diff-chg">RDF
+1.1
+Turtle:
+Terse
+RDF
+Triple
+Language.
+</ins></a>
+<del class="diff-old">&lt;rdf:Property rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#first"&gt;
+  &lt;rdfs:isDefinedBy rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/&gt;
+  &lt;rdfs:label&gt;first&lt;/rdfs:label&gt;
+  &lt;rdfs:comment&gt;The first item in the subject RDF list.&lt;/rdfs:comment&gt;
+  &lt;rdfs:domain rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/&gt;
+  &lt;rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Resource"/&gt;
+&lt;/rdf:Property&gt;
+</del>
+</cite>
+<ins class="diff-chg">9
+January
+2014.
+W3C
+Proposed
+Recommendation
+(work
+in
+progress).
+URL:
+</ins><a href="http://www.w3.org/TR/2014/PR-turtle-20140109/"><ins class="diff-chg">
+http://www.w3.org/TR/2014/PR-turtle-20140109/
+</ins></a>.<ins class="diff-chg">
+The
+latest
+edition
+is
+available
+at
+</ins><a href="http://www.w3.org/TR/turtle/"><ins class="diff-chg">
+http://www.w3.org/TR/turtle/
+</ins></a>
+<del class="diff-old">&lt;rdf:Property rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#rest"&gt;
+  &lt;rdfs:isDefinedBy rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/&gt;
+  &lt;rdfs:label&gt;rest&lt;/rdfs:label&gt;
+  &lt;rdfs:comment&gt;The rest of the subject RDF list after the first item.&lt;/rdfs:comment&gt;
+  &lt;rdfs:domain rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/&gt;
+  &lt;rdfs:range rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#List"/&gt;
+&lt;/rdf:Property&gt;
+</del>
+</dd>
+</dl>
+</section>
+<section id="informative-references" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
+<h3 aria-level="2" role="heading" id="h3_informative-references">
+<del class="diff-old">&lt;rdfs:Class rdf:about="http://www.w3.org/2000/01/rdf-schema#Datatype"&gt;
+  &lt;rdfs:isDefinedBy rdf:resource="http://www.w3.org/2000/01/rdf-schema#"/&gt;
+  &lt;rdfs:label&gt;Datatype&lt;/rdfs:label&gt;
+  &lt;rdfs:comment&gt;The class of RDF datatypes.&lt;/rdfs:comment&gt;
+  &lt;rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Class"/&gt;
+&lt;/rdfs:Class&gt;
+	
+&lt;rdfs:Datatype rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral"&gt;
+  &lt;rdfs:subClassOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/&gt; 
+  &lt;rdfs:isDefinedBy rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/&gt;
+  &lt;rdfs:label&gt;XMLLiteral&lt;/rdfs:label&gt;
+  &lt;rdfs:comment&gt;The class of XML literal values.&lt;/rdfs:comment&gt;
+&lt;/rdfs:Datatype&gt;
+</del>
+<span class="secno">
+<ins class="diff-chg">C.2
+</ins></span><ins class="diff-chg">
+Informative
+references
+</ins></h3><dl class="bibliography" about=""><dt id="bib-BERNERS-LEE98"><ins class="diff-chg">
+[BERNERS-LEE98]
+</ins></dt><dd rel="dcterms:references"><ins class="diff-chg">
+Tim
+Berners-Lee.
+</ins><cite>
+<del class="diff-old">&lt;rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#"&gt;
+  &lt;rdfs:seeAlso rdf:resource="http://www.w3.org/2000/01/rdf-schema-more"/&gt;
+&lt;/rdf:Description&gt;
+</del>
+<a href="http://www.w3.org/DesignIssues/RDFnot.html">
+<ins class="diff-chg">What
+the
+Semantic
+Web
+can
+represent
+</ins></a>
+<del class="diff-old">&lt;/rdf:RDF&gt;
+</del>
+</cite>.
+<ins class="diff-chg">1998.
+URI:
+</ins><a href="http://www.w3.org/DesignIssues/RDFnot.html"><ins class="diff-chg">
+http://www.w3.org/DesignIssues/RDFnot.html
+</ins></a>.</dd><dt id="bib-OWL2-OVERVIEW"><ins class="diff-chg">
+[OWL2-OVERVIEW]
+</ins></dt><dd rel="dcterms:references"><ins class="diff-chg">
+W3C
+OWL
+Working
+Group.
+</ins><a href="http://www.w3.org/TR/owl2-overview/">
+<cite>
+<ins class="diff-chg">OWL
+2
+Web
+Ontology
+Language
+Document
+Overview
+(Second
+Edition)
+</ins></cite>
+</a>.
+<ins class="diff-chg">11
+December
+2012.
+W3C
+Recommendation.
+URL:
+</ins><a href="http://www.w3.org/TR/owl2-overview/"><ins class="diff-chg">
+http://www.w3.org/TR/owl2-overview/
+</ins></a>
+</dd>
+<dt id="bib-RDF11-PRIMER">
+<ins class="diff-chg">[RDF11-PRIMER]
+</ins></dt><dd rel="dcterms:references"><ins class="diff-chg">
+Guus
+Schreiber,
+Yves
+Raimond.
+</ins><cite>
+<a href="http://www.w3.org/TR/2013/WD-rdf11-primer-20131217/">
+<ins class="diff-new">RDF
+1.1
+Primer
+</ins>
+</a>
+</cite>.
+<ins class="diff-chg">W3C
+Working
+Draft
+(work
+in
+progress),
+17
+December
+2013.
+The
+latest
+version
+is
+available
+at
+</ins><a href="http://www.w3.org/TR/rdf11-primer/"><ins class="diff-chg">
+http://www.w3.org/TR/rdf11-primer/
+</ins></a>.</dd></dl></section></section>
+</body>
+</html>
+

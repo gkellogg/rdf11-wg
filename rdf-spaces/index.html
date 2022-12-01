@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>RDF Spaces and Datasets</title>
+    <style type="text/css">
+.figure { font-weight: bold; text-align: center; }
+table.xsd-types td, table.xsd-types th { border: 1px solid #ddd; padding: 0.1em 0.5em; }
+    </style>
+    <script src='../ReSpec.js/js/respec.js' class='remove'></script>
+    <script class='remove'>
+      var respecConfig = {
+          // specification status (e.g. WD, LCWD, NOTE, etc.). If in doubt use ED.
+          specStatus:           "ED",
+          
+          // the specification's short name, as in http://www.w3.org/TR/short-name/
+          shortName:            "rdf-spaces",
+
+          // if your specification has a subtitle that goes below the main
+          // formal title, define it here
+          // subtitle   :  "an excellent document",
+
+          // if you wish the publication date to be other than today, set this
+          publishDate:  "2012-05-15",
+
+          // if the specification's copyright date is a range of years, specify
+          // the start date here:
+          //          copyrightStart: "2012",
+
+          // if there is a previously published draft, uncomment this and set its YYYY-MM-DD date
+          // and its maturity status
+//          previousPublishDate:  "2004-02-10",
+//          previousMaturity:  "REC",
+
+          // if there a publicly available Editor's Draft, this is the link
+//
+          edDraftURI:           "http://dvcs.w3.org/hg/rdf/raw-file/default/rdf-spaces/index.html",
+
+          // if this is a LCWD, uncomment and set the end of its review period
+          // lcEnd: "2009-08-05",
+
+          // if there is an earler version of this specification at the Recommendation level,
+          // set this to the shortname of that version. This is optional and not usually
+          // necessary.
+          //          prevRecShortname: "rdf-concepts",
+
+          // if you want to have extra CSS, append them to this list
+          // it is recommended that the respec.css stylesheet be kept
+          extraCSS:             ["http://dvcs.w3.org/hg/rdf/raw-file/default/ReSpec.js/css/respec.css"],
+
+          // editors, add as many as you like
+          // only "name" is required
+          editors:  [
+              { name: "TBD", url: "",
+                company: "", companyURL: "",
+              },
+          ],
+          otherContributors: {
+              "Contributor": [
+	      { name: "Sandro Hawke", url:"http://www.w3.org/People/Sandro",
+	      company:"W3C", companyURL: "http://www.w3.org", note:"Initial text"},
+	      ]
+          },
+
+          // authors, add as many as you like. 
+          // This is optional, uncomment if you have authors as well as editors.
+          // only "name" is required. Same format as editors.
+
+          //authors:  [
+          //    { name: "Your Name", url: "http://example.org/",
+          //      company: "Your Company", companyURL: "http://example.com/" },
+          //],
+          
+          // name of the WG
+          wg:           "RDF Working Group",
+          
+          // URI of the public WG page
+          wgURI:        "http://www.w3.org/2011/rdf-wg/",
+          
+          // name (with the @w3c.org) of the public mailing to which comments are due
+          wgPublicList: "public-rdf-comments",
+          
+          // URI of the patent status for this WG, for Rec-track documents
+          // !!!! IMPORTANT !!!!
+          // This is important for Rec-track documents, do not copy a patent URI from a random
+          // document unless you know what you're doing. If in doubt ask your friendly neighbourhood
+          // Team Contact.
+          wgPatentURI:  "http://www.w3.org/2004/01/pp-impl/46168/status",
+
+          // if this parameter is set to true, ReSpec.js will embed various RDFa attributes
+          // throughout the generated specification. The triples generated use vocabulary items
+          // from the dcterms, foaf, and bibo. The parameter defaults to false.
+          doRDFa: true,
+      };
+
+//  A number of references have been patched into the local berjon.biblio and need to be added to the global biblio in CVS:
+    </script>
+
+    
+    <style type="text/css">
+
+     .alert {
+         padding: 1em; 
+         margin: 0em; 
+         margin-bottom: 2em; 
+
+         border:2px solid blue; 
+
+         box-shadow: 10px 10px 5px #888;
+         -moz-box-shadow: 10px 10px 5px #888;
+         -webkit-box-shadow: 10px 10px 5px #888;
+
+         -moz-border-radius: 5px;
+         -webkit-border-radius: 5px;
+         -khtml-border-radius: 5px;
+         border-radius: 5px;
+     }
+
+    .separated thead tr th { border:1px solid black; padding: .2em; }
+    .separated tbody tr td { border:1px solid black; text-align: center; }
+    .separated tbody tr td.r { text-align: right; padding: .5em; }
+    .grammar td { font-family: monospace;}
+    .grammar-literal { color: gray;}
+    
+    .example-def { border:1px solid black; padding: 1em; }
+
+    /* --- borrowed from  EXAMPLES --- */
+.exvoc {
+    border: 1px solid #90A0B0;
+    padding:    1em;
+    margin-top: 1em;
+}
+
+.exvoc::before {
+    content:    "Vocabulary Defined For This Example";
+    display:    block;
+    width:      450px;
+    background: #90A0B0;
+    color:  #fff;
+    font-family:    initial;
+    padding:    3px;
+    font-weight:    bold;
+    margin: -1em 0 1em -1em;
+}
+
+.schema {
+   color: #8090A0;
+}
+    </style> 
+	
+  </head>
+
+  <body>
+
+<section id="abstract">
+  <p>This specification introduces the notion of RDF
+  <a>space</a>s&mdash;places to store RDF triples&mdash;and defines a
+  set of mechanisms expressing and manipulating information about
+  them.  Examples of RDF spaces include: an HTML page with embedded
+  RDFa or microdata, a file containing RDF/XML or Turtle data, and a
+  SQL database viewable as RDF using R2RML.  RDF spaces are a
+  generalization of SPARQL's <a>named graph</a>s, providing a standard
+  model with formal semantics for systems which manage multiple
+  collections of RDF data. </p>
+</section>
+
+<section id="sotd">
+  <div class="alert">
+    <h2>Editor's Draft Status</h2>
+    
+    <p>Closing in on FPWD IMHO, but not there yet.  The
+    "@@@" flags mark the places where I'm pretty sure something is
+    needed before FPWD.</p>
+
+    <p>This text might be re-factored into other the other RDF
+    documents.  The Use Cases and Example would probably end up in a
+    WG Note.</p>
+
+  </div>
+</section>
+
+<section class="informative">
+    <h2>Introduction</h2>
+
+
+    <p>The <a href="http://www.w3.org/TR/rdf11-concepts/">Resource
+    Description Framework (RDF)</a> provides a simple declarative way
+    to store and transmit information.  It also provides a trivial but
+    effective way to combine information from multiple sources, with
+    graph merging.  This allows information from different people,
+    different organizations, different units within an organization,
+    different servers, different algorithms, etc, to all be combined
+    and used together, without any special processing or understanding
+    of the relationships among the providers.</p>
+
+    <p>For some applications, the basic RDF merge operation is overly
+    simplistic, as extra processing and an understanding of the
+    relationships among the providers may be useful.  This document
+    specifies a way to conveniently handle information coming from
+    multiple sources, by modeling each one as a separate
+    <em>space</em>, and using RDF to express information about these
+    spaces.  In addition to this important concept, we provide a pair
+    of languages&mdash;extensions to existing RDF syntaxes&mdash;
+    which can be used to store or transmit in one document the
+    contents of multiple spaces as well as information about them.
+
+    <p>This approach allows for a variety of use cases (immediately
+    below) to be addressed in a straightforward manner, as shown in <a
+    href="#detailed-example" class="sectionRef"></a>.</p>
+
+</section>
+
+<section>
+  <h2>Use Cases</h2>
+
+  <p>Each of these use cases is initally described in terms of the
+  following scenario.  Details of how each use case might be addressed
+  using the technologies specified in this document are in <a
+  href="#detailed-example" class="sectionRef"></a>.</p>
+
+  <blockquote style="font-style: italic">
+
+    <p>The Example Foundation is a large organization with more than
+    ten thousand employees and volunteers, spread out over five
+    continents.  It has branches in <b>25 different countries</b>, and
+    those divisions have considerable autonomy; they are only loosely
+    controlled by the parent organization (called "headquarters" or
+    "HQ") in Geneva.</p>
+
+    <p>HQ wants to help the divisions work together better.  It
+    decides a first step is to provide a simple but complete directory
+    of all the Example personnel.  Until now, each division has
+    maintained its own directory, using its own technology.  HQ wants to gather them all together, building a <b>federated phonebook</b>.  They want
+    to be able to find someone's phone number, mailing address,
+    and job title, knowing only their name or email addresses.  Later,
+    they hope to extend the system to allow finding people based on
+    their areas of interest and expertise.</p>
+
+    <p>HQ understands that people will want access to the phonebook in
+    many different computing environments and with different
+    languages, social norms, and application styles.  Users are going
+    to want at least one Web based user interface (UI), but they will
+    also want mobile UIs for different platforms, desktop UIs for
+    different platforms, and even to look up information via text
+    messaging.  HQ does not have the resources to build all of these,
+    so they intend to provide <b>direct access to the data</b> so that the
+    divisions can do it themselves as needed.</p>
+
+  </blockquote>
+  
+  <p>Each of the sections below, after the first, contains a new
+  requirement, something additional that users in this scenario want
+  the system to do.  Each of these will motivate the features of the
+  technologies specified in this rest of document.</p>
+
+  <section id="uc-start">
+    <h2>Baseline Solution (Just Triples)</h2>
+
+    <blockquote style="font-style: italic">
+
+      <p>As a starting point, HQ needs to gather data from each
+      division and re-publish it, in one place, for use by the
+      different UIs.</p>
+
+    </blockquote>
+    
+    <p>This is a general use case for RDF, with no specific need for
+    using <a>space</a>s or <a>dataset</a>s.  It simply involves
+    divisions pubishing RDF data on the web (with some common
+    vocabulary and with access control), then HQ merging it and
+    putting it on their website (with access control).</p>
+
+    <p>For an example of how this baseline could be implemented, see
+    <a href="#example-start" class="sectionRef"></a></p>
+
+  </section>
+
+  <section id="uc-web">
+    <h2>Showing Provenance</h2>
+
+    <blockquote style="font-style: italic">
+
+      <p>A user says: I'm looking at an incorrect phonebook entry.  It
+      has the name of the person I'm looking for, but it's missing
+      most of the record.  I can't even tell which division the person
+      works for.  I need to know who is responsible for this
+      information, so I can get it corrected.
+      </p>
+
+      <p>While this might be address by including a "report-errors-to"
+      field in each phonebook entry, HQ is looking ahead to the day
+      when other information is in the phonebook &mdash; like which
+      projects the person has worked on &mdash; which might be come
+      from a variety of others sources, possibly other divisions.</p>
+
+    </blockquote>
+    
+    <p>For a discussion of how this use case could be addressed, see
+    <a href="#example-web" class="sectionRef"></a></p>
+
+  </section>
+
+  <section id="uc-process">
+    <h2>Maintaining Derived Data</h2>
+
+    <blockquote style="font-style: italic">
+
+      <p>It turns out different divisions are using somewhat different
+      vocabularies for publishing their data.  HQ writes a program to
+      translate, but they need the output of that program to be
+      correctly attributed, in case it turns out to be wrong.
+      </p>
+
+    </blockquote>
+    
+    <p>This use case motivates sharing of blank nodes between named
+    graphs, as seen in the example.</p>
+
+    <p>For a discussion of how this use case could be addressed, see
+    <a href="#example-process" class="sectionRef"></a></p>
+
+  </section>
+
+
+  <section id="uc-reported">
+    <h2>Distributed Harvesting</h2>
+
+    <blockquote style="font-style: italic">
+
+      <p>It turns out some divisions do not have centralized
+      phonebooks.  Division 3 has twelve different departments, each
+      with its own phonebook.  Divsion 3 can do the harvesting from
+      its departments, but it does not want to be in the loop for
+      corrections; it wants those to go straight back to the relevant
+      department.
+      </p>
+
+    </blockquote>
+    
+    <p>For a discussion of how this use case could be addressed, see
+    <a href="#example-reported" class="sectionRef"></a></p>
+
+  </section>
+
+
+  <section id="uc-untrusted">
+    <h2>Loading Untrusted Datasets</h2>
+
+    <blockquote style="font-style: italic">
+
+      <p>A user reports: There's information here that says it's from
+      our department, but it's not.  Somehow your provenance
+      information is wrong.  We need to see the provenance of the
+      provenance!</p>
+
+    </blockquote>
+    
+    <p>For a discussion of how this use case could be addressed, see
+    <a href="#example-untrusted" class="sectionRef"></a></p>
+
+  </section>
+
+
+  <section id="uc-transtime">
+    <h2>Showing Revision History</h2>
+
+    <blockquote style="font-style: italic">
+
+      <p>Division 14's legal department says: "We're doing an
+      investigation and we need to be able to connect people's names
+      and phone numbers as they used to be.  Can you include archival
+      data in the data feed, so we we can search the phonebook as it
+      was on each day of September, last year?"
+      </p>
+
+    </blockquote>
+    
+    <p>For a discussion of how this use case could be addressed, see
+    <a href="#example-transtime" class="sectionRef"></a></p>
+
+  </section>
+
+
+  <section id="uc-validtime">
+    <h2>Expressing Past or Future States</h2>
+
+    <blockquote style="font-style: italic">
+
+      <p>Division 5 says: "We're planning a major move in three
+      months, to a neighboring city.  Everybody's office and phone
+      number will have to change.  Can we start putting that
+      information in the phonebook now, but mark it as not effective
+      until 20 July?  After the move, we'll also need to see the old
+      (no-longer-in-effect) data for a while, until we get everything
+      straightened out.</p>
+
+    </blockquote>
+    
+    <p>This use case, contrasted with the previous one, shows the
+    difference between <em>Transaction Time</em> and <em>Valid
+    Time</em> in bitemporal databases.  After Division 5's move, the
+    "old" phone numbers are not just the old state of the database;
+    they reflect the old state of the world.  It is possible that some
+    time after the move, an error in the pre-move data might need to
+    be corrected.  This would require a new transaction time, even
+    though the valid-time has already ended.</p>
+
+    <p>Use case sightings:</p>
+    <ul>
+      <li><a href="http://www.jenitennison.com/blog/node/101">Temporal Scope for RDF Triples</a>, Jeni Tennison's report of attempting to solve this problem in UK Government data.
+      </li>
+      <li><a
+    href="http://lists.w3.org/Archives/Public/public-rdf-wg/2012May/0099.html">Vocab
+    terms for owner, validFrom and validUntil</a>, Manu Sporny
+    reports PaySwarm wants to record ownership information for
+    particular time ranges.</li>
+    </ul>
+
+    <p>For a discussion of how this use case could be addressed, see
+    <a href="#example-validtime" class="sectionRef"></a></p>
+
+  </section>
+
+
+  <section>
+    <h2>Vendor-Neutral SPARQL Backup</h2>
+
+    <blockquote style="font-style: italic">
+
+      <p>
+      </p>
+
+    </blockquote>
+    
+
+
+    <p>@@@ we want to be able to dump the database and load it in a different system</p>
+
+    <p>@@@ This doesn't seem to belong here.   Maybe we have Federated Phonebook use cases, and *other* ones, too?</p>
+  </section>
+
+
+</section>
+
+
+
+<section>
+  <h2>Concepts</h2>
+
+
+  <section>
+    <h2>Space</h2>
+
+    <p class="issue">The term "space" might change.  The final
+    terminology has not yet been selected by the Working Group.  Other
+    candidates include "g-box", "data space", "graph space", "(data)
+    surface", "(data) layer", "sheet", and "(data) page".</p>
+
+    <p>An RDF <dfn>space</dfn> is anything that can reasonably be said
+    to explicitly contain zero or more RDF triples and has an identity distinct
+    from the triples it contains.  Examples include:
+    </p>
+    
+    <ul>
+
+      <li>a human-readable Web page, such as an HTML page containing
+      RDFa markup, microdata markup, or embedded turtle.</li>
+
+      <li>a file, in a computer's filesystem, containing RDF data
+      expressed in RDF/XML, N-Triples, Turtle, etc.</li>
+
+      <li>a machine-readable Web page containing RDF data expressed in
+      RDF/XML, N-Triples, Turtle, etc.</li>
+
+      <li>a SQL database which provides an RDF view of its data,
+      perhaps using R2RML</li>
+
+      <li>the default graph or any of the named graphs available via a
+      SPARQL endpoint</li>
+    </ul>
+
+    <p>Examples of things that are not spaces:</p>
+
+    <ul>
+
+      <li>Natural language text.  While it might be possible extract
+      some of the meaning of the text and express that meaning in RDF
+      triples, those triples are not explicit and in practice might
+      vary from one extractor to the next.</li>
+
+      <li>RDF Graphs.  Since they are just mathematical sets of RDF
+      triples, they have no distinct identity apart from their
+      contents.  For example, if two systems have in memory the RDF
+      graph { &lt;a> &lt;b> &lt;c> }, any metadata about the graph in
+      one system logically applies to the graph in the other system,
+      since technically it is the same graph.  (If this seems
+      counter-intuitive, you may be among the many who have been using
+      the term "graph" to refer to what we now call a space.  It may
+      help to think about a "graph space" (a place to put a graph) and
+      a "graph state" (the state of that space).  That "graph state"
+      is what the existing specifications call an "RDF Graph").</li>
+
+      <li>Web pages containing embedded RDF but which do not contain a
+      well-defined set of triples at any given point in time.  For
+      example: a Web Service which returns RDF data including the
+      client's IP address, or a site which customizes the data
+      presented based on client login cookies.  Such resources might
+      be called "hyperspaces".</li>
+
+    </ul>
+
+  </section>
+
+  <section>
+    <h2>Quad and Quadset</h2>
+
+    <p>We define an RDF <dfn>quad</dfn> as the 4-tuple
+    (<i>subject</i>, <i>predicate</i>, <i>object</i>,
+    <i>space</i>).</p>
+
+    <p>Informally, a quad should be understood as a statement that the
+    RDF triple (<i>subject</i>, <i>predicate</i>, <i>object</i>) is in
+    the <a>space</a> <i>space</i>.</p>
+
+    <p>We define an RDF <dfn>quadset</dfn> as a set containing (zero
+    or more) RDF Quads and (zero or more) RDF Triples.  A quadset is
+    thus an extension to the concept of an RDF Graph (a set containing
+    zero or more RDF triples) to also potentially include statements
+    about triples being in particular spaces.</p>
+
+  </section>
+
+
+  <section>
+    <h2>Dataset</h2>
+
+    <p>A <dfn>dataset</dfn> is defined by <a
+    href="http://www.w3.org/TR/sparql11-query/#rdfDataset">SPARQL
+    1.1</a> as a structure consisting of:</p>
+    
+    <ol>
+      
+      <li>A distinguished RDF Graph called the <dfn>default graph</dfn></li>
+      
+      <li>A set of (<i>name</i>, <i>graph</i>) pairs, where
+      <i>name</i> is an IRI and the <i>graph</i> is an RDF Graph.  No
+      two pairs in a dataset may have the same <i>name</i>.</li>
+      
+    </ol>
+    
+    <p>This definition forms the basis of the SPARQL Query semantics;
+    each query is performed against the information in a specific
+    dataset.</p>
+    
+    <p>Although the term is sometimes used more loosely, a dataset is
+    a pure mathematical structure, like an RDF Graph or a set of
+    integers, with no identity apart from its contents.  Two datasets
+    with the same contents are in fact the same dataset, and one
+    dataset cannot change over time.</p>
+
+    <p>The word <strong>"default"</strong> in the term "default graph"
+    refers to the fact that in SPARQL, this is the graph a server uses
+    to perform a query when the client does not specify which graph to
+    use.  The term is not related to the idea of a graph containing
+    default (overridable) information.  The role and purpose of the
+    default graph in a dataset varies with application.</p>
+
+  </section>
+
+  <section>
+    <h2>Named Graph</h2>
+
+    <p>SPARQL formally defines a <em>named graph</em>
+    following <b>[Carroll]</b>, to be any of the (name, graph) pairs in a
+    <a>dataset</a>.</p>
+
+    <p>In practice, the term is often used to refer to the graph part
+    of those pairs.  This is the usage we follow in this document,
+    saying that a graph is a <dfn>named graph</dfn> in some dataset if
+    and only if it appears as the graph part of a (name, graph) pair
+    in that dataset.  Note that "named graph" is a relation, not a
+    class: we say that something is a named graph <em>of a
+    dataset</em>, not simply that it is a named graph.</p>
+
+    <p>The term is also sometimes used to refer to the slot part of
+    the (name, slot) pairs in a <a>graph store</a>.  For example, the
+    text of <a
+    href="http://www.w3.org/TR/2012/WD-sparql11-update-20120105/">SPARQL
+    1.1 Update</a> says, "This example copies triples from one named
+    graph to another named graph".  For clarity, we avoid calling
+    these "named graphs" and instead call them "named slots" of the
+    graph store.</p>
+
+  </section>
+
+    
+  <section id="qdmap">
+    <h2>Quadset/Dataset Relationship</h2>
+
+    <p>A <dfn>quad-equivalent dataset</dfn> is a <a>dataset</a> with
+    no empty named graphs.  A <dfn>non-quad-equivalent dataset</dfn>
+    is a dataset in which one or more of its named graphs is empty.
+    Every non-quad-equivalent dataset has a corresponding
+    quad-equivalent dataset formed by removing the (name, graph) pairs
+    where the graph is empty.</p>
+
+    <p><a>Quadset</a>s and quad-equivalent datasets are isomorphic,
+    and given identical declarative semantics in <a href="#semantics"
+    class="sectionRef"></a>.  The isomorphism is:</p>
+
+    <ul>
+
+      <li>the triples in the quadset correspond to the triples in default
+     graph of the dataset;</li>
+
+     <li>each quad corresponds to a triple in named graph: the quad (S
+     P O Sp) corresponds to the triple (S P O) in the graph paired
+     with the name Sp.</li>
+
+    </ul>
+
+    <p>The phrasing <dfn>quads in a dataset</dfn> is thus shorthand
+    for: quads in some quadset which is isomorphic to a given dataset.
+    If the dataset is a <a>non-quad-equivalent dataset</a>, then the
+    isomorphism is to the dataset produced by removing all its empty
+    named graphs.</p>
+
+    <p>In order to promote interoperability and flexibility in
+    implementation techniques &mdash; to allow datasets and quadsets
+    to be used interchangably &mdash; systems which handle datasets
+    SHOULD NOT give significance to empty named graphs.</p>
+
+    <p class="issue">
+      Can we take a stronger stand against non-quad-equivalent
+      datasets?  Maybe we can use the terms "proper" and "improper",
+      or something like that.  Improper datasets might also include
+      ones which use the same name in more than one pair.  Combining
+      these, like removing empty named graphs, is how you convert an
+      improper dataset to a proper one.
+    </p>
+
+  </section>
+
+  <section>
+    <h2>Graph Store</h2>
+    
+    <p>SPARQL 1.1 Update defines a mutable (time-dependent) structure
+    corresponding to a <a>dataset</a>, called <dfn>graph store</dfn>.
+    It is defined as:</p>
+
+    <ol>
+
+      <li>A distinguished slot for an RDF Graph</li>
+      
+      <li>A set of (<i>name</i>, <i>slot</i>) pairs, where the slot holds an RDF Graph
+      and the name is an IRI.  No two pairs in a graph store may have the same <i>name</i>.</li>
+      
+    </ol>
+    
+    <p>A "slot" in this definition is an RDF space.</p>
+
+    <p>A dataset can be thought of as the state of a <a>graph
+    store</a>, just like an RDF graph can be thought of as the state
+    of a <a>space</a>.</p>
+
+  </section>
+
+
+  <section>
+    <h2>Merge and Union</h2>
+
+    <p>RDF graphs are usually combined in one of two ways:</p>
+
+    <ul>
+      <li>The <dfn>union</dfn> of two graphs is the set-union of the set of triples in each graph.</li>
+      <li>The <dfn>merge</dfn> of two graphs is the set-union of the set of triples in each graph, after any blank nodes that occur in both graphs are "renamed apart".</li>
+    </ul>
+
+    <p>This difference is not noticable when graphs are being
+    expressed in an orginary RDF syntax, like RDF/XML, RDFa, or
+    Turtle, because they provide no mechanism for transmitted two
+    graphs which have a blank node in common.  The difference can
+    appear, however, in systems and languages which handle datasets or
+    in APIs which allow blank nodes to be shared between graphs.</p>
+
+    <p>We define a <dfn>union dataset</dfn> to be a <a>dataset</a> in
+    which its <a>default graph</a> is the <a>union</a> of all its
+    <a>named graph</a>s.  Some systems provide special, simplified
+    handling of union datasets.</p>
+
+    <p>We define a <dfn>merge dataset</dfn> to be a <a>dataset</a> in
+    which its <a>default graph</a> is the <a>merge</a> of all its
+    <a>named graph</a>s.</p>
+
+    <p>We define the union and merge of quadsets (and thus datasets)
+    as the set merge of their constituent triples and quads; in the
+    case of a merge, it is after any shared blank nodes have been
+    renamed apart.</p>
+
+  </section>
+
+
+  <section>
+    <h2>Untrusting Merge</h2>
+
+    <p>The act of <dfn>renaming the graphs</dfn> in a dataset is to
+    create another dataset which differs from the first only in that
+    all the IRIs used as graph names are replace by fresh "Skolem"
+    IRIs.  This replacement occurs in the name slot of the
+    (name,graph) pairs, and in the triples in the default graph, but
+    <em>not</em> in the triples in the named graphs.</p>
+
+    <p>Logically, this operation is equivalent to partially
+    un-labeling an RDF Graph (turning some IRIs into blank nodes),
+    then Skolemizing those blank nodes.  As an operation, it discards
+    some of the information and adds more true information; it is a
+    sound but not complete reasoning step.  It can be made complete by
+    <dfn>recording</dfn> the relationship between the old graph names
+    and the new ones, using some vocabulary such as owl:sameAs.</p>
+
+    <p>For example, a recording graph_rename operation might take as input:</p>
+    <pre>@prefix : &lt;http://example.com/>
+:g1 { :a :b :c }
+:d :e :f</pre>
+    <p>and produce:</p>
+    <pre>@prefix : &lt;http://example.com/>
+:fe2b9765-ba1d-4644-a335-80a8c3786c8d { :a :b :c }
+:d :e :f
+:fe2b9765-ba1d-4644-a335-80a8c3786c8d owl:sameAs :g1
+</pre>
+
+    <p>Given the semantics of datasets, informally described above and
+    formally stated in <a href="#semantics" class="sectionRef"></a>,
+    and the semantics of OWL, where { ?a owl:sameAs ?b } means that
+    the terms ?a and ?b both denote the same thing, the second dataset
+    above entails the first and includes only additional information
+    that is known to be true.  (Slight caveat: the new information is
+    only true if the assumptions of the name-generation function are
+    correct, that the name is previously unused and this naming agent
+    has the right to claim it.)</p>
+
+    <p>A relatated operation, <dfn>sequestering</dfn> the default
+    graph, is to create a new dataset which differs from the first
+    only in that the the triples in the default graph of the input
+    appear instead in a new, freshly-named, <a>named graph</a> of the
+    output.  Sequestering returns both the new dataset and the name
+    generated for the new graph: <code>sequester(D1) -> (D2,
+    generatedIRI)</code>.</p>
+
+    <p>Used together, the operations of <a>renaming the graphs</a>,
+    <a>sequestering</a> the default graphs, and then <a>merging
+    datasets</a>, constitutes an <dfn>untrusting merge</dfn> of
+    datasets.  This operation provides the functionality required for
+    addressing the use case described in <a href="#uc-untrusted"
+    class="sectionRef"></a> and is illustrated in <a
+    href="#example-untrusted" class="sectionRef"></a>.  It uses quads
+    to address some&mdash;perhaps all&mdash;of the need for quints
+    or nested graphs.</p>
+
+    <p>More precisely:</p>
+    
+    <div style="margin-left: 2em;">
+      <pre>function untrusted_merge(D1, ... Dn):
+   for i in 1..n:
+      RDi = rename_graphs(Di)
+      (SRDi, DGNi) = sequester(RDi)
+   return (merge(SRD1, ... SRDn), (DGN1, ... DGNn))</pre>
+    </div>
+
+   <p>Here, <tt>untrusted_merge</tt> returns a single dataset and a list of
+   the names of the graphs (in that dataset) which contain the triples
+   that were in the default graphs, possibly augmented with
+   <a>recording</a> triples.  Whether recording is done or not is
+   hidden inside the rename_graphs function, and is
+   application-dependent.</p>
+
+  </section>
+
+  
+</section>
+
+<section>
+  <h2>Semantics</h2>
+
+  <p>This section specifies a declarative semantics for <a>quad</a>s,
+  <a>quadset</a>s, and <a>dataset</a>s, allowing them to be used to
+  express knowledge, especially knowledge about spaces.  This makes
+  the languages defined in <a href="#syntax"
+  class="sectionRef"></a> suitable for conveying knowledge about
+  spaces and providing a foundation for addressing the challenges
+  described in <a href="#use-cases" class="sectionRef"></a>.</p>
+
+  <p>@@@ the section needs some revision by someone with a good ear
+  for formal semantics, and probably some references to the old and/or new versions of RDF Semantics.</p>
+
+  <p>The fundamental notion of RDF spaces is that they can contain
+  triples.  This is formalized with the relation CT(S, T) which is
+  informally understood to hold true for any triple T and space S such
+  that S explicitely contains T.</p>
+
+  <p>The basic declarative meaning (that is, the truth condition) of
+  RDF quads is this:</p>
+
+  <div style="padding: 1em; border: 1px solid blue;">
+
+    <p>The RDF <a>quad</a> (s, p, o, sp) is true in I if and only if CT(I(sp), triple(s, p, o)).</p>
+
+  </div>
+
+  <p>The declarative meaning of a quadset is to simply read the
+  quadset as a conjunction of its quads and its triples.  Given <a
+  href="#qdmap">the structural mapping between quadsets and
+  datasets</a>, the truth condition for datasets follows:</p>
+
+  <div style="padding: 1em; border: 1px solid blue;">
+
+    <p>The RDF <a>dataset</a> (DG, (N1,G1),... (Ni,Gi), ...(Nn,Gn)) is
+    true in I if and only if:</p>
+
+    <ol>
+    <li>DG is true in I, and</li>
+    <li>For every (Ni,Gi) (1&lt;=i&lt;=n):
+    <ul>
+      <li>For every triple T in Gi:
+      <ul>
+	<li>CT(I(Ni),T)</li>
+      </ul>
+      </li>
+    </ul>
+    </li>
+    </ol>
+
+  </div>
+
+  <p>Some implications of these truth conditions: </p>
+
+  <ul>
+
+    <li><p>A dataset with no named graphs has the same declarative
+    meaning as its default graph.  A quadset with no quads has the
+    same declarative meaning as the RDF graph consisting of the
+    triples in the quadset.  </p><p>This fits the intuition that datasets and
+    quadsets are extensions of RDF Graphs and applies to the syntax as
+    well: a Trig document without any named graphs is syntactically
+    and semantically a Turtle document; an N-QUads document without
+    any quads is syntactically and semantically an N-Triples
+    document.</p></li>
+
+    <li>
+    <p>The empty named graphs in a <a>non-quad-equivalent dataset</a>
+    have no effect on its meaning.  Replacing such a dataset with its
+    equivalent without the empty named graphs does not change its
+    meaning.</p>
+    </li>
+
+  </ul>
+
+  <p class="note">
+    We say nothing here about the fact that the truth value of a quad
+    is likely to change over time.  Time is orthogonal to RDF
+    semantics, and quads present no fundamentally different issue
+    here.  When the world changes state, the truth value of RDF
+    triples or quads might change.  This occurs when a triple is put
+    in or taken out of a space, but it also occurs with "normal" RDF
+    when, for instance, someone changes their address and different
+    vcard triples about them become true.  Some approaches to handling
+    change-over-time are discussed in <a href="#example-valid-time"
+    class="sectionRef"></a> and <a href="#example-transaction-time"
+    class="sectionRef"></a>.
+  </p>
+
+  <p>@@@ explain why we use partial-graph semantics, and how in most
+  applications its bad to drop information, but sometimes it's
+  necessary, and sometimes you only have incomplete information.</p>
+
+</section>
+
+
+<section id="syntax">
+  <h2>Dataset Languages</h2>
+
+  <p>This section contains specifications of languages for serializing
+  <a>quad-equivalent dataset</a>s.  N-Quads documents and Trig
+  documents have identical semantics, since they each serialize the
+  same structure and follow <a href="#semantics"
+  class="sectionRef"></a>.</p>
+
+  <p>Dataset information may also be conveyed and manipulated using
+  SPARQL or using RDF triple-based tools and languages as per <a
+  href="#folding" class="sectionRef"></a>.</p>
+
+  <section>
+    <h3>N-Quads</h3>
+
+    <p>The syntax of N-Quads is the same as the syntax of N-Triples,
+    except that a fourth term, identifying an RDF space, may
+    optionally be included on each line, after the "object" term.</p>
+
+    <p>Formally, the N-Quads grammar is <a href="http://dvcs.w3.org/hg/rdf/raw-file/default/rdf-turtle/index.html#n-triple-grammar">the N-Triples
+    Grammar</a> modified by removing productions [1] and [2], and
+    adding the following productions:</p>
+
+<div style="margin: 1em; margin-top: 0; padding: 1em; border: 1px solid gray;">
+    
+<table border="0" class="grammar">
+
+<tbody class="prod">
+<tr valign="baseline">
+<td><a id="prod-sandro-nquads-nquadsDoc" name="prod-sandro-nquads-nquadsDoc"></a>[<span class="prodNo">1q</span>]&nbsp;&nbsp;&nbsp;</td>
+<td><code class="production prod">nquadsDoc</code></td>
+<td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
+<td><code class="content"><span class="prod"><a class="grammarRef" href="#prod-sandro-nquads-statement">statement</a></span>? (<span class="prod"><a class="grammarRef" href="#prod-sandro-nquads-EOL">EOL</a></span> <span class="prod"><a class="grammarRef" href="#prod-sandro-nquads-statement">statement</a></span>)* <span class="prod"><a class="grammarRef" href="#prod-sandro-nquads-EOL">EOL</a></span>?</code></td>
+</tr>
+</tbody>
+
+<tbody class="prod">
+<tr valign="baseline">
+<td><a id="prod-sandro-nquads-statement" name="prod-sandro-nquads-statement"></a>[<span class="prodNo">2q</span>]&nbsp;&nbsp;&nbsp;</td>
+<td><code class="production prod">statement</code></td>
+<td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
+<td><code class="content"><span class="prod"><a class="grammarRef" href="#prod-sandro-nquads-subject">subject</a></span> <span class="prod"><a class="grammarRef" href="#prod-sandro-nquads-predicate">predicate</a></span> <span class="prod"><a class="grammarRef" href="#prod-sandro-nquads-object">object</a></span> <span class="prod"><a class="grammarRef" href="#prod-sandro-nquads-space">space</a></span>? <span class="grammar-literal">"."</span></code></td>
+</tr>
+</tbody>
+
+<tbody class="prod">
+<tr valign="baseline">
+<td><a id="prod-sandro-nquads-space" name="prod-sandro-nquads-space"></a>[<span class="prodNo">3q</span>]&nbsp;&nbsp;&nbsp;</td>
+<td><code class="production prod">space</code></td>
+<td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
+<td><code class="content"><span class="prod"><a class="grammarRef" href="#prod-sandro-nquads-IRIREF">IRIREF</a></span></code></td>
+</tr>
+</tbody>
+
+</table>
+
+<p>The grammar symbols 
+<code class="production prod" id="prod-sandro-nquads-EOL">EOL</code>,
+<code class="production prod" id="prod-sandro-nquads-subject">subject</code>
+<code class="production prod" id="prod-sandro-nquads-predicate">predicate</code>
+<code class="production prod" id="prod-sandro-nquads-object">object</code>, and 
+<code class="production prod" id="prod-sandro-nquads-IRIREF">IRIREF</code> are defined in the <a
+href="http://dvcs.w3.org/hg/rdf/raw-file/default/rdf-turtle/index.html#n-triple-grammar">the
+N-Triples Grammar</a></p>
+
+</div>
+
+    <p>The following example shows a <a>quadset</a> consisting of two
+    triples and two <a>quads</a>.  The quads both use the same triple,
+    but express the fact that it is in two spaces, "space1" and
+    "space2".</p>
+
+    <pre class="example">&lt;http://example.org/subject> &lt;http://example.org/predicate> &lt;http://example.org/object1>.
+&lt;http://example.org/subject> &lt;http://example.org/predicate> &lt;http://example.org/object2>.
+&lt;http://example.org/subject> &lt;http://example.org/predicate> &lt;http://example.org/object1> &lt;http://example.org/space1>.
+&lt;http://example.org/subject> &lt;http://example.org/predicate> &lt;http://example.org/object1> &lt;http://example.org/space2>.</pre>
+
+  </section>
+
+
+  <section>
+    <h3>Trig</h3>
+
+    <p>The syntax of Trig is the same as the syntax of Turtle except
+    that (name, graph) pairs can be specified by giving an optional
+    <tt>GRAPH</tt> keyword, a "name" term, and a nested Turtle graph expression
+    in curly braces.</p>
+
+
+    <p>Formally, the Trig grammar is <a
+    href="http://dvcs.w3.org/hg/rdf/raw-file/default/rdf-turtle/index.html#sec-grammar-grammar">the
+    Turtle Grammar</a> modified by removing productions [1] and [2],
+    and adding the following productions:</p>
+
+    <div style="margin: 1em; margin-top: 0; padding: 1em; border: 1px solid gray;">
+    <table border="0">
+
+<tbody class="prod">
+<tr valign="baseline">
+<td><a id="prod-trig-trigDoc" name="prod-trig-trigDoc"></a>[<span class="prodNo">1g</span>]&nbsp;&nbsp;&nbsp;</td>
+<td><code class="production prod">trigDoc</code></td>
+<td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
+<td><code class="content"><span class="prod"><a class="grammarRef" href="#prod-trig-statement">statement</a></span>*</code></td>
+</tr>
+</tbody>
+
+<tbody class="prod">
+<tr valign="baseline">
+<td><a id="prod-trig-statement" name="prod-trig-statement"></a>[<span class="prodNo">2g</span>]&nbsp;&nbsp;&nbsp;</td>
+<td><code class="production prod">statement</code></td>
+<td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
+<td><code class="content"><span class="prod"><a class="grammarRef" href="#prod-trig-directive">directive</a></span> <span class="grammar-literal">"."</span> | <span class="prod"><a class="grammarRef" href="#prod-trig-triples">triples</a></span> <span class="grammar-literal">"."</span> | <span class="prod"><a class="grammarRef" href="#prod-trig-naming">naming</a></span> | <span class="prod"><a class="grammarRef" href="#prod-trig-wrappedDefault">wrappedDefault</a></span></code></td>
+</tr>
+</tbody>
+
+<tbody class="prod">
+<tr valign="baseline">
+<td><a id="prod-trig-naming" name="prod-trig-naming"></a>[<span class="prodNo">3g</span>]&nbsp;&nbsp;&nbsp;</td>
+<td><code class="production prod">naming</code></td>
+<td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
+<td><code class="content">
+  <span class="grammar-literal">"GRAPH"</span>? 
+  <span class="prod"><a class="grammarRef" href="#prod-trig-spaceName">spaceName</a></span> 
+<!--  (  -->
+  ( <span class="grammar-literal">"," </span>
+  <span class="prod"><a class="grammarRef" href="#prod-trig-spaceName">spaceName</a></span> 
+  )* <span class="grammar-literal">"{"</span>
+  <span class="prod"><a class="grammarRef" href="#prod-trig-triples">triples</a></span> 
+  <span class="grammar-literal">"."</span>? 
+  <span class="grammar-literal">"}"</span>  <!--) 
+  |
+  ( "{" 
+  <span class="prod"><a class="grammarRef" href="#prod-trig-triples">triples</a></span> 
+  <span class="grammar-literal">"."</span>? "}" 
+  ( <span class="grammar-literal">";"</span> 
+  <span class="prod"><a class="grammarRef" href="#prod-trig-verb">verb</a></span>
+  <span class="prod"><a class="grammarRef" href="#prod-trig-objectList">objectList</a></span>
+  )? ) -->
+</code></td>
+</tr>
+</tbody>
+
+<tbody class="prod">
+<tr valign="baseline">
+<td><a id="prod-trig-spaceName"></a>[<span class="prodNo">4g</span>]&nbsp;&nbsp;&nbsp;</td>
+<td><code class="production prod">spaceName</code></td>
+<td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
+<td><code class="content"> 
+    <span class="prod"><a class="grammarRef" href="#prod-trig-iri">iri</a></span>
+    | <span class="grammar-literal">"DEFAULT"</span>
+</code></td>
+</tr>
+</tbody>
+
+<tbody class="prod">
+<tr valign="baseline">
+<td><a id="prod-trig-wrappedDefault" name="prod-trig-wrappedDefault"></a>[<span class="prodNo">5g</span>]&nbsp;&nbsp;&nbsp;</td>
+<td><code class="production prod">wrappedDefault</code></td>
+<td>&nbsp;&nbsp;&nbsp;::=&nbsp;&nbsp;&nbsp;</td>
+<td><code class="content">
+<span class="grammar-literal">"{"</span> <span class="prod"><a class="grammarRef" href="#prod-trig-triples">triples</a></span> <span class="grammar-literal">"."</span>? <span class="grammar-literal">"}"</span></code></td>
+</tr>
+</tbody>
+
+
+    </table>
+
+
+<p>The grammar symbols 
+
+<code class="production prod" id="prod-trig-directive">directive</code>,
+<code class="production prod" id="prod-trig-triples">triples</code>, and
+<code class="production prod" id="prod-trig-iri">iri</code>
+<!--
+<code class="production prod" id="prod-trig-verb">verb</code>, and
+<code class="production prod" id="prod-trig-objectList">objectList</code>
+-->
+are defined in <a
+href="http://dvcs.w3.org/hg/rdf/raw-file/default/rdf-turtle/index.html#sec-grammar-grammar">the
+Turtle Grammar</a>
+</p>
+
+
+    </div>
+
+
+    <p>Parsing a Trig document is like parsing a Turtle document
+    except:</p>
+    <ol>
+
+      <li>The result is a <a>dataset</a>, not an RDF Graph</li>
+
+      <li>The triples generated during parsing of the <code
+      class="prod production">naming</code> production go into each
+      <a>named graph</a> and/or the default graph as given in the
+      <code class="prod production">spaceName</code> productions.</li>
+
+      <li>The triples generated during other parsing go into the
+      default graph.</li>
+
+    </ol>
+      
+    <p>
+    <p>Note that the grammar forbids directives between curly braces
+    and empty curly-brace expressions.  Also, note that blank node
+    processing is not affected by curly braces, so conceptually blank
+    node identifiers are scoped to the entire document.</p>
+
+    <p>There is no requirement that <a>named graph</a> names be unique
+    in a document, or that triples in the default graph be
+    continguous. For example, these two Trig document parse to exactly
+    the same Dataset:</p>
+
+    <pre class="example"># Trig Example 1
+    @prefix : &lt;http://example.org/>.
+    :a :b 1.
+    :s1 { :a :b 10 }
+    :s2 { :a :b 20 }
+    :s1 { :a :b 11 }
+    :s2 { :a :b 21 }
+    :a :b 2.
+</pre>
+
+    <pre class="example"># Trig Example 2
+    @prefix : &lt;http://example.org/>.
+    :a :b 1,2.
+    :s1 { :a :b 10,11. }
+    :s2 { :a :b 20,21. }
+</pre>
+
+    <p>The same dataset could be expressed in N-Quads as:</p>
+
+    <pre style="overflow-x:scroll; width:800px;" class="example"># N-Quads for TriG Example 1 and 2
+&lt;http://example/org/a> &lt;http://example/org/b> "1"^^&lt;http://www.w3.org/2001/XMLSchema#integer>.
+&lt;http://example/org/a> &lt;http://example/org/b> "2"^^&lt;http://www.w3.org/2001/XMLSchema#integer>.
+&lt;http://example/org/a> &lt;http://example/org/b> "10"^^&lt;http://www.w3.org/2001/XMLSchema#integer> &lt;http://example/org/s1>.
+&lt;http://example/org/a> &lt;http://example/org/b> "11"^^&lt;http://www.w3.org/2001/XMLSchema#integer> &lt;http://example/org/s1>.
+&lt;http://example/org/a> &lt;http://example/org/b> "20"^^&lt;http://www.w3.org/2001/XMLSchema#integer> &lt;http://example/org/s2>.
+&lt;http://example/org/a> &lt;http://example/org/b> "21"^^&lt;http://www.w3.org/2001/XMLSchema#integer> &lt;http://example/org/s2>.
+</pre>
+
+    <div class="issue">
+      <p>There are several open issues concernting Trig syntax:</p>
+      <ul>
+	<li>Should we call this something other than Trig, since it's a bit different?   Qurtle?  Mugr (multi-graph-rdf)?   Turtle2?  </li>
+	<li>Are braces around default-graph triples required,
+    optional, or disallowed?    Assuming "optional" for now.</li>
+        <li>Is the name prefixed by a keyword?  If so, is the
+    keyword "@graph" or "GRAPH"?   Assuming optional "GRAPH" for now.</li>
+        <li>     Are blank node labels scoped to the document, the
+    curly-brace expression, or the graph name?  Assuming
+    document-scope for now.   This is <a href="http://www.w3.org/2011/rdf-wg/track/issues/21">Issue-21</a>.</li>
+    <li>Can blank node labels be used as space names?
+    Assuming not, for now.</li>
+    <li>Can we provide a way to say a graph is in multiple spaces without repeating it?  Something like [GRAPH] g1, g2, DEFAULT { ... } (where default is a keyword stand-in for the default graph; assuming yes.</li>
+    <li>Can we allow allow people to re-use subject, like:  g1 { ... }; :lastModified .... ?  assuming no; it interacts a bit confusingly with repeated spaceName, and it's not clear what it means for spaceName DEFAULT.</li>
+      </ul>
+    </div>
+
+
+  </section>
+</section>
+
+<section>   <!-- I don't like what respec does with id=conformance -->
+  <h2>Conformance</h2>
+
+  <p>@@@ what to say here?  What kind of think might conform or not
+  conform to this spec?</p>
+
+</section>
+
+<section class="informative appendix">
+
+  <h2>Detailed Example</h2>
+
+  <p>This section presents a design for using <a>space</a>s in constructing a
+  federated information system.  It is intended to help explain and
+  help motivate the designs specified in this document.</p>
+
+  <p>The example covers the same federated phonebook scenario used in
+  <a href="#use-cases" class="sectionRef"></a>, with each specific use
+  case having an example here.</p>
+
+  <div class="alert">
+    <p>@@@ An obsolete but complete version was in the <a
+  href="http://dvcs.w3.org/hg/rdf/raw-file/ee60c6dc8ad4/rdf-spaces/index.html#">May 10 Version</a>.
+  </p>
+  </div>
+
+
+  <section id="example-start">
+    <h2>Showing Triples (v1)</h2>
+
+    <p>@@@ Shows the baseline in <a href="#uc-start" class="sectionRef"></a></p>
+
+  </section>
+
+
+  <section id="example-web">
+    <h2>Showing Web Provenance (v2)</h2>
+
+    <p>@@@ Shows how to address<a href="#uc-web" class="sectionRef"></a></p>
+
+  </section>
+
+
+
+  <section id="example-process">
+    <h2>Showing Process Provenance(v3)</h2>
+
+    <p>@@@ Shows how to address <a href="#uc-process" class="sectionRef"></a></p>
+
+  </section>
+
+
+
+  <section id="example-reported">
+    <h2>Showing Reported Provenance (v4)</h2>
+
+    <p>@@@ Shows how to address <a href="#uc-reported" class="sectionRef"></a></p>
+
+  </section>
+
+
+
+  <section id="example-untrusted">
+    <h2>Showing Untrusted Quads(v5)</h2>
+
+    <p>@@@ Show how to address <a href="#uc-untrusted" class="sectionRef"></a></p>
+    <p>@@@ uses <a>renaming the graphs</a>.</p>
+
+
+  </section>
+
+
+
+  <section id="example-transtime">
+    <h2>Showing Change History (v6)</h2>
+
+    <p>To keep versions, as required by <a href="#uc-transtime"
+    class="sectionRef"></a>, we simply copy the old data into a new
+    named graph and record some metadata about it.</p>
+
+    <p>In this example, we handle this by defining the following vocabulary:</p>
+
+    <div class="exvoc">
+
+      @@@ tdb   can we define each property separately with any sense, or just the block, together?
+
+    </div>
+      
+    <p>If Marvin changes, rather absurdly, changes his email address
+    every day, to include the date, we might have a dataset like
+    this:</p>
+
+    <pre class="example">@prefix transt: &lt;http://example.org/ns/transaction-time>.
+@prefix hq: &lt;http://example.org/ns/phonebook>.
+@prefix v:  &lt;http://www.w3.org/2006/vcard/ns#>.
+@prefix : &lt;>.
+
+:g32201 {  
+   #... various data, then:
+   [] a v:VCard
+      v:fn "Marvin Mover" ;
+      v:email "marvin-0101@example.org". 
+   #... more data from other people
+}
+[] a transt:Snapshot;
+   transt:source &lt;http://div14.example.org/phonefeed>;
+   transt:result :g32201;
+   transt:starts "2012-01-01T00:00:00"^^xs:dateTime;
+   transt:ends "2012-01-02T00:00:00"^^xs:dateTime.
+
+:g32202 {  
+   #... various data, then:
+   [] a v:VCard
+      v:fn "Marvin Mover" ;
+      v:email "marvin-0102@example.org". 
+   #... more data from other people
+}
+[] a transt:Snapshot;
+   transt:source &lt;http://div14.example.org/phonefeed>;
+   transt:result :g32202;
+   transt:starts "2012-01-02T00:00:00"^^xs:dateTime;
+   transt:ends "2012-01-03T00:00:00"^^xs:dateTime.
+
+# the current data
+&lt;http://div14.example.org/phonefeed> {
+   #... various data, then:
+   [] a v:VCard
+      v:fn "Marvin Mover" ;
+      v:email "marvin-0103@example.org". 
+   #... more data from other people
+}
+
+</pre>
+
+<p>@@@ or should we put the data directly into a genid graph, so that
+metadata about it is less likely to change or be wrong...?  On the other hand, there's ALSO some nice potential for metadata about the feed space.</p>
+
+  </section>
+
+
+
+  <section id="example-validtime">
+    <h2>Showing Past and Future States (v7)</h2>
+
+
+    <p>The challenge expressed in <a href="#uc-validtime"
+    class="sectionRef"></a> is to segregate some of the triples,
+    marking them as being in-effect only at certain times.  The study
+    of how to do this is part of the field of temporal databases.</p>
+
+    <p>In this example, we handle this by defining the following vocabulary:</p>
+
+    <div class="exvoc">
+      
+      <p>This "valid-time" vocabulary allows a data publisher to
+      express a time range during which the triples in some space are
+      considered valid.  This acts like a time-dependent version of
+      owl:import, where the import is only made during the given time
+      range.</p>
+
+      <dl>
+	<dt><span class="schema">(rdf:space Sp)</span> vt:starts <span class="schema">(xs:dateTime T1)</span></dt>
+	<dd>Claims that all the triples in Sp are valid starting at T1, ending at some unspecified period of time.</dd>
+	<dt><span class="schema">(rdf:space Sp)</span> vt:end <span class="schema">(xs:dateTime T2)</span></dt>
+	<dd>Claims that all the triples in Sp are valid until just before T2, starting at some unspecified time.</dd>
+      </dl>
+
+      <p>In general, these two predicates need to be used together,
+      providing both vt:starts and vt:ends values for a space.  In
+      this case, { ?sp vt:starts ?t1; vt:ends ?t2 } claims that all
+      the triples in ?sp are in effect for all points in time t such
+      that t1 &lt;= t &lt; t2.  A consumer who only knows one of the
+      two times is unable to make use of data; there are no
+      default values.</p>
+
+      <p>These predicates say nothing about the validity (or "truth") of
+      the triples in Sp outside of the valid-time range.  Each of the
+      triples might or might not hold outside of the range &mdash;
+      these vt triples simply make no claim about them.</p>
+
+    </div>
+
+    <p>Given this definition, it is almost trivial for Division 5 to share their "before" and "after phonebooks:</p>
+
+    <pre class="example">@prefix vt: &lt;http://example.org/ns/valid-time>.
+@prefix hq: &lt;http://example.org/ns/phonebook>.
+@prefix : &lt;>.
+
+:pre-move {  
+    # all the pre-move data  
+    ...
+}
+:post-move {
+    # all the post-move data  
+    ...
+}
+
+:pre-move  vt:starts "2010-01-01T00:00:00"^^xs:dateTime;
+           vt:ends   "2012-07-12T00:00:00"^^xs:dateTime.
+:post-move vt:starts "2012-07-12T00:00:00"^^xs:dateTime;
+           vt:ends   "2020-01-01T00:00:00"^^xs:dateTime.
+
+</pre>
+
+     <p>This design requires every client to be modified to understand
+     and use the valid-time vocabulary.  There may be designs that do
+     not require this.</p>
+
+
+  </section>
+
+
+
+
+</section>
+
+
+  <section class="appendix" id="folding">
+    <h2>Folding</h2>
+
+    <p class="note">This section is experimental.</p>
+
+    <p>This section specifies a mechanism and an RDF vocabulary for
+    conveying <a>quad</a>s/<a>dataset</a>s using ordinary RDF Graphs
+    instead of special syntaxes and/or interfaces.  The mechanism is
+    somewhat similar to reflection or reification.  The idea is to
+    express each quad using a set of triples using a specialized
+    vocabulary.</p>
+
+    <p>Folding allows quads and thus datasets to be conveyed and
+    manipulated using normal triple-based RDF machinery, including
+    RDF/XML, Turtle, and RDFa, but at the cost of some complexity,
+    storage space, and performance.  In general, in systems where
+    languages or APIs are available which directly support datasets,
+    folding is neither required nor useful.</p>
+
+    <p>As an example, the dataset 
+
+    <pre class="example">
+@prefix : &lt;http://example.org/>.
+:space { eg:subject eg:predicate eg:object }
+    </pre>
+
+    would fold to these triples:
+
+    <pre class="example">@prefix : &lt;http://example.org/>.
+:space rdf:containsTriple [   
+   a rdf:Triple;
+   rdf:subjectIRI "http://example.org/subject";
+   rdf:predicateIRI "http://example.org/predicate";
+   rdf:objectIRI "http://example.org/object";</pre>
+
+   <p>The terms in the triple are encoded (turned into literal
+   strings, in this example), to provide referential opacity.  In the
+   semantics of quads, it does not follow from (a b c d) and a=aa that
+   (aa b c d).  Without this encoding of terms as strings, that
+   conclusion would erroneously follow from the folded quad..</p>
+
+   <p>Terms in this vocabulary:</p>
+
+   <dl>
+
+     <dt>rdf:Triple</dt>
+     <dd>The class of RDF Triples, each of which is just a triple
+     (3-tuple) of a three RDF terms, called its "subject",
+     "predicate", and "object".  Triples have no identity apart from
+     their three components.</dd>
+
+     <dt>rdf:subjectIRI</dt>
+     <dd>A predicate expressing the relationship to the triple's subject term,
+     when the subject term is an IRI.  The value is the IRI (a string)
+     which is the subject-term part of the triple.</dd>
+
+     <dt>rdf:subjectNode</dt>
+     <dd>A predicate expressing the relationship to the triple's
+     subject term, when the subject term is a blank node.  The value
+     is any RDF Resource; it simply serves as a placeholder,
+     representing the blank node which serves as the subject-term part
+     of the triple.</dd>
+
+     <dt>rdf:predicateIRI</dt>
+     <dd>A predicate expressing the relationship to the triple's
+     predicate term.  The value is the IRI (a string) which serves as
+     the predicate-term part of the triples.</dd>
+
+     <dt>rdf:objectIRI</dt>
+     <dd>A predicate expressing the relationship to the triple's
+     object term, when the object term is an IRI.  The value is the
+     IRI (a string) which is the object-term part of the triple.</dd>
+
+     <dt>rdf:objectNode</dt>
+     <dd>A predicate expressing the relationship to the triple's
+     object term, when the object term is a blank node.  The value
+     is any RDF Resource; it simply serves as a placeholder,
+     representing the blank node which serves as the object-term part
+     of the triple.</dd>
+
+     <dt>rdf:objectValue</dt>
+     <dd>A predicate expressing the relationship to the triple's
+     object term, when the object term is literal.  The value is the
+     value which serves as the object-term part of the triple.</dd>
+
+     <dt>rdf:containsTriple</dt>
+     <dd>A predicate expressing the relationship between an RDF
+     <a>space</a> and a triple which it contains.</dd>
+
+   </dl>
+
+   <p>This vocabulary is used in a specific template form, always
+   matching this SPARQL graph pattern: </p>   
+
+   <pre>?sp rdf:containsTriple [ 
+   a rdf:Triple;
+   rdf:subjectIRI|rdf:subjectNode ?s;
+   rdf:predicateIRI ?p;
+   rdf:objectIRI|rdf:objectNode|rdf:objectValue ?o 
+]</pre>
+
+   <p>This one template uses SPARQL 1.1 property paths, with
+   alternation using the "|" character.  It could also be expressed as
+   six different SPARQL 1.0 (non-property-path) graph patterns.</p>
+
+   <p>The terms in this vocabulary only have fully-defined meaning
+   when they occur in the template pattern.  When they do, the set of
+   triples matching the template has the same meaning as the
+   <a>quad</a> [ ?s ?p ?o ?sp ].</p>
+
+   <p><dfn>Folding a dataset</dfn> is the act of completely
+   conveying the facts in a dataset in RDF triples, using this
+   vocabulary.  The procedure is: (1) check for occurances
+   of the fold template in the default graph -- if they occur,
+   abort, since folding is not defined for this dataset; (2) copy
+   the triples in the default graph of the input to the output; (3)
+   for each quad in the input, generate a matching instance of the
+   fold template and put the resulting five triples in the
+   output.</p>
+
+   <p><dfn>Unfolding a dataset</dfn> is the act of turning an RDF
+   graph into a dataset, using this vocabulary.  The
+   procedure is: (1) make a mutable copy of the input graph, (2) for
+   each match of the fold template, add the resulting quad to the
+   output dataset and delete the five triples which matched the
+   template, (3) copy the remaining triples to the output as the
+   default graph of the dataset.</p>
+
+   <p>The fold and unfold functions are inverses of each other.
+   That is, for all datasets D on which fold is defined, D =
+   unfold(fold(D)) and for all graphs G, G =
+   (fold(unfold(G)).</p>
+
+   <p>The functions cannot be composed with themselves (called
+   recursively), since for each of them the domain and range are
+   disjoint.  If we were to implicitely convert graphs to datasets
+   (with the graph as the default graph), then fold(fold(D)) would
+   either be an error (if D had any named graphs) or be the same as
+   fold(D).  If we were to define unfold2 as an unfold operating on
+   datasets using their default graphs, unfold2(D) = union(D,
+   unfold(default_graph(D)), then unfold2 would be idempotent:
+   unfold2(D) = unfold2(unfold2(D)).</p>
+
+</section>
+
+
+
+
+
+
+
+<section id="references">
+<p>@@@ tbd</p>
+</section>
+
+<section class="appendix informative" id="changes">
+  <h2>Changes</h2>
+  <ul>
+    <li>2012-05-15: Added section on "Untrusting Merge".</li>
+    <li>2012-05-14: Fill in the use cases, removing some of the text that was there and which can go into the example.  Redid the trig grammar, adding spaceName, changing formatting.  Added valid-time example.  Added some of transaction-time example.</li>
+    <li>2012-05-13: Fill in the example's skeleton, add a few issues/ideas on trig</li>
+    <li>2012-05-11: Rewriting and reorganizing Concepts; some more work on Usecases and Example; removed the Detailed Example since it needs to be so re-written; renamed 'reflection' to 'folding'; reworked the Semanics</li>
+    <li>2012-05-10: Wrote a short intro.  Started writing the Use Cases section for real.   Added grammar for N-Quads and Trig.  Did a first draft of the semantics.</li>
+    <li>2012-05-09: Renamed "layers" as "spaces"; some word-smithing in Concepts and the Abstract; removed "Turtle in HTML" as a dataset syntax; added some text about trig and nquads; added a note about change-over-time; added an appendix with a reflection vocabulary</li>
+    <li>2012-05-02: Removed obsolete text from the introduction, removed the section on datasets borrowed from RDF Concepts, and added many entries to Concepts (and renamed it from Terminology).</li>
+    <li>2012-05-01: Starting with a little text from RDF Concepts, a few ideas, and the text from <a href="http://www.w3.org/2011/rdf-wg/wiki/Layers">Layers</a></li>
+  </ul>
+</section>
+
+
+
+</body>
+</html>
+

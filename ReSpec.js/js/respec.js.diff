@@ -1,0 +1,24 @@
+244a245,247
+>         real_hash = window.location.hash;
+>         window.location.hash = "#";
+>         window.location.hash = real_hash;
+761c764
+<                 header += " ( " + pers.note + " )";
+---
+>                 header += " (" + pers.note + ")";
+898a902,907
+>         if (this.otherContributors) {
+>             for (var role in this.otherContributors) {
+>                 if (!this.otherContributors.hasOwnProperty(role)) continue;
+>                 header += this.showPeople(role, this.otherContributors[role]);
+>             }
+>         }
+1363a1373,1376
+>         var tmp = document.getElementById("references");
+>         if (tmp) {
+>             tmp.parentNode.removeChild(tmp);
+>         }
+1369a1383,1385
+>         if (tmp) {
+>             sn.copyChildren(tmp, refsec);
+>         }

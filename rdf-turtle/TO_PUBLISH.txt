@@ -1,0 +1,6 @@
+Note that there are a ton of subdirectories. The Turtle spec requires
+very little besides the HTML page. The safest way to proceed is to
+copy index.html to WWW/TR/2099/WD-turtle-20999999/Overview.html and
+run checklink.
+
+ericP

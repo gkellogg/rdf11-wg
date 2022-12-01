@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>RDF 1.1 Test Cases</title>
+  <script src="../local-biblio.js" class="remove"></script>
+  <script src="https://www.w3.org/Tools/respec/respec-w3c-common" class="remove"></script>
+  <script class='remove'>
+    var respecConfig = {
+        // extend the bibliography entries
+        localBiblio: localBibliography,
+
+        // specification status (e.g. WD, LC, WG-NOTE, etc.). If in doubt use ED.
+        specStatus:           "WG-NOTE",
+
+        // the specification's short name, as in http://www.w3.org/TR/short-name/
+        shortName:            "rdf11-testcases",
+
+        errata:               "http://www.w3.org/2014/rdf1.1-errata",
+
+        // if you wish the publication date to be other than today, set this
+        publishDate:  "2014-02-25",
+
+        // if the specification's copyright date is a range of years, specify
+        // the start date here:
+        copyrightStart: "2013",
+
+        // if there is a previously published draft, uncomment this and set its YYYY-MM-DD date
+        // and its maturity status
+        // previousPublishDate:  "2013-07-23",
+        // previousMaturity:  "LC",
+
+        // if there a publicly available Editor's Draft, this is the link
+        // edDraftURI:           "https://dvcs.w3.org/hg/rdf/raw-file/default/rdf11-testcases/index.html",
+
+        // if there is an earler version of this specification at the Recommendation level,
+        // set this to the shortname of that version. This is optional and not usually
+        // necessary.
+        // prevRecShortname: "rdf11-testcases",
+
+        // editors, add as many as you like
+        // only "name" is required
+        editors:  [
+            { name: "Gregg Kellogg",
+              url: "http://greggkellogg.net/",
+              company: "Kellogg Associates" },
+            { name: "Markus Lanthaler",
+              url: "http://www.markus-lanthaler.com/",
+              company: "Graz University of Technology",
+              companyURL: "http://www.tugraz.at/" }
+        ],
+
+        // name of the WG
+        wg:           "RDF Working Group",
+
+        // URI of the public WG page
+        wgURI:        "http://www.w3.org/2011/rdf-wg/",
+
+        // name (with the @w3c.org) of the public mailing to which comments are due
+        wgPublicList: "public-rdf-comments",
+
+        // URI of the patent status for this WG, for Rec-track documents
+        // !!!! IMPORTANT !!!!
+        // This is important for Rec-track documents, do not copy a patent URI from a random
+        // document unless you know what you're doing. If in doubt ask your friendly neighbourhood
+        // Team Contact.
+        wgPatentURI:  "http://www.w3.org/2004/01/pp-impl/46168/status",
+
+        // if this parameter is set to true, ReSpec.js will embed various RDFa attributes
+        // throughout the generated specification. The triples generated use vocabulary items
+        // from the dcterms, foaf, and bibo. The parameter defaults to false.
+        doRDFa: "1.1",
+
+        noTOC:  false,
+
+        // alternateFormats: [ { uri: "diff-20130723.html", label: "diff to previous version" } ]
+    };
+  </script>
+  <style type="text/css">
+    /* Style Turtle script blocks to be visible */
+    pre.example script {
+        display:block;
+    }
+    .separated { border-collapse:collapse; }
+    .separated thead tr th { border:1px solid black; padding: .2em; }
+    .separated tbody tr td { border:1px solid black; text-align: center; }
+    .separated tbody tr td.r { text-align: right; padding: .5em; }
+    .grammar td { font-family: monospace; vertical-align: top; }
+    .grammar-literal { color: gray;}
+     .grammar_comment { color: #A52A2A; font-style: italic; }
+  </style>
+</head>
+<body>
+  <section id='sotd'></section>
+  <section id="abstract">
+    <p>The Resource Description Framework (RDF) is a framework for
+      representing information in the Web. This document lists
+      the test suites and implementation reports
+      for RDF 1.1 Semantics as well as the various
+      serialization formats.</p>
+  </section>
+
+  <section>
+    <h2>Test Suites and Implementation Reports</h2>
+    <p>The following are links to the syntax and semantics test suites and
+      implementation reports:</p>
+
+    <ul>
+      <li><strong>RDF 1.1 Semantics</strong> [[RDF11-MT]]<br/>
+        <ul>
+          <li><a href="http://www.w3.org/2013/rdf-mt-tests/">Test Suite</a></li>
+          <li><a href="http://www.w3.org/2013/rdf-mt-reports/index.html">Implementation Report</a></li>
+        </ul>
+      </li>
+      <li><strong>RDF 1.1 Turtle</strong> [[TURTLE]]<br/>
+        <ul>
+          <li><a href="http://www.w3.org/2013/TurtleTests/">Test Suite</a></li>
+          <li><a href="http://www.w3.org/2013/TurtleReports/index.html">Implementation Report</a></li>
+        </ul>
+      </li>
+      <li><strong>RDF 1.1 TriG</strong> [[TRIG]]<br/>
+        <ul>
+          <li><a href="http://www.w3.org/2013/TrigTests/">Test Suite</a></li>
+          <li><a href="http://www.w3.org/2013/TrigReports/index.html">Implementation Report</a></li>
+        </ul>
+      </li>
+      <li><strong>RDF 1.1 N-Triples</strong> [[N-TRIPLES]]<br/>
+        <ul>
+          <li><a href="http://www.w3.org/2013/N-TriplesTests/">Test Suite</a></li>
+          <li><a href="http://www.w3.org/2013/N-TriplesReports/index.html">Implementation Report</a></li>
+        </ul>
+      </li>
+      <li><strong>RDF 1.1 N-Quads</strong> [[N-QUADS]]<br/>
+        <ul>
+          <li><a href="http://www.w3.org/2013/N-QuadsTests/">Test Suite</a></li>
+          <li><a href="http://www.w3.org/2013/N-QuadsReports/index.html">Implementation Report</a></li>
+        </ul>
+      </li>
+      <li><strong>RDF 1.1 XML</strong> [[RDF11-XML]]<br/>
+        <ul>
+          <li><a href="http://www.w3.org/2013/RDFXMLTests/">Test Suite</a></li>
+        </ul>
+      </li>
+      <li><strong>JSON-LD 1.0</strong> [[JSON-LD]]/[[JSON-LD-API]]<br/>
+        <ul>
+          <li><a href="http://www.w3.org/2013/json-ld-tests/">Test Suite</a></li>
+          <li><a href="http://json-ld.org/test-suite/reports/index.html">Implementation Report</a></li>
+        </ul>
+      </li>
+    </ul>
+
+    <p>RDF 1.1 Concepts [[RDF11-CONCEPTS]] does not have a test suite and is not directly implemented in software;
+      instead, it is implemented by the specs which build on it, including the other specs in the set above.</p>
+  </section>
+
+  <section>
+    <h2>General instructions for running RDF Test suites</h2>
+    <p>All test suites have a common test manifest representation using test vocabularies
+      similar to the SPARQL 1.1 Test case structure [[SPARQL11-TEST-CASE]]. Test manifests
+      are expressed using [[TURTLE]], except for the JSON-LD test manifests, which
+      are represented using [[JSON-LD]]. (Detailed information on the JSON-LD Test Suite
+      is at [[JSON-LD-TESTS]]). The Manifest has a header, and lists one
+      or more test entries such as the following:</p>
+    <pre class="example" title="Manifest header"><script type="text/turtle"><>  rdf:type mf:Manifest ;
+   rdfs:comment "Turtle tests" ;
+   mf:entries
+   (
+   ....
+   ) .</script></pre>
+
+    <p>In addition to the namespaces described in [[SPARQL11-TEST-CASE]], RDF manifests use
+      the following vocabularies:</p>
+    <dl>
+      <dt><code>rdft</code></dt>
+      <dd><code>http://www.w3.org/ns/rdftest#</code></dd>
+    </dl>
+
+    <section>
+      <h3>Syntax Tests</h3>
+      <p>Concrete RDF syntaxes may have positive- and negative-syntax tests, intended
+        to determine if a processor correctly recognizes valid or invalid serializations.
+        Positive Syntax Tests include a <em>name</em>, optional <em>comment</em>, and <em>action</em> along
+        with a type which identifies them as being a Syntax Test for the appropriate
+        serialization format. An example Turtle Syntax test definition is the following:</p>
+
+      <pre class="example" title="Syntax test"><script type="text/turtle"><#turtle-syntax-file-01> rdf:type rdft:TestTurtlePositiveSyntax ;
+   mf:name    "turtle-syntax-file-01" ;
+   rdfs:comment "Empty file" ;
+   mf:action    <turtle-syntax-file-01.ttl> ;
+   .</script></pre>
+
+     <p>Class names vary by serialization format and include the following:</p>
+     <dl>
+       <dt><code>rdft:TestTurtlePositiveSyntax</code></dt><dd>A Positive [[TURTLE]] Syntax Test.</dd>
+       <dt><code>rdft:TestTurtleNegativeSyntax</code></dt><dd>A Negative [[TURTLE]] Syntax Test.</dd>
+       <dt><code>rdft:TestTriGPositiveSyntax</code></dt><dd>A Positive [[TRIG]] Syntax Test.</dd>
+       <dt><code>rdft:TestTriGNegativeSyntax</code></dt><dd>A Negative [[TRIG]] Syntax Test.</dd>
+       <dt><code>rdft:TestNTriplesPositiveSyntax</code></dt><dd>A Positive [[N-TRIPLES]] Syntax Test.</dd>
+       <dt><code>rdft:TestNTriplesNegativeSyntax</code></dt><dd>A Negative [[N-TRIPLES]] Syntax Test.</dd>
+       <dt><code>rdft:TestNQuadsPositiveSyntax</code></dt><dd>A Positive [[N-QUADS]] Syntax Test.</dd>
+       <dt><code>rdft:TestNQuadsNegativeSyntax</code></dt><dd>A Negative [[N-QUADS]] Syntax Test.</dd>
+       <dt><code>rdft:TestXMLNegativeSyntax</code></dt><dd>A Negative [[RDF11-XML]] Syntax Test.</dd>
+     </dl>
+
+     <p>A positive test is passed if an implementation can parse the content at the URL identified
+       by the object of the <code>mf:action</code> properly using rules for the the appropriate syntax.</p>
+     <p>A negative test is passed if an implementation raises an error when it parses
+        content at the URL identified by the object of the <code>mf:action</code> properly using rules for the appropriate syntax.</p>
+   </section>
+   <section>
+     <h3>Evaluation Tests</h3>
+     <p>Concrete RDF syntaxes may have positive- and negative-evaluation tests, intended
+       to determine if a processor correctly evaluates serializations.
+       Positive Evaluation Tests include a <em>name</em>, optional <em>comment</em>, <em>action</em>, and <em>result</em> along
+       with a type which identifies them as being an Evaluation Test for the appropriate
+       serialization format. An example Turtle Evaluation test definition is the following:</p>
+
+     <pre class="example" title="Evaluation test"><script type="text/turtle"><#IRI_subject> rdf:type rdft:TestTurtleEval ;
+   mf:name      "IRI_subject" ;
+   rdfs:comment "IRI subject" ;
+   mf:action    <IRI_subject.ttl> ;
+   mf:result    <IRI_spo.nt> ;
+   .</script></pre>
+
+     <p>Class names vary by serialization format and include the following:</p>
+     <dl>
+       <dt><code>rdft:TestTurtleEval</code></dt><dd>A Positive [[TURTLE]] Evaluation Test.</dd>
+       <dt><code>rdft:TestTurtleNegativeEval</code></dt><dd>A Negative [[TURTLE]] Evaluation Test.</dd>
+       <dt><code>rdft:TestTrigEval</code></dt><dd>A Positive [[TRIG]] Evaluation Test.</dd>
+       <dt><code>rdft:TestTrigNegativeEval</code></dt><dd>A Negative [[TRIG]] Evaluation Test.</dd>
+       <dt><code>rdft:XMLEval</code></dt><dd>A Positive [[RDF11-XML]] Evaluation Test.</dd>
+     </dl>
+
+     <p>A positive test is passed if an implementation parses the input
+       (identified by the object of the <code>mf:action</code> property) using the
+       appropriate syntax into a graph
+       or dataset, parses the expected result
+       (identified by the object of the <code>mf:result</code> property)
+       into another graph or dataset, and those two graphs/datasets are
+       <a href="http://www.w3.org/TR/rdf11-concepts/#graph-isomorphism">isomorphic</a> (see [[RDF11-CONCEPTS]]).</p>
+       <p>A negative test is passed if an implementation parses the input
+         (identified by the object of the <code>mf:action</code> property) using the
+         appropriate syntax into a graph
+         or dataset, parses the expected result
+         (identified by the object of the <code>mf:result</code> property)
+         into another graph or dataset, and those two graphs/datasets are _not_
+         <a href="http://www.w3.org/TR/rdf11-concepts/#graph-isomorphism">isomorphic</a> (see [[RDF11-CONCEPTS]]).</p>
+    </section>
+
+    <section>
+      <h3>Sematics Tests</h3>
+      <p>These tests test implementations of RDF and RDFS Entailment [[RDF11-MT]].
+        Entailment Tests (<code>mf:PositiveEntailmentTest</code> or <code>mf:NegativeEntailmentTest</code>) include a <em>name</em>, <em>comment</em>, <em>action</em>, <em>result</em>, an <em>entailment</em> regime,
+        a <em>list of recognized datatypes</em> and a <em>list of unrecognized datatypes</em>, and <em>result</em> along
+        with a type which identifies them as being an Entailment Test for the appropriate
+        serialization format.</p>
+      <p>All tests have the following properties:</p>
+      <ul>
+        <li>a name (<code>mf:name</code>)</li>
+        <li>an input RDF graph url (<code>mf:action</code>)</li>
+        <li>an output RDF graph URL or the special marker <code>false</code> (<code>mf:result</code>),</li>
+        <li>an entailment regime, which is "simple", "RDF", or "RDFS" (<code>mf:entailmentRegime</code>),</li>
+        <li>a list of recognized datatypes (<code>mf:recognizedDatatypes</code>),</li>
+        <li>a list of unrecognized datatypes (<code>mf:unrecognizedDatatypes</code>).</li>
+      </ul>
+      <p>An example Entailment test is the following:</p>
+
+     <pre class="example" title="Entailment test"><script type="text/turtle"><#datatypes-non-well-formed-literal-2> a mf:PositiveEntailmentTest;
+  mf:name "datatypes-non-well-formed-literal-2";
+  rdfs:comment """
+    With appropriate datatype knowledge, a 'badly-formed'
+    datatyped literal can be detected.
+  """;
+  rdfs:comment """
+    Ill-formed datatyped literals now are inconsistent.
+    Used to be negative entailment to <datatypes/test002b.nt>
+  """;
+  rdft:approval rdft:Approved;
+  mf:entailmentRegime "RDFS" ;
+  mf:recognizedDatatypes ( xsd:integer ) ;
+  mf:unrecognizedDatatypes ( ) ;
+  mf:action <datatypes/test002.nt>;
+  mf:result false.</script></pre>
+
+    <p>An implementation passes a Positive (Negative) Entailment Test if, when
+    configured to
+     (1) perform entailment under the entailment regime of the test or some entailment regime that is stronger (weaker) than the entailment regime and
+     (2) recognize all the datatypes in the list of <em>recognized datatypes</em> and none of the datatypes in the list of <em>unrecognized datatypes</em>,</p>
+    <ul>
+    <li>for tests that have an output graph, determines that the input RDF graph entails (does not entail) the output RDF graph</li>
+    <li>for tests that have <code>false</code> as output, either determines that the input RDF graph entails (does not entail) an inconsistent RDF graph or that the input RDF graph is inconsistent (consistent).</li>
+  </ul>
+
+  <p>An implementation also passes a test if when configured differently from a
+    correct configuration as given above nonetheless produces the given result,
+    and the result is correct in the configured entailment regime with the
+    configured recognized datatypes.</p>
+
+    </section>
+  </section>
+</body>
+</html>

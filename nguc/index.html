@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>RDF Named Graphs: Use Cases</title>
+    <style type="text/css">
+.figure { font-weight: bold; text-align: center; }
+table.xsd-types td, table.xsd-types th { border: 1px solid #ddd; padding: 0.1em 0.5em; }
+    </style>
+    <script src='../ReSpec.js/js/respec.js' class='remove'></script>
+    <script class='remove'>
+      var respecConfig = {
+          // specification status (e.g. WD, LCWD, NOTE, etc.). If in doubt use ED.
+          specStatus:           "ED",
+          
+          // the specification's short name, as in http://www.w3.org/TR/short-name/
+          shortName:            "nguc",
+
+          // if your specification has a subtitle that goes below the main
+          // formal title, define it here
+          // subtitle   :  "an excellent document",
+
+          // if you wish the publication date to be other than today, set this
+          // publishDate:  "2009-08-06",
+
+          // if the specification's copyright date is a range of years, specify
+          // the start date here:
+          //          copyrightStart: "2012",
+
+          // if there is a previously published draft, uncomment this and set its YYYY-MM-DD date
+          // and its maturity status
+//          previousPublishDate:  "2004-02-10",
+//          previousMaturity:  "REC",
+
+          // if there a publicly available Editor's Draft, this is the link
+//
+          edDraftURI:           "http://dvcs.w3.org/hg/rdf/raw-file/default/nguc/index.html",
+
+          // if this is a LCWD, uncomment and set the end of its review period
+          // lcEnd: "2009-08-05",
+
+          // if there is an earler version of this specification at the Recommendation level,
+          // set this to the shortname of that version. This is optional and not usually
+          // necessary.
+          //          prevRecShortname: "rdf-concepts",
+
+          // if you want to have extra CSS, append them to this list
+          // it is recommended that the respec.css stylesheet be kept
+          extraCSS:             ["http://dvcs.w3.org/hg/rdf/raw-file/default/ReSpec.js/css/respec.css"],
+
+          // editors, add as many as you like
+          // only "name" is required
+          editors:  [
+	      { name: "Sandro Hawke", url:"http://www.w3.org/People/Sandro",
+	      company:"W3C", companyURL: "http://www.w3.org"
+              },
+          ],
+          //otherContributors: {
+          //    "Contributor": [
+	  //    ]
+          //},
+
+          // authors, add as many as you like. 
+          // This is optional, uncomment if you have authors as well as editors.
+          // only "name" is required. Same format as editors.
+
+          //authors:  [
+          //    { name: "Your Name", url: "http://example.org/",
+          //      company: "Your Company", companyURL: "http://example.com/" },
+          //],
+          
+          // name of the WG
+          wg:           "RDF Working Group",
+          
+          // URI of the public WG page
+          wgURI:        "http://www.w3.org/2011/rdf-wg/",
+          
+          // name (with the @w3c.org) of the public mailing to which comments are due
+          wgPublicList: "public-rdf-comments",
+          
+          // URI of the patent status for this WG, for Rec-track documents
+          // !!!! IMPORTANT !!!!
+          // This is important for Rec-track documents, do not copy a patent URI from a random
+          // document unless you know what you're doing. If in doubt ask your friendly neighbourhood
+          // Team Contact.
+          wgPatentURI:  "http://www.w3.org/2004/01/pp-impl/46168/status",
+
+          // if this parameter is set to true, ReSpec.js will embed various RDFa attributes
+          // throughout the generated specification. The triples generated use vocabulary items
+          // from the dcterms, foaf, and bibo. The parameter defaults to false.
+          doRDFa: true,
+      };
+
+//  A number of references have been patched into the local berjon.biblio and need to be added to the global biblio in CVS:
+    </script>
+
+    
+    <style type="text/css">
+
+     .alert {
+         padding: 1em; 
+         margin: 0em; 
+         margin-bottom: 2em; 
+
+         border:2px solid blue; 
+
+         box-shadow: 10px 10px 5px #888;
+         -moz-box-shadow: 10px 10px 5px #888;
+         -webkit-box-shadow: 10px 10px 5px #888;
+
+         -moz-border-radius: 5px;
+         -webkit-border-radius: 5px;
+         -khtml-border-radius: 5px;
+         border-radius: 5px;
+     }
+
+    .separated thead tr th { border:1px solid black; padding: .2em; }
+    .separated tbody tr td { border:1px solid black; text-align: center; }
+    .separated tbody tr td.r { text-align: right; padding: .5em; }
+    .grammar td { font-family: monospace;}
+    .grammar-literal { color: gray;}
+    
+    .example-def { border:1px solid black; padding: 1em; }
+
+    /* --- borrowed from  EXAMPLES --- */
+.exvoc {
+    border: 1px solid #90A0B0;
+    padding:    1em;
+    margin-top: 1em;
+}
+
+.exvoc::before {
+    content:    "Vocabulary Defined For This Example";
+    display:    block;
+    width:      450px;
+    background: #90A0B0;
+    color:  #fff;
+    font-family:    initial;
+    padding:    3px;
+    font-weight:    bold;
+    margin: -1em 0 1em -1em;
+}
+
+.schema {
+   color: #8090A0;
+}
+    </style> 
+	
+  </head>
+
+  <body>
+
+<section id="abstract">
+  <p>This document explores some of the motivations for having
+  <em>Named Graphs</em> and <em>Datasets</em> in RDF.</p>
+</section>
+
+<section id="sotd">
+  <div class="alert">
+    <h2>Editor's Draft Status</h2>
+    
+    <p>This text came from <a href="http://dvcs.w3.org/hg/rdf/raw-file/d1c5a569d603/rdf-spaces/index.html#">RDF Spaces and Datasets (15 May 2012)</a>, and now is being updated here.</p>
+
+
+  </div>
+</section>
+
+<section class="informative">
+    <h2>Introduction</h2>
+
+
+    <p>The <a href="http://www.w3.org/TR/rdf11-concepts/">Resource
+    Description Framework (RDF)</a> provides a simple declarative way
+    to store and transmit information.  It also provides a trivial but
+    effective way to combine information from multiple sources, with
+    graph merging.  This allows information from different people,
+    different organizations, different units within an organization,
+    different servers, different algorithms, etc, to all be combined
+    and used together, without any special processing or understanding
+    of the relationships among the providers.</p>
+
+    <p>For some applications, the basic RDF merge operation is overly
+    simplistic, as extra processing and an understanding of the
+    relationships among the providers may be useful.  This document
+    enumerates some of these applicatsion.</p>
+
+</section>
+
+<section>
+  <h2>Use Cases</h2>
+
+  <p>Each of these use cases is initally described in terms of the
+  following scenario.  Details of how each use case might be addressed
+  are in <a href="#detailed-example" class="sectionRef"></a>.</p>
+
+  <blockquote style="font-style: italic">
+
+    <p>The Example Foundation is a large organization with more than
+    ten thousand employees and volunteers, spread out over five
+    continents.  It has branches in <b>25 different countries</b>, and
+    those divisions have considerable autonomy; they are only loosely
+    controlled by the parent organization (called "headquarters" or
+    "HQ") in Geneva.</p>
+
+    <p>HQ wants to help the divisions work together better.  It
+    decides a first step is to provide a simple but complete directory
+    of all the Example personnel.  Until now, each division has
+    maintained its own directory, using its own technology.  HQ wants to gather them all together, building a <b>federated phonebook</b>.  They want
+    to be able to find someone's phone number, mailing address,
+    and job title, knowing only their name or email addresses.  Later,
+    they hope to extend the system to allow finding people based on
+    their areas of interest and expertise.</p>
+
+    <p>HQ understands that people will want access to the phonebook in
+    many different computing environments and with different
+    languages, social norms, and application styles.  Users are going
+    to want at least one Web based user interface (UI), but they will
+    also want mobile UIs for different platforms, desktop UIs for
+    different platforms, and even to look up information via text
+    messaging.  HQ does not have the resources to build all of these,
+    so they intend to provide <b>direct access to the data</b> so that the
+    divisions can do it themselves as needed.</p>
+
+  </blockquote>
+  
+  <p>The first section below describes a minimal, baseline approach.
+  Each section after that describes a new system requirement, a new
+  thing the users in this scenario want the federated phonebook to
+  do.</p>
+
+  <section id="uc-start">
+    <h2>Baseline Solution (Just Triples)</h2>
+
+    <blockquote style="font-style: italic">
+
+      <p>As a starting point, HQ needs to gather data from each
+      division and re-publish it, in one place, for use by the
+      different UIs.</p>
+
+    </blockquote>
+    
+    <p>This is a general use case for RDF, with no specific need for
+    using named graphs.  It simply involves
+    divisions publishing RDF data on the web (with some common
+    vocabulary and with access control), then HQ merging it and
+    putting it on their website (with access control).</p>
+
+    <p>For an example of how this baseline could be implemented, see
+    <a href="#example-start" class="sectionRef"></a></p>
+
+  </section>
+
+  <section id="uc-web">
+    <h2>Showing Provenance</h2>
+
+    <blockquote style="font-style: italic">
+
+      <p>A user says: I'm looking at an incorrect phonebook entry.  It
+      has the name of the person I'm looking for, but it's missing
+      most of the record.  I can't even tell which division the person
+      works for.  I need to know who is responsible for this
+      information, so I can get it corrected.
+      </p>
+
+      <p>While this might be address by including a "report-errors-to"
+      field in each phonebook entry, HQ is looking ahead to the day
+      when other information is in the phonebook &mdash; like which
+      projects the person has worked on &mdash; which might be come
+      from a variety of others sources, possibly other divisions.</p>
+
+    </blockquote>
+    
+    <p>For a discussion of how this use case could be addressed, see
+    <a href="#example-web" class="sectionRef"></a></p>
+
+  </section>
+
+  <section id="uc-process">
+    <h2>Maintaining Derived Data</h2>
+
+    <blockquote style="font-style: italic">
+
+      <p>It turns out different divisions are using somewhat different
+      vocabularies for publishing their data.  HQ writes a program to
+      translate, but they need the output of that program to be
+      correctly attributed, in case it turns out to be wrong.
+      </p>
+
+    </blockquote>
+    
+    <p>This use case motivates sharing of blank nodes between named
+    graphs, as seen in the example.</p>
+
+    <p>For a discussion of how this use case could be addressed, see
+    <a href="#example-process" class="sectionRef"></a></p>
+
+  </section>
+
+
+  <section id="uc-reported">
+    <h2>Distributed Harvesting</h2>
+
+    <blockquote style="font-style: italic">
+
+      <p>It turns out some divisions do not have centralized
+      phonebooks.  Division 3 has twelve different departments, each
+      with its own phonebook.  Divsion 3 can do the harvesting from
+      its departments, but it does not want to be in the loop for
+      corrections; it wants those to go straight back to the relevant
+      department.
+      </p>
+
+    </blockquote>
+    
+    <p>For a discussion of how this use case could be addressed, see
+    <a href="#example-reported" class="sectionRef"></a></p>
+
+  </section>
+
+
+  <section id="uc-untrusted">
+    <h2>Loading Untrusted Datasets</h2>
+
+    <blockquote style="font-style: italic">
+
+      <p>A user reports: There's information here that says it's from
+      our department, but it's not.  Somehow your provenance
+      information is wrong.  We need to see the provenance of the
+      provenance!</p>
+
+    </blockquote>
+    
+    <p>For a discussion of how this use case could be addressed, see
+    <a href="#example-untrusted" class="sectionRef"></a></p>
+
+  </section>
+
+
+  <section id="uc-transtime">
+    <h2>Showing Revision History</h2>
+
+    <blockquote style="font-style: italic">
+
+      <p>Division 14's legal department says: "We're doing an
+      investigation and we need to be able to connect people's names
+      and phone numbers as they used to be.  Can you include archival
+      data in the data feed, so we we can search the phonebook as it
+      was on each day of September, last year?"
+      </p>
+
+    </blockquote>
+    
+    <p>For a discussion of how this use case could be addressed, see
+    <a href="#example-transtime" class="sectionRef"></a></p>
+
+  </section>
+
+
+  <section id="uc-validtime">
+    <h2>Expressing Past or Future States</h2>
+
+    <blockquote style="font-style: italic">
+
+      <p>Division 5 says: "We're planning a major move in three
+      months, to a neighboring city.  Everybody's office and phone
+      number will have to change.  Can we start putting that
+      information in the phonebook now, but mark it as not effective
+      until 20 July?  After the move, we'll also need to see the old
+      (no-longer-in-effect) data for a while, until we get everything
+      straightened out.</p>
+
+    </blockquote>
+    
+    <p>This use case, contrasted with the previous one, shows the
+    difference between <em>Transaction Time</em> and <em>Valid
+    Time</em> in bitemporal databases.  After Division 5's move, the
+    "old" phone numbers are not just the old state of the database;
+    they reflect the old state of the world.  It is possible that some
+    time after the move, an error in the pre-move data might need to
+    be corrected.  This would require a new transaction time, even
+    though the valid-time has already ended.</p>
+
+    <p>Use case sightings:</p>
+    <ul>
+      <li><a href="http://www.jenitennison.com/blog/node/101">Temporal Scope for RDF Triples</a>, Jeni Tennison's report of attempting to solve this problem in UK Government data.
+      </li>
+      <li><a
+    href="http://lists.w3.org/Archives/Public/public-rdf-wg/2012May/0099.html">Vocab
+    terms for owner, validFrom and validUntil</a>, Manu Sporny
+    reports PaySwarm wants to record ownership information for
+    particular time ranges.</li>
+    </ul>
+
+    <p>For a discussion of how this use case could be addressed, see
+    <a href="#example-validtime" class="sectionRef"></a></p>
+
+  </section>
+
+
+</section>
+
+
+
+<section class="informative appendix">
+
+  <h2>Detailed Example</h2>
+
+  <p>This section presents a design for using named graphs in constructing a
+  federated information system.  It is intended to help explain and
+  help motivate the designs @@@.</p>
+
+  <p>The example covers the same federated phonebook scenario used in
+  <a href="#use-cases" class="sectionRef"></a>, with each specific use
+  case having an example here.</p>
+
+  <div class="alert">
+    <p>@@@ An obsolete but complete version was in the <a
+  href="http://dvcs.w3.org/hg/rdf/raw-file/ee60c6dc8ad4/rdf-spaces/index.html#">May 10 Version</a>.
+  </p>
+  </div>
+
+
+  <section id="example-start">
+    <h2>Showing Triples (v1)</h2>
+
+    <p>@@@ Shows the baseline in <a href="#uc-start" class="sectionRef"></a></p>
+
+  </section>
+
+
+  <section id="example-web">
+    <h2>Showing Web Provenance (v2)</h2>
+
+    <p>@@@ Shows how to address<a href="#uc-web" class="sectionRef"></a></p>
+
+  </section>
+
+
+
+  <section id="example-process">
+    <h2>Showing Process Provenance(v3)</h2>
+
+    <p>@@@ Shows how to address <a href="#uc-process" class="sectionRef"></a></p>
+
+  </section>
+
+
+
+  <section id="example-reported">
+    <h2>Showing Reported Provenance (v4)</h2>
+
+    <p>@@@ Shows how to address <a href="#uc-reported" class="sectionRef"></a></p>
+
+  </section>
+
+
+
+  <section id="example-untrusted">
+    <h2>Showing Untrusted Quads(v5)</h2>
+
+    <p>@@@ Show how to address <a href="#uc-untrusted" class="sectionRef"></a></p>
+    <p>@@@ uses <a>renaming the graphs</a>.</p>
+
+
+  </section>
+
+
+
+  <section id="example-transtime">
+    <h2>Showing Change History (v6)</h2>
+
+    <p>To keep versions, as required by <a href="#uc-transtime"
+    class="sectionRef"></a>, we simply copy the old data into a new
+    named graph and record some metadata about it.</p>
+
+    <p>In this example, we handle this by defining the following vocabulary:</p>
+
+    <div class="exvoc">
+
+      @@@ tdb   can we define each property separately with any sense, or just the block, together?
+
+    </div>
+      
+    <p>If Marvin changes, rather absurdly, changes his email address
+    every day, to include the date, we might have a dataset like
+    this:</p>
+
+    <pre class="example">@prefix transt: &lt;http://example.org/ns/transaction-time>.
+@prefix hq: &lt;http://example.org/ns/phonebook>.
+@prefix v:  &lt;http://www.w3.org/2006/vcard/ns#>.
+@prefix : &lt;>.
+
+:g32201 {  
+   #... various data, then:
+   [] a v:VCard
+      v:fn "Marvin Mover" ;
+      v:email "marvin-0101@example.org". 
+   #... more data from other people
+}
+[] a transt:Snapshot;
+   transt:source &lt;http://div14.example.org/phonefeed>;
+   transt:result :g32201;
+   transt:starts "2012-01-01T00:00:00"^^xs:dateTime;
+   transt:ends "2012-01-02T00:00:00"^^xs:dateTime.
+
+:g32202 {  
+   #... various data, then:
+   [] a v:VCard
+      v:fn "Marvin Mover" ;
+      v:email "marvin-0102@example.org". 
+   #... more data from other people
+}
+[] a transt:Snapshot;
+   transt:source &lt;http://div14.example.org/phonefeed>;
+   transt:result :g32202;
+   transt:starts "2012-01-02T00:00:00"^^xs:dateTime;
+   transt:ends "2012-01-03T00:00:00"^^xs:dateTime.
+
+# the current data
+&lt;http://div14.example.org/phonefeed> {
+   #... various data, then:
+   [] a v:VCard
+      v:fn "Marvin Mover" ;
+      v:email "marvin-0103@example.org". 
+   #... more data from other people
+}
+
+</pre>
+
+<p>@@@ or should we put the data directly into a genid graph, so that
+metadata about it is less likely to change or be wrong...?  On the other hand, there's ALSO some nice potential for metadata about the feed space.</p>
+
+  </section>
+
+
+
+  <section id="example-validtime">
+    <h2>Showing Past and Future States (v7)</h2>
+
+
+    <p>The challenge expressed in <a href="#uc-validtime"
+    class="sectionRef"></a> is to segregate some of the triples,
+    marking them as being in-effect only at certain times.  The study
+    of how to do this is part of the field of temporal databases.</p>
+
+    <p>In this example, we handle this by defining the following vocabulary:</p>
+
+    <div class="exvoc">
+      
+      <p>This "valid-time" vocabulary allows a data publisher to
+      express a time range during which the triples in some space are
+      considered valid.  This acts like a time-dependent version of
+      owl:import, where the import is only made during the given time
+      range.</p>
+
+      <dl>
+	<dt><span class="schema">(rdf:space Sp)</span> vt:starts <span class="schema">(xs:dateTime T1)</span></dt>
+	<dd>Claims that all the triples in Sp are valid starting at T1, ending at some unspecified period of time.</dd>
+	<dt><span class="schema">(rdf:space Sp)</span> vt:end <span class="schema">(xs:dateTime T2)</span></dt>
+	<dd>Claims that all the triples in Sp are valid until just before T2, starting at some unspecified time.</dd>
+      </dl>
+
+      <p>In general, these two predicates need to be used together,
+      providing both vt:starts and vt:ends values for a space.  In
+      this case, { ?sp vt:starts ?t1; vt:ends ?t2 } claims that all
+      the triples in ?sp are in effect for all points in time t such
+      that t1 &lt;= t &lt; t2.  A consumer who only knows one of the
+      two times is unable to make use of data; there are no
+      default values.</p>
+
+      <p>These predicates say nothing about the validity (or "truth") of
+      the triples in Sp outside of the valid-time range.  Each of the
+      triples might or might not hold outside of the range &mdash;
+      these vt triples simply make no claim about them.</p>
+
+    </div>
+
+    <p>Given this definition, it is almost trivial for Division 5 to share their "before" and "after phonebooks:</p>
+
+    <pre class="example">@prefix vt: &lt;http://example.org/ns/valid-time>.
+@prefix hq: &lt;http://example.org/ns/phonebook>.
+@prefix : &lt;>.
+
+:pre-move {  
+    # all the pre-move data  
+    ...
+}
+:post-move {
+    # all the post-move data  
+    ...
+}
+
+:pre-move  vt:starts "2010-01-01T00:00:00"^^xs:dateTime;
+           vt:ends   "2012-07-12T00:00:00"^^xs:dateTime.
+:post-move vt:starts "2012-07-12T00:00:00"^^xs:dateTime;
+           vt:ends   "2020-01-01T00:00:00"^^xs:dateTime.
+
+</pre>
+
+     <p>This design requires every client to be modified to understand
+     and use the valid-time vocabulary.  There may be designs that do
+     not require this.</p>
+
+
+  </section>
+
+
+
+
+</section>
+
+
+
+
+<section id="references">
+<p>@@@ tbd</p>
+</section>
+
+<section class="appendix informative" id="changes">
+  <h2>Changes</h2>
+  <ul>
+    <li>2012-08-20: Started fresh Use Cases document, using some text from <a href="http://dvcs.w3.org/hg/rdf/raw-file/d1c5a569d603/rdf-spaces/index.html#">RDF Spaces and Datasets</a>.</li>
+  </ul>
+</section>
+
+
+
+</body>
+</html>
+

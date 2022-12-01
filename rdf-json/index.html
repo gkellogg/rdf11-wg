@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>RDF 1.1 JSON Alternate Serialization (RDF/JSON)</title>
+    <!-- Changed by: , 30-Oct-2013 -->
+    <style>
+.figure { font-weight: bold; text-align: center; }
+    </style>
+    <script src="../local-biblio.js" class="remove"></script>
+    <script src="https://www.w3.org/Tools/respec/respec-w3c-common" class="remove"></script>
+    <script class="remove">
+        // extend bibliography with local reference
+        localBibliography["TALIS-RDF-JSON"] = "Talis. <a href=\"http://docs.api.talis.com/platform-api/output-types/rdf-json\"><cite>RDF JSON</cite></a>. URL:  <a href=\"http://docs.api.talis.com/platform-api/output-types/rdf-json\">http://docs.api.talis.com/platform-api/output-types/rdf-json</a>";
+
+	var respecConfig = {
+          localBiblio: localBibliography,
+
+          // specification status (e.g. WD, LCWD, NOTE, etc.). If in doubt use ED.
+//          specStatus:           "WG-NOTE",
+          specStatus:           "ED",
+
+	  noRecTrack: true,
+          
+          // the specification's short name, as in http://www.w3.org/TR/short-name/
+          shortName:            "rdf-json",
+
+          // if your specification has a subtitle that goes below the main
+          // formal title, define it here
+          // subtitle   :  "an excellent document",
+
+         // if you wish the publication date to be other than today, set this
+          publishDate:  "2013-11-07",
+
+          // if the specification's copyright date is a range of years, specify
+          // the start date here:
+          copyrightStart: "2011",
+
+          // if there is a previously published draft, uncomment this and set its YYYY-MM-DD date
+          // and its maturity status
+//          previousPublishDate:  "2004-02-10",
+//          previousMaturity:  "REC",
+
+          // if there a publicly available Editor's Draft, this is the link
+//@@@
+          edDraftURI:           "http://dvcs.w3.org/hg/rdf/raw-file/default/rdf-json/index.html",
+
+          // if this is a LCWD, uncomment and set the end of its review period
+          // lcEnd: "2009-08-05",
+
+          // if there is an earler version of this specification at the Recommendation level,
+          // set this to the shortname of that version. This is optional and not usually
+          // necessary.
+          
+          // if you want to have extra CSS, append them to this list
+          // it is recommended that the respec.css stylesheet be kept
+//          extraCSS:             ["http://dev.w3.org/2009/dap/ReSpec.js/css/respec.css"],
+
+          // editors, add as many as you like
+          // only "name" is required
+          editors:  [
+              { name: "Ian Davis", url: "http://iandavis.com/",
+                company: "Talis", companyURL: "http://www.talis.com/",
+              },
+              { name: "Thomas Steiner", // url: "http://example.org/",
+                company: "Google Inc.", companyURL: "http://www.google.com/",
+              },
+              { name: "Arnaud J Le Hors", // url: "http://example.com/",
+                company: "IBM", companyURL: "http://www.ibm.com/",
+              },
+          ],
+
+          // authors, add as many as you like. 
+          // This is optional, uncomment if you have authors as well as editors.
+          // only "name" is required. Same format as editors.
+
+          //authors:  [
+          //    { name: "Your Name", url: "http://example.org/",
+          //      company: "Your Company", companyURL: "http://example.com/" },
+          //],
+          
+          // name of the WG
+          wg:           "RDF Working Group",
+          
+          // URI of the public WG page
+          wgURI:        "http://www.w3.org/2011/rdf-wg/",
+          
+          // name (with the @w3c.org) of the public mailing to which comments are due
+          wgPublicList: "public-rdf-comments",
+          
+          // URI of the patent status for this WG, for Rec-track documents
+          // !!!! IMPORTANT !!!!
+          // This is important for Rec-track documents, do not copy a patent URI from a random
+          // document unless you know what you're doing. If in doubt ask your friendly neighbourhood
+          // Team Contact.
+          wgPatentURI:  "http://www.w3.org/2004/01/pp-impl/46168/status",
+
+          // if this parameter is set to true, ReSpec.js will embed various RDFa attributes
+          // throughout the generated specification. The triples generated use vocabulary items
+          // from the dcterms, foaf, and bibo. The parameter defaults to false.
+          doRDFa: true,
+      };
+    </script>
+  </head>
+
+  <body>
+
+<section id="abstract">
+    <p>The Resource Description Framework (RDF) is a framework for
+    representing information in the Web.</p>
+    <p>This document defines a textual syntax for RDF called RDF/JSON that 
+    allows an RDF graph to be completely written in a form compatible
+    with the JavaScript Object Notation (JSON) [[!RFC4627]] and alternative
+    to the one recommended in JSON-LD [[JSON-LD]].</p>
+    <p>The syntax defined in this document should not be used unless there is
+    a specific reason to do so. <b>Use of JSON-LD is
+    recommended</b>.</p>
+</section>
+
+
+<section id="sotd">
+    <p><b>Important Note:</b> The <a href="http://www.w3.org/2011/rdf-wg/">RDF Working
+    Group</a> has decided not to push this document through the W3C
+    Recommendation Track. You should therefore not expect to see this
+    document eventually become a W3C Recommendation.</p>
+    <p>This document was published as a Working Group Note to provide those
+    who are using it and/or have an interest in it with a stable reference.</p>
+    <p>The RDF Working Group decided to put <a
+    href="http://www.w3.org/TR/json-ld/">JSON-LD</a> on the
+    Recommendation track. Therefore, unless you have a specific reason to use
+    the syntax defined in this document instead of JSON-LD, <b>you are
+    encouraged to use JSON-LD</b>.</p>
+</section>
+
+
+<section id="section-intro">
+    <h2>Introduction</h2>
+
+    <p>This document defines RDF/JSON, a concrete syntax for RDF, as 
+    defined in the RDF Concepts and Abstract Syntax W3C Recommendation 
+    [[!RDF11-CONCEPTS]], 
+    in JavaScript Object Notation (JSON) [[!RFC4627]].</p>
+    <p>The syntax defined in this document is an alternative
+    to the one recommended in JSON-LD [[JSON-LD]]. It should not be
+    used unless there is a specific reason to do
+    so. <b>Use of JSON-LD is recommended</b>.</p>
+
+</section>
+
+<section id="conformance"></section>
+
+<section class="informative">
+
+    <h2>Overview of RDF/JSON</h2>
+
+    <p>An RDF Graph consists of a set of RDF triples, each triple consisting
+    of a subject, a predicate and an object (formally defined in [[!RDF11-CONCEPTS]]).
+    An RDF/JSON document serializes such a set of RDF triples as a series of nested 
+    data structures. </p>
+
+    <p>A conforming RDF/JSON document consists of a single JSON object called
+    the root object. Each unique subject in the set of triples is represented as a key
+    in the root object. No key may appear more than once in the root object.</p>
+    
+    <p>The value of each root object key is a further JSON object whose 
+    keys are the URIs of the predicates occuring in triples with the
+    given subject. These keys are known as predicate keys. 
+    No predicate key may appear more than once within a single object.</p>
+    
+    <p>The value of each predicate key is an array of JSON objects representing 
+    the object of each serialized triple.</p>
+    
+    
+
+    <p>In general, a triple (subject S, predicate P, object O) is 
+    serialized in the following structure:</p>
+
+    <pre>{ "S" : { "P" : [ O ] } }</pre>
+
+    <p>The object of the triple O is represented as a further JSON 
+    object with the following keys:</p>
+
+    <dl>
+      <dt>type</dt>
+      <dd>one of 'uri', 'literal' or 'bnode' (required)</dd>
+      <dt>value</dt>
+      <dd>the URI of the object, its lexical value or a blank node label depending on whether the object is a uri, literal or bnode
+      </dd>
+      <dt>lang</dt>
+      <dd>the language of a literal value (optional but if supplied it must not be empty)</dd>
+      <dt>datatype</dt>
+      <dd>the datatype URI of the literal value (optional)</dd>
+    </dl>
+
+    <p>Blank node subjects are named using a string conforming to the nodeID production in Turtle. For example: _:A1</p>
+
+    <p>The 'lang' and 'datatype' keys should only be used if the value of the 'type' key is "literal".</p>
+
+    <p>All keywords defined in this document are case sensitive, and
+    must be lowercase.</p>
+
+
+</section>
+
+<section id="section-serialization">
+    <h2>Serialization of RDF as JSON</h2>
+    <p>Given a set of RDF Triples an RDF/JSON document may be constructed using the following algorithm:</p>
+    <ol>
+      <li>Start a JSON object (called the root object)</li>
+      <li>Group all the triples by subject</li>
+      <li>For each unique subject:
+          <ol>
+          <li>Create a JSON object for the subject (called the subject object)</li>
+          <li>Group all triples having the current subject by predicate</li>
+          <li>For each unique predicate:
+              <ol>
+              <li>Create a JSON array (called the value array)</li>
+              <li>Select all triples having the current subject and current predicate</li>
+              <li>For each triple:
+                <ol>
+                  <li>Create a JSON object (called the value object)</li>
+                  <li>Add the following key/value pairs to the value object:
+                    <ul>
+                      <li>If the object of the triple is an RDF URI Reference 
+                      U add a key called "type" with a value being the string "uri". Add a key
+                      called "value" with the value being U.</li>
+                      <li>If the object of the triple is an RDF Literal S
+                      add a key called "type" with a value being the string "literal". Add a key
+                      called "value" with the value being the lexical form of S and:
+			<ul><li>If the object of the triple is an RDF Literal with language L, add a key called "lang" with the 
+                      value being L.</li>
+                            <li>If the object of the triple is an RDF Typed Literal with datatype URI D, add a key called "datatype" with the 
+                      value being D.</li>
+			</ul>
+                      <li>If the object of the triple is a Blank Node with label I
+                      add a key called "type" with a value being the string "bnode". Add a key
+                      called "value" with the value being the string formed by concatenting an underscore (U+005F) followed by a colon (U+003A) followed by I.</li>
+                    </ul>
+                  </li>
+                  <li>Push the value object onto the end of the value array.</li>
+                </ol>
+              <li>Add a key/value pair to the subject object with the key being the predicate URI and the value being the value array.</li>
+              </ol>
+          </li>
+          <li>Add a key/value pair to the root object with value being the subject object created in the previous step and the key being one of the following:
+            <ul>
+              <li>If the subject of the triple is an RDF URI Reference U the key is  U.</li>
+              <li>If the subject of the triple is a Blank Node with label I
+              the key is the string formed by concatenting an underscore (U+005F) followed by a colon (U+003A) followed by I.</li>
+            </ul>
+          </li>
+          </ol>
+      </li>
+    </ol>
+
+    
+    
+    
+</section>
+
+<section id="sec-examples" class="informative">
+    <h2>Examples</h2>
+  
+    <p>An example of a single triple with a literal object having a language of "en"</p>
+    <pre class="example">
+      {
+        "http://example.org/about" : {
+            "http://purl.org/dc/terms/title" : [ { "value" : "Anna's Homepage", 
+                                                   "type" : "literal", 
+                                                   "lang" : "en" } ] 
+        }
+      }                                                        
+    </pre>
+
+    <p>This is equivalent to the following N-Triples [[!N-TRIPLES]]:</p>
+    <pre class="example">
+      &lt;http://example.org/about> &lt;http://purl.org/dc/terms/title> "Anna's Homepage"@en .                                                        
+    </pre>
+
+    <p>An example of two triples that share the same subject and predicate
+    but have differing objects:</p>
+    <pre class="example">
+      {
+        "http://example.org/about" : {
+            "http://purl.org/dc/terms/title" : [ { "value" : "Anna's Homepage", 
+                                                   "type" : "literal", 
+                                                   "lang" : "en" },
+                                                 { "value" : "Annas hjemmeside", 
+                                                   "type" : "literal", 
+                                                   "lang" : "da" } ] 
+        }
+      }                                                        
+    </pre>
+
+    <p>This is equivalent to the following N-Triples:</p>
+    <pre class="example">
+      &lt;http://example.org/about> &lt;http://purl.org/dc/terms/title> "Anna's Homepage"@en .                                                        
+      &lt;http://example.org/about> &lt;http://purl.org/dc/terms/title> "Annas hjemmeside"@da .                                                        
+    </pre>
+
+    <p>An example of a triple with a datatyped literal object:</p>
+    <pre class="example">
+      {
+        "http://example.org/about" : {
+            "http://purl.org/dc/terms/title" : [ { "value" : "&lt;p xmlns=\"http://www.w3.org/1999/xhtml\"&gt;&lt;b&gt;Anna's&lt;/b&gt; Homepage&gt;/p&gt;", 
+                                                   "type" : "literal", 
+                                                   "datatype" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral" } ] 
+        }
+      }                                                        
+    </pre>
+
+    <p>This is equivalent to the following N-Triples:</p>
+    <pre class="example">
+      &lt;http://example.org/about> &lt;http://purl.org/dc/terms/title> "&lt;p xmlns=\"http://www.w3.org/1999/xhtml\"&gt;&lt;b&gt;Anna's&lt;/b&gt; Homepage&gt;/p&gt;"^^&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> .
+    </pre>
+
+
+    <p>An example of triples with a common blank node:</p>
+    <pre class="example">
+      {
+        "http://example.org/about" : {
+            "http://purl.org/dc/terms/creator" : [ { "value" : "_:anna", 
+                                                     "type" : "bnode" } ] ,
+        "_:anna" : {
+            "http://xmlns.com/foaf/0.1/name" : [ { "value" : "Anna", 
+                                                   "type" : "literal" } ] 
+        }
+      }                                                        
+    </pre>
+
+    <p>This is equivalent to the following N-Triples:</p>
+    <pre class="example">
+      &lt;http://example.org/about> &lt;http://purl.org/dc/terms/creator> _:anna .
+      _:anna &lt;http://xmlns.com/foaf/0.1/name> "Anna" .
+    </pre>
+
+
+    <p>An example of a triple with a URI object:</p>
+    <pre class="example">
+      {
+        "_:anna" : {
+            "http://xmlns.com/foaf/0.1/homepage" : [ { "value" : "http://example.org/anna", 
+                                                       "type" : "uri" } ] 
+        }
+      }                                                        
+    </pre>
+
+    <p>This is equivalent to the following N-Triples:</p>
+    <pre class="example">
+      _:anna &lt;http://xmlns.com/foaf/0.1/homepage> &lt;http://example.org/anna> .
+    </pre>
+
+
+    <p>An example of triples with common subjects:</p>
+    <pre class="example">
+      {
+        "_:anna" : {
+            "http://xmlns.com/foaf/0.1/name" : [ { "value" : "Anna", 
+                                                   "type" : "literal" } ],
+            "http://xmlns.com/foaf/0.1/homepage" : [ { "value" : "http://example.org/anna", 
+                                                       "type" : "uri" } ] 
+        }
+      }                                                        
+    </pre>
+
+    <p>This is equivalent to the following N-Triples:</p>
+    <pre class="example">
+      _:anna &lt;http://xmlns.com/foaf/0.1/name> "Anna" .
+      _:anna &lt;http://xmlns.com/foaf/0.1/homepage> &lt;http://example.org/anna> .
+    </pre>
+
+
+    <p>An empty RDF graph is serialized as a JSON object with zero keys.</p>
+    <pre class="example">{ }</pre>
+
+</section>
+
+<section id="section-Acknowledgments" class="informative">
+    <h2>Acknowledgments</h2>
+
+    <p>This document is based on original work from Talis [[TALIS-RDF-JSON]] and has benefited from the review of the RDF WG, especially Andy Seaborne and Pierre-Antoine Champin.</p>
+
+
+</section>
+
+      <section id="sec-mediaReg" class="appendix">
+        <h2>Internet Media Type, File Extension and Macintosh File Type</h2>
+    <p>The suggested media type for RDF/JSON is "application/rdf+json".</p>
+
+    <p>It is suggested that RDF/JSON files have the extension ".rj" (all lowercase) on all platforms.</p>
+    <p>JSON is encoded in Unicode, with a default encoding of UTF-8. See RFC627, section 3 "Encoding".</p>
+
+</section>
+      
+
+<section id="references"></section>
+
+  </body>
+</html>
+
