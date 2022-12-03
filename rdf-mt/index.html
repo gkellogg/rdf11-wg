@@ -2,32 +2,56 @@
 <html>
   <head>
     <meta http-equiv='Content-Type' content='text/html;charset=utf-8'/>
-    <title>RDF 1.1 Semantics</title>
-    <script src="../local-biblio.js" class="remove"></script>
-    <script src='https://www.w3.org/Tools/respec/respec-w3c-common' class='remove'></script>
+    <title>RDF 1.2 Semantics</title>
+    <script src='https://www.w3.org/Tools/respec/respec-w3c' class='remove'></script>
     <script class='remove'>
       var respecConfig = {
           // extend the bibliography entries
-          localBiblio: localBibliography,
+          //localBiblio: localBibliography,
+          localBiblio: {
+            "ISO24707": {
+              id: "ISO24707",
+              title: "Information technology — Common Logic (CL) — A framework for a family of logic-based languages",
+              date: "2018-07",
+              href: "https://www.iso.org/standard/66249.html",
+              status: "Published",
+              publisher: "ISO/EIC"
+            },
+            "HORST04": {
+              id: "HORST04",
+              title: "Extending the RDFS Entailment Lemma",
+              authors: ["Herman J. ter Horst"],
+              date: "2004",
+              isbn: "978-3-540-30475-3",
+              href: "https://doi.org/10.1007/978-3-540-30475-3_7",
+              status: "Conference Proceeding",
+              publisher: "Springer, Berlin, Heidelberg"
+            },
+            HORST05: {
+              id: "HORST05",
+              title: "Completeness, Decidability and Complexity of Entailment for RDF Schema and a Semantic Extension Involving the OWL Vocabulary",
+              authors: ["Herman J. ter Horst"],
+              date: "2005",
+              href: "https://dx.doi.org/10.2139/ssrn.3199251",
+              status: "Conference Proceeding",
+              publisher: "Journal of Web Semantics"
+            }
+            //"HORST05": "Herman J. ter Horst. <cite>Completeness, Decidability and Complexity of Entailment for RDF Schema and a Semantic Extension Involving the OWL Vocabulary</cite>, Journal of Web Semantics 3 (2005) 79-115.",
+          },
 
           // specification status (e.g. WD, LCWD, NOTE, etc.). If in doubt use ED.
-          specStatus:              "REC",
-          errata:                  "http://www.w3.org/2014/rdf1.1-errata",
-          implementationReportURI: "http://www.w3.org/2013/rdf-mt-reports/index.html",
-          testSuiteURI:            "http://www.w3.org/TR/2014/NOTE-rdf11-testcases-20140225/",
-          // prEnd:                "2014-02-09", 
-          // crEnd:                "2013-11-26",
-          // lcEnd:                "2013-09-06",
+          specStatus:              "ED",
+          testSuiteURI:            "https://w3c.github.io/rdf-tests/rdf-mt/",
 
           // the specification's short name, as in http://www.w3.org/TR/short-name/
-          shortName:            "rdf11-mt",
+          shortName:            "rdf12-mt",
 
           // if your specification has a subtitle that goes below the main
           // formal title, define it here
           // subtitle   :  "an excellent document",
 
           // if you wish the publication date to be other than today, set this
-          publishDate:  "2014-02-25",
+          //publishDate:  "2014-02-25",
 
           // if the specification's copyright date is a range of years, specify
           // the start date here:
@@ -35,15 +59,15 @@
 
           // if there is a previously published draft, uncomment this and set its YYYY-MM-DD date
           // and its maturity status
-          previousPublishDate:  "2014-01-09",
-          previousMaturity:  "PR",
+          previousPublishDate:  "2014-02-25",
+          previousMaturity:  "REC",
 
           // if there a publicly available Editor's Draft, this is the link
           // edDraftURI: "https://dvcs.w3.org/hg/rdf/raw-file/default/rdf-mt/index.html",
 
           // if this is a LCWD, uncomment and set the end of its review period
  
-          prevRecShortname:   "rdf-mt/",
+          prevRecShortname:   "rdf11-mt",
 
           // editors, add as many as you like
           // only "name" is required
@@ -64,22 +88,14 @@
           //      company: "Your Company", companyURL: "http://example.com/" },
           //],
 
+          github: "https://github.com/gellogg/rdf11-wg/",
+
           // name of the WG
-          wg:           "RDF Working Group",
+          group:           "rdf-star",
 
-          // URI of the public WG page
-          wgURI:        "http://www.w3.org/2011/rdf-wg/",
-
-          // name (without the @w3c.org) of the public mailing to which comments are due
-          wgPublicList: "public-rdf-comments",
-
-          // URI of the patent status for this WG, for Rec-track documents
-          // !!!! IMPORTANT !!!!
-          // This is important for Rec-track documents, do not copy a patent URI from a random
-          // document unless you know what you're doing. If in doubt ask your friendly neighbourhood
-          // Team Contact.
-          wgPatentURI:  "http://www.w3.org/2004/01/pp-impl/46168/status",
-
+          doJsonLd:     true,
+          wgPublicList: "public-rdf-star-wg"	  
+ 
       };
     </script>
 <style type="text/css">
@@ -146,7 +162,7 @@
   <body>
     <section id='abstract'>
     <p>  This document describes a precise semantics for the Resource Description
-  Framework 1.1 [[RDF11-CONCEPTS]] and RDF Schema [[RDF11-SCHEMA]]. It defines a number of distinct entailment regimes and corresponding patterns of entailment. It is part of a suite of documents which comprise the full specification of RDF 1.1.</p>
+  Framework 1.1 [[RDF11-CONCEPTS]] and RDF Schema [[RDF-SCHEMA]]. It defines a number of distinct entailment regimes and corresponding patterns of entailment. It is part of a suite of documents which comprise the full specification of RDF 1.1.</p>
   </section>
 
 <section id='sotd'>
@@ -178,25 +194,38 @@ Changes</a>. </p>
 
 <p><a>Semantic extension</a>s MAY impose special syntactic conditions or restrictions upon RDF graphs, such as requiring certain triples to be present, or prohibiting particular combinations of IRIs in triples, and MAY consider RDF graphs which do not conform to these conditions to be errors. For example, RDF statements of the form <br/><br/> <code>ex:a rdfs:subClassOf "Thing"^^xsd:string .</code><br/><br/> are prohibited in the OWL <a>semantic extension</a> based on description logics [[OWL2-SYNTAX]]. In such cases, basic RDF operations such as taking a subset of triples, or combining RDF graphs, may cause syntax errors in parsers which recognize the extension conditions. None of the <a>semantic extension</a>s normatively defined in this document impose such syntactic restrictions on RDF graphs.</p>
 
-<p>All entailment regimes MUST be <dfn>monotonic</dfn> extensions of the simple entailment regime described in the document, in the sense that if A simply <a>entail</a>s B then A also entails B under any extended notion of entailment, provided that any syntactic conditions of the extension are also satisfied. Put another way, a <a>semantic extension</a> cannot "cancel" an entailment made by a weaker entailment regime, although it can treat the result as a syntax error.</p>
+<p>All entailment regimes MUST be <dfn data-export="">monotonic</dfn> extensions of the simple entailment regime described in the document, in the sense that if A simply <a>entail</a>s B then A also entails B under any extended notion of entailment, provided that any syntactic conditions of the extension are also satisfied. Put another way, a <a>semantic extension</a> cannot "cancel" an entailment made by a weaker entailment regime, although it can treat the result as a syntax error.</p>
     </section>
 
  <section>
       <h2 id="notation">Notation and Terminology</h2>
 
 
-      <p>This document uses the following terminology for describing RDF graph syntax, all as defined in the companion RDF Concepts specification [[!RDF11-CONCEPTS]]: <em><a class="externalDFN" href="http://www.w3.org/TR/rdf11-concepts/#dfn-iri"><dfn>IRI</dfn></a></em>, <em><a class="externalDFN" href="http://www.w3.org/TR/rdf11-concepts/#section-triples"><dfn>RDF triple</dfn></a>, <a class="externalDFN" href="http://www.w3.org/TR/rdf11-concepts/#section-rdf-graph"><dfn>RDF graph</dfn></a>, <a class="externalDFN" href="http://www.w3.org/TR/rdf11-concepts/#section-triples"><dfn>subject</dfn></a>, <a class="externalDFN" href="http://www.w3.org/TR/rdf11-concepts/#section-triples"><dfn>predicate</dfn></a>, <a class="externalDFN" href="http://www.w3.org/TR/rdf11-concepts/#section-triples"><dfn>object</dfn></a>, <a class="externalDFN" href="http://www.w3.org/TR/rdf11-concepts/#dfn-rdf-source"><dfn>RDF source</dfn></a>, <a class="externalDFN" href="http://www.w3.org/TR/rdf11-concepts/#dfn-node"><dfn>node</dfn></a>, <a class="externalDFN" href="http://www.w3.org/TR/rdf11-concepts/#dfn-blank-node"><dfn>blank node</dfn></a>, <a class="externalDFN" href="http://www.w3.org/TR/rdf11-concepts/#dfn-literal"><dfn>literal</dfn></a>, <a class="externalDFN" href="http://www.w3.org/TR/rdf11-concepts/#graph-isomorphism"><dfn>isomorphic</dfn></a>, and <a class="externalDFN" href="http://www.w3.org/TR/rdf11-concepts/#section-dataset"><dfn>RDF dataset</dfn></a>.</em> All the definitions in this document apply unchanged to <a class="externalDFN" href="http://www.w3.org/TR/rdf11-concepts/#section-generalized-rdf">generalized RDF triples, graphs, and datasets</a>. </p>
+      <p>This document uses the following terminology for describing RDF graph syntax, all as defined in the companion RDF Concepts specification [[!RDF11-CONCEPTS]]:
+        <dfn data-cite="RDF11-CONCEPTS#dfn-iri">IRI</dfn>,
+        <dfn data-cite="RDF11-CONCEPTS#dfn-rdf-triple">RDF triple</dfn>,
+        <dfn data-cite="RDF11-CONCEPTS#dfn-rdf-graph">RDF graph</dfn>,
+        <dfn data-cite="RDF11-CONCEPTS#dfn-subject">subject</dfn>,
+        <dfn data-cite="RDF11-CONCEPTS#dfn-predicate">predicate</dfn>,
+        <dfn data-cite="RDF11-CONCEPTS#dfn-object">object</dfn>,
+        <dfn data-cite="RDF11-CONCEPTS#dfn-rdf-source">RDF source</dfn>,
+        <dfn data-cite="RDF11-CONCEPTS#dfn-node">node</dfn>,
+        <dfn data-cite="RDF11-CONCEPTS#dfn-blank-node">blank node</dfn>,
+        <dfn data-cite="RDF11-CONCEPTS#dfn-literal">literal</dfn>,
+        <dfn data-cite="RDF11-CONCEPTS#dfn-graph-isomorphism">isomorphic</dfn>, and
+        <dfn data-cite="RDF11-CONCEPTS#dfn-rdf-dataset">RDF dataset</dfn>.
+        All the definitions in this document apply unchanged to <a data-cite="RDF-CONCEPTS#section-generalized-rdf">generalized RDF triples, graphs, and datasets</a>. </p>
 
 <p>
-An <dfn>interpretation</dfn> is a mapping from IRIs and literals into a set, together with some constraints upon the set and the mapping. This document defines various notions of interpretation, each corresponding in a standard way to an entailment regime. These are identified by prefixes such as <em>simple interpretation</em>, etc., and are defined in later sections. The unqualified term <em>interpretation</em> is usually used to refer to any compatible kind of interpretation in general, but if clear from the context might refer to a specific kind of interpretation.
+An <dfn class="export">interpretation</dfn> is a mapping from IRIs and literals into a set, together with some constraints upon the set and the mapping. This document defines various notions of interpretation, each corresponding in a standard way to an entailment regime. These are identified by prefixes such as <em>simple interpretation</em>, etc., and are defined in later sections. The unqualified term <em>interpretation</em> is usually used to refer to any compatible kind of interpretation in general, but if clear from the context might refer to a specific kind of interpretation.
 <p>
 
-<p>The words <dfn>denote</dfn><strong>s</strong> and <dfn>refers to</dfn> are used interchangeably as synonyms for the relationship between an IRI or literal and what it refers to in a given interpretation, itself called the <dfn>denotation</dfn> or <dfn>referent</dfn>. IRI meanings may also be determined by other constraints external to the RDF semantics; when we wish to refer to such an externally defined naming relationship, we will use the word <dfn>identify</dfn> and its cognates. For example, the fact that the IRI <code>http://www.w3.org/2001/XMLSchema#decimal</code> is widely used as the name of a datatype described in the XML Schema document [[XMLSCHEMA11-2]] might be described by saying that the IRI <em>identifies</em> that datatype. If an IRI identifies something it may or may not refer to it in a given interpretation, depending on how the semantics is specified. For example, an IRI used as a graph name <a>identify</a>ing a named graph in an <a href="http://www.w3.org/TR/rdf11-concepts/#section-dataset" class="external">RDF dataset</a> may refer to something different from the graph it identifies. </p>
+<p>The words <dfn data-lt="refers to">denotes</dfn> and <a>refers to</a> are used interchangeably as synonyms for the relationship between an IRI or literal and what it refers to in a given interpretation, itself called the <dfn  class="export">denotation</dfn> or <dfn class="export">referent</dfn>. IRI meanings may also be determined by other constraints external to the RDF semantics; when we wish to refer to such an externally defined naming relationship, we will use the word <dfn data-lt="identified">identify</dfn> and its cognates. For example, the fact that the IRI <code>http://www.w3.org/2001/XMLSchema#decimal</code> is widely used as the name of a datatype described in the XML Schema document [[XMLSCHEMA11-2]] might be described by saying that the IRI <em>identifies</em> that datatype. If an IRI identifies something it may or may not refer to it in a given interpretation, depending on how the semantics is specified. For example, an IRI used as a graph name <a>identify</a>ing a named graph in an <a data-cite="RDF-CONCEPTS#section-dataset">RDF dataset</a> may refer to something different from the graph it identifies. </p>
 
 <p>Throughout this document, the equality sign = indicates strict identity. The statement "A = B" means that there is one entity to which both expressions "A" and "B" refer.  Angle brackets &lt; x, y &gt; are used to indicate an ordered pair
   of x and y.</p>
 
-<p>Throughout this document, <a>RDF graph</a>s and other fragments of RDF abstract syntax are written using the notational conventions of the Turtle syntax [[!TURTLE]]. The namespace prefixes <code>rdf:</code> <code>rdfs:</code> and <code>xsd:</code> are used as in [[!RDF11-CONCEPTS]], <a href="http://www.w3.org/TR/rdf11-concepts/#vocabularies">section 1.4</a>. When the exact IRI does not matter, the prefix <code>ex:</code> is used. When stating general rules or conditions we use three-character variables such as aaa, xxx, sss  to indicate arbitrary IRIs, literals, or other components of RDF syntax. Some cases are illustrated by node-arc diagrams showing the graph structure directly.</p>
+<p>Throughout this document, <a>RDF graph</a>s and other fragments of RDF abstract syntax are written using the notational conventions of the Turtle syntax [[!TURTLE]]. The namespace prefixes <code>rdf:</code> <code>rdfs:</code> and <code>xsd:</code> are used as in [[!RDF11-CONCEPTS]], <a data-cite="RDF-CONCEPTS#vocabularies">section 1.4</a>. When the exact IRI does not matter, the prefix <code>ex:</code> is used. When stating general rules or conditions we use three-character variables such as aaa, xxx, sss  to indicate arbitrary IRIs, literals, or other components of RDF syntax. Some cases are illustrated by node-arc diagrams showing the graph structure directly.</p>
 
 <p>A <dfn>name</dfn> is any IRI or literal. A typed literal contains
   two <a>name</a>s: itself and its internal type
@@ -220,7 +249,7 @@ An <dfn>interpretation</dfn> is a mapping from IRIs and literals into a set, tog
   an instance of an instance of G is an instance of G,
   and if H is an instance of G then every triple in H is an instance of at least one triple
   in G.</p>
-<p>An <dfn>instance with respect to</dfn> a vocabulary
+<p>An <dfn class="export">instance with respect to</dfn> a vocabulary
   V is an <a>instance</a> in which all the
   <a>name</a>s in the instance that were substituted
   for blank nodes in the original are <a>name</a>s
@@ -228,12 +257,12 @@ An <dfn>interpretation</dfn> is a mapping from IRIs and literals into a set, tog
 <p>A <dfn>proper instance</dfn> of a graph
   is an <a>instance</a> in which a blank node has been replaced by a <a>name</a>, or two blank
   nodes in the graph have been mapped into the same node in the instance. </p>
-<p>Two graphs are <a class="externalDFN" href="http://www.w3.org/TR/rdf11-concepts/#graph-isomorphism">isomorphic</a> when each maps into the other by a 1:1 mapping on blank nodes. Isomorphic graphs are mutual instances with an invertible instance
+<p>Two graphs are <a data-cite="RDF-CONCEPTS#graph-isomorphism">isomorphic</a> when each maps into the other by a 1:1 mapping on blank nodes. Isomorphic graphs are mutual instances with an invertible instance
   mapping. As blank nodes have no particular identity beyond their location in a graph, we will often treat isomorphic graphs as identical.</p>
 
 <p >An RDF graph is <dfn>lean</dfn> if it has no instance which is
-  a proper subgraph of itself. Non-lean graphs have internal redundancy
-  and express the same content as their lean subgraphs. For example, the graph</p>
+  a <a>proper subgraph</a> of itself. Non-lean graphs have internal redundancy
+  and express the same content as their lean <a>subgraphs</a>. For example, the graph</p>
 <p ><code>ex:a ex:p _:x .<br/>
   _:y ex:p _:x .</code></p>
 <p >is not lean, but</p>
@@ -248,7 +277,7 @@ Graphs share blank nodes only if they are derived from graphs
 described by documents or other structures (such as an RDF dataset) that explicitly provide for the sharing of blank nodes between different RDF graphs.  Simply downloading a
 web document does not mean that the blank nodes in a resulting RDF
 graph are the same as the blank nodes coming from other downloads of
-the same document or from the same <a class="externalDFN" href="http://www.w3.org/TR/rdf11-concepts/#dfn-rdf-source">RDF source</a>.</p>
+the same document or from the same <a data-cite="RDF-CONCEPTS#dfn-rdf-source">RDF source</a>.</p>
 
 <p> RDF applications which manipulate concrete syntaxes for RDF which use blank node identifiers should take care to keep track of the identity of the blank nodes they identify. Blank node identifiers often have a local scope, so when RDF from different sources is combined, identifiers may have to be changed in order to avoid accidental conflation of distinct blank nodes.</p>
 <p> For example, two documents may both use the blank node identifier "<code>_:x</code>" to identify a blank node, but unless these documents are in a shared identifier scope or are derived from a common source, the occurrences of "<code>_:x</code>" in one document will identify a different blank node than the one in the graph described by the other document. When graphs are formed by combining RDF from multiple sources, it may be necessary to <dfn>standardize</dfn> apart the blank node identifiers by replacing them by others which do not occur in the other document(s). For example, the two graphs represented  by the following texts: </p>
@@ -274,8 +303,8 @@ ex:b ex:q _:x2 .</code></p>
 
 <p>in which the blank node identifiers have been <a>standardize</a>d apart to avoid conflating the distinct blank nodes. (The particular blank node identifiers used have no significance, only that they are distinct.) </p>
 
-<p>It is possible for two or more graphs to share a blank node, for example if they are subgraphs of a single larger graph or derived from a common source. In this case, the union of a set of graphs preserves the identity of blank nodes shared between the graphs. In general, the union of a set of RDF graphs accurately represents the same semantic content as the graphs themselves, whether or not they share blank nodes. </p>
-<p>A related operation, called <dfn>merging</dfn>, takes the union after forcing any shared blank nodes, which occur in more than one graph, to be distinct in each graph. The resulting graph is called the <dfn>merge</dfn>. The merge of subgraphs of a graph may be larger than the original graph. For example, the result of merging the two singleton subgraphs of the three-node graph</p>
+<p>It is possible for two or more graphs to share a blank node, for example if they are <a>subgraphs</a> of a single larger graph or derived from a common source. In this case, the union of a set of graphs preserves the identity of blank nodes shared between the graphs. In general, the union of a set of RDF graphs accurately represents the same semantic content as the graphs themselves, whether or not they share blank nodes. </p>
+<p>A related operation, called <dfn class="export">merging</dfn>, takes the union after forcing any shared blank nodes, which occur in more than one graph, to be distinct in each graph. The resulting graph is called the <dfn class="export">merge</dfn>. The merge of <a>subgraphs</a> of a graph may be larger than the original graph. For example, the result of merging the two singleton subgraphs of the three-node graph</p>
 
 <p><img src="RDF11SemanticsDiagrams/example3.jpg" alt="Three-node Graph"></p>
 
@@ -298,7 +327,7 @@ ex:b ex:q _:x2 .</code></p>
 <p>The entire semantics applies to <a>RDF graph</a>s, not to <a>RDF source</a>s. An <a>RDF source</a> has a semantic meaning only through the graph that is its value at a given time, or in a given state. Graphs cannot change their semantics with time.</p>
 
 
-<p>A <dfn>simple interpretation</dfn> I is a structure consisting of:</p>
+<p>A <dfn data-lt="simply entail">simple interpretation</dfn> I is a structure consisting of:</p>
 
 <table>
 <caption>Definition of a simple interpretation.</caption>
@@ -314,13 +343,13 @@ ex:b ex:q _:x2 .</code></p>
   </tr>
   </table>
 
-<p class="changenote">The 2004 RDF 1.0 semantics defined simple interpretations relative to a vocabulary.<br/><br/>In the 2004 RDF 1.0 semantics, IL was a total, rather than partial, mapping.<br/><br/> The 2004 RDF 1.0 specification divided literals into 'plain' literals with no type and optional language tags, and typed literals. Usage has shown that it is important that every literal have a type. RDF 1.1 replaces plain literals without language tags by literals typed with the XML Schema <code>string</code> datatype, and introduces the special type <a href="http://www.w3.org/TR/rdf11-concepts/#dfn-language-tagged-string"><code>rdf:langString</code></a> for language-tagged strings. The full semantics for typed literals is given in the next section. </p>
+<p class="changenote">The 2004 RDF 1.0 semantics defined simple interpretations relative to a vocabulary.<br/><br/>In the 2004 RDF 1.0 semantics, IL was a total, rather than partial, mapping.<br/><br/> The 2004 RDF 1.0 specification divided literals into 'plain' literals with no type and optional language tags, and typed literals. Usage has shown that it is important that every literal have a type. RDF 1.1 replaces plain literals without language tags by literals typed with the XML Schema <code>string</code> datatype, and introduces the special type <a data-cite="RDF-CONCEPTS#dfn-language-tagged-string"><code>rdf:langString</code></a> for language-tagged strings. The full semantics for typed literals is given in the next section. </p>
 
 <p class="technote"> Simple interpretations are required to interpret all <a>name</a>s, and are therefore infinite. This simplifies the exposition. However, RDF can be interpreted using finite structures, supporting decidable algorithms. Details are given in Appendix B. </p>
 
 
 <p>IEXT(x), called
-      the <dfn>extension</dfn> of x, is a
+      the <dfn class="export">extension</dfn> of x, is a
       set of pairs which identify the arguments for which the property is true,
       that is, a binary relational extension.
       </p>
@@ -420,7 +449,7 @@ I(<code>ex:Alice</code>)=Alice, I(<code>ex:Bob</code>)=Bob, IEXT(I(<code>ex:hasC
 
 <section id="simpleentailment"><h2>Simple Entailment</h2>
 
-<p>Following standard terminology, we say that I (simply) <dfn>satisfies</dfn> E when I(E)=true, that E is (simply) <dfn>satisfiable</dfn> when a simple interpretation exists which satisfies it, otherwise (simply) <dfn>unsatisfiable</dfn>, and that a graph G simply <dfn>entail</dfn><strong>s</strong> a graph E when every interpretation which satisfies G also satisfies E. If two graphs E and F each entail the other then they are logically <dfn>equivalent</dfn>.</p>
+<p>Following standard terminology, we say that I (simply) <dfn>satisfies</dfn> E when I(E)=true, that E is (simply) <dfn>satisfiable</dfn> when a simple interpretation exists which <a>satisfies</a> it, otherwise (simply) <dfn>unsatisfiable</dfn>, and that a graph G simply <dfn data-lt="simple entailment|entailment">entails</dfn> a graph E when every interpretation which <a>satisfies</a> G also satisfies E. If two graphs E and F each entail the other then they are logically <dfn>equivalent</dfn>.</p>
 <p>In later sections these notions will be adapted to other classes of interpretations, but throughout this section 'entailment' should be interpreted as meaning simple entailment.
 </p>
 
@@ -428,11 +457,11 @@ I(<code>ex:Alice</code>)=Alice, I(<code>ex:Bob</code>)=Bob, IEXT(I(<code>ex:hasC
 
     <p>Any process which constructs a graph E from
     some other graph S is (simply) <dfn>valid</dfn> if S
-    simply entails E in every case, otherwise <dfn>invalid.</dfn></p>
+    <a>simply entails</a> E in every case, otherwise <dfn class="export">invalid.</dfn></p>
 
 <p>The fact that an inference is valid should not be understood as meaning that any RDF application is obliged or required to make the inference. Similarly, the logical invalidity of some RDF transformation or process does not mean that the process is incorrect or prohibited. Nothing in this specification requires or prohibits any particular operations on RDF graphs or sources. Entailment and validity are concerned solely with establishing the conditions on such operations which guarantee the preservation of truth. While logically invalid processes, which do not follow valid entailments, are not prohibited, users should be aware that they may be at risk of introducing falsehoods into true RDF data. Nevertheless, particular uses of logically invalid processes may be justified and appropriate for data processing under circumstances where truth can be ensured by other means. </p>
 
-<p>Entailment refers only to the truth of RDF graphs, not to their suitability for any other purpose. It is possible for an RDF graph to be fitted for a given purpose and yet validly entail another graph which is not appropriate for the same purpose. An example is the RDF test cases manifest [[RDF-TESTCASES]] which is provided as an RDF document for user convenience. This document lists examples of correct entailments by describing their antecedents and conclusions. Considered as an RDF graph, the manifest simply entails a subgraph which omits the antecedents, and would therefore be incorrect if used as a test case manifest. This is not a violation of the RDF semantic rules, but it shows that the property of <em> "being a correct RDF test case manifest"</em> is not preserved under RDF entailment, and therefore cannot be described as an RDF <a>semantic extension</a>. Such entailment-risky uses of RDF should be restricted to cases, as here, where it is obvious to all parties what the intended special restrictions on entailment are, in contrast with the more normal case of using RDF for the open publication of data on the Web.</p>
+<p>Entailment refers only to the truth of RDF graphs, not to their suitability for any other purpose. It is possible for an RDF graph to be fitted for a given purpose and yet validly entail another graph which is not appropriate for the same purpose. An example is the RDF test cases manifest [[RDF-TESTCASES]] which is provided as an RDF document for user convenience. This document lists examples of correct entailments by describing their antecedents and conclusions. Considered as an RDF graph, the manifest <a>simply entails</a> a <a>subgraph</a> which omits the antecedents, and would therefore be incorrect if used as a test case manifest. This is not a violation of the RDF semantic rules, but it shows that the property of <em> "being a correct RDF test case manifest"</em> is not preserved under RDF entailment, and therefore cannot be described as an RDF <a>semantic extension</a>. Such entailment-risky uses of RDF should be restricted to cases, as here, where it is obvious to all parties what the intended special restrictions on entailment are, in contrast with the more normal case of using RDF for the open publication of data on the Web.</p>
 
 </section>
 
@@ -441,21 +470,21 @@ I(<code>ex:Alice</code>)=Alice, I(<code>ex:Bob</code>)=Bob, IEXT(I(<code>ex:hasC
 <h3 id="simple_entailment_properties">Properties of simple entailment (Informative) </h3>
 <p>The properties described here apply only to simple entailment, not to extended notions of entailment introduced in later sections. Proofs are given in Appendix C. </p>
 
-<p class="fact">Every graph is simply satisfiable.</p>
+<p class="fact">Every graph is simply <a>satisfiable</a>.</p>
 
 <p>This does not always hold for extended notions of interpretation. For example, a graph containing an <a>ill-typed</a> literal is <a>D-unsatisfiable</a>.</p>
 
 <p>The following <dfn>interpolation</dfn> <strong>lemma</strong> </p>
 
   <p class="fact">
-  G simply entails a graph E if and only if a subgraph of G is an instance of E.
+  G <a>simply entails</a> a graph E if and only if a <a>subgraph</a> of G is an instance of E.
 </p>
 
 <p> completely characterizes simple entailment in syntactic
-  terms. To detect whether one RDF graph simply entails another, check that
+  terms. To detect whether one RDF graph <a>simply entails</a> another, check that
   there is some instance of the entailed graph which is a subset of the first graph. </p>
 
-<p class="technote">This is clearly decidable, but it is also difficult to determine in general, since one can encode the NP-hard subgraph problem (detecting whether one mathematical graph is a subgraph of another) as detecting simple entailment between RDF graphs. This construction (due to Jeremy Carroll) uses graphs all of whose nodes are blank nodes. The complexity of checking simple entailment is reduced by having fewer blank nodes in the conclusion E. When E is a <a>ground</a> graph, it is simply a matter of checking the subset relationship on sets of triples.</p>
+<p class="technote">This is clearly decidable, but it is also difficult to determine in general, since one can encode the NP-hard <a>subgraph</a> problem (detecting whether one mathematical graph is a subgraph of another) as detecting simple entailment between RDF graphs. This construction (due to Jeremy Carroll) uses graphs all of whose nodes are blank nodes. The complexity of checking simple entailment is reduced by having fewer blank nodes in the conclusion E. When E is a <a>ground</a> graph, it is simply a matter of checking the subset relationship on sets of triples.</p>
 
 <p><a>Interpolation</a> has a number of direct consequences, for example:</p>
 
@@ -463,7 +492,7 @@ I(<code>ex:Alice</code>)=Alice, I(<code>ex:Bob</code>)=Bob, IEXT(I(<code>ex:hasC
   any graph, and does not simply entail any graph except itself.
 <!-- <a href="#emptygraphlemmaprf" class="termref">[Proof]</a> -->
 </p>
-<p class="fact"> A graph simply entails all its subgraphs.
+<p class="fact"> A graph <a>simply entails</a> all its subgraphs.
 <!-- <a href="#subglemprf" class="termref">[Proof]</a> -->
 </p>
 <p class="fact"> A graph
@@ -475,7 +504,7 @@ I(<code>ex:Alice</code>)=Alice, I(<code>ex:Bob</code>)=Bob, IEXT(I(<code>ex:hasC
   not simply entail E'.
 </p>
 
-<p class="fact"> If S is a subgraph of S' and S simply entails E, then S' simply entails E.
+<p class="fact"> If S is a <a>subgraph</a> of S' and S <a>simply entails</a> E, then S' <a>simply entails</a> E.
 <!-- <a href="#monotonicitylemmaprf" class="termref"> [Proof]</a> -->
 </p>
 <p class="fact">
@@ -491,13 +520,13 @@ I(<code>ex:Alice</code>)=Alice, I(<code>ex:Bob</code>)=Bob, IEXT(I(<code>ex:hasC
 </section>
 
 <section class="informative"><h2 id="skolemization">Skolemization (Informative)</h2>
-<p><a class="externaldefinition"><dfn>Skolemization</dfn></a> is a transformation on RDF graphs which eliminates blank nodes by replacing them with "new" IRIs, which means IRIs which are coined for this purpose and are therefore guaranteed to not occur in any other RDF graph (at the time of creation). See <a href="http://www.w3.org/TR/rdf11-concepts/#section-skolemization">Section 3.5</a> of [[!RDF11-CONCEPTS]] for a fuller discussion. </p>
+<p><a class="externaldefinition"><dfn>Skolemization</dfn></a> is a transformation on RDF graphs which eliminates blank nodes by replacing them with "new" IRIs, which means IRIs which are coined for this purpose and are therefore guaranteed to not occur in any other RDF graph (at the time of creation). See <a data-cite="RDF-CONCEPTS#section-skolemization">Section 3.5</a> of [[!RDF11-CONCEPTS]] for a fuller discussion. </p>
 <p> Suppose G is a graph containing blank nodes and sk is a skolemization mapping from the blank nodes in G to the skolem IRIs which are substituted for them, so that sk(G) is a skolemization of G.  Then the semantic relationship between them can be summarized as follows. </p>
 
-<p class="fact">   sk(G) simply entails G (since sk(G) is an instance of G.)</p>
+<p class="fact">   sk(G) <a>simply entails</a> G (since sk(G) is an instance of G.)</p>
 <p class="fact">   G does not simply entail sk(G) (since sk(G) contains IRIs not in G.) </p>
-<p class="fact">  For any graph H, if sk(G) simply entails H then there is a graph H' such that G entails H' and H=sk(H') . </p>
-<p class="fact">  For any graph H which does not contain any of the "new" IRIs introduced into sk(G), sk(G) simply entails H if and only if G simply entails H.
+<p class="fact">  For any graph H, if sk(G) <a>simply entails</a> H then there is a graph H' such that G entails H' and H=sk(H') . </p>
+<p class="fact">  For any graph H which does not contain any of the "new" IRIs introduced into sk(G), sk(G) <a>simply entails</a> H if and only if G <a>simply entails</a> H.
 </p>
 
 <p>The second property means that a graph is not logically <a>equivalent</a> to its skolemization. Nevertheless, they are in a strong sense almost interchangeable, as shown the next two properties. The third property means that even when conclusions are drawn from the skolemized graph which do contain the new vocabulary, these will exactly mirror what could have been derived from the original graph with the original blank nodes in place. The replacement of blank nodes by IRIs does not effectively alter what can be validly derived from the graph, other than by giving new names to what were formerly anonymous entities. The fourth property, which is a consequence of the third, clearly shows that in some sense  a skolemization of G can "stand in for" G as far as entailments are concerned. Using sk(G) instead of G will not affect any entailments which do not involve the new skolem vocabulary.  </p>
@@ -507,17 +536,17 @@ I(<code>ex:Alice</code>)=Alice, I(<code>ex:Bob</code>)=Bob, IEXT(I(<code>ex:hasC
 <section><h2 id="datatypes">Literals and datatypes</h2>
 <p class="changenote">  In the 2004 RDF 1.0 specification, datatype D-entailment was defined as a <a>semantic extension</a> of RDFS-entailment. Here it is defined as a direct extension to basic RDF. This is more in conformity with actual usage, where RDF with datatypes is widely used without the RDFS vocabulary. If there is a need to distinguish this from the 2004 RDF 1.0 terminology, the longer phrasing "simple D-entailment" or "simple datatype entailment" should be used rather than "D-entailment". </p>
 
-<p> Datatypes are <a title="identify">identified</a> by IRIs. Interpretations will vary according to which IRIs are recognized as denoting datatypes. We describe this using a parameter D on simple interpretations, where D is the set of <dfn>recognize</dfn><em><strong>d</strong></em> datatype IRIs. </p>
+<p> Datatypes are <a>identified</a> by IRIs. Interpretations will vary according to which IRIs are recognized as denoting datatypes. We describe this using a parameter D on simple interpretations, where D is the set of <dfn>recognize</dfn><em><strong>d</strong></em> datatype IRIs. </p>
 
 <p class="changenote">The previous version of this specification defined the parameter D as a <a>datatype map</a> from IRIs to datatypes, i.e. as a restricted kind of interpretation mapping. As the current semantics presumes that a recognized IRI identifies a unique datatype, this IRI-to-datatype mapping is globally unique and externally specified, so we can think of D as either a set of IRIs or as a fixed <a>datatype map</a>. Formally, the <dfn>datatype map</dfn> corresponding to the set D is the restriction of a <a>D-interpretation</a> to the set D. Semantic extensions which are stated in terms of conditions on <a>datatype map</a>s can be interpreted as applying to this mapping. </p>
 
-<p>The exact mechanism by which an IRI <a title="identify">identifies</a> a datatype is considered to be external to the semantics, but the semantics presumes that a recognized IRI <a title="identify">identifies</a> a unique datatype wherever it occurs. RDF processors which are not able to determine which datatype is identified by an IRI cannot <a>recognize</a> that IRI, and should treat any literals with that IRI as their datatype IRI as unknown names. </p>
+<p>The exact mechanism by which an IRI <a>identifies</a> a datatype is considered to be external to the semantics, but the semantics presumes that a recognized IRI <a>identifies</a> a unique datatype wherever it occurs. RDF processors which are not able to determine which datatype is identified by an IRI cannot <a>recognize</a> that IRI, and should treat any literals with that IRI as their datatype IRI as unknown names. </p>
 
-<p>RDF literals and datatypes are fully described in <a href="http://www.w3.org/TR/rdf11-concepts/#section-Datatypes"> Section 5</a> of [[!RDF11-CONCEPTS]]. In summary: with one exception, RDF literals combine a string and an IRI <a>identify</a>ing a datatype. The exception is <a href="http://www.w3.org/TR/rdf11-concepts/#dfn-language-tagged-string">language-tagged strings</a>, which have two syntactic components, a string and a language tag, and are assigned the type <code>rdf:langString</code>. A datatype is understood to define a partial mapping, called the <dfn>lexical-to-value mapping</dfn>, from a lexical space (a set of character strings) to values. The function <dfn>L2V</dfn> maps datatypes to their lexical-to-value mapping. A literal with datatype d denotes the value obtained by applying this mapping to the character string sss: L2V(d)(sss). If the literal string is not in the lexical space, so that the lexical-to-value mapping gives no value for the literal string, then the literal has no referent. The <dfn>value space</dfn> of a datatype is the range of the <a>lexical-to-value mapping</a>. Every literal with that type either refers to a value in the value space of the type, or fails to refer at all. An  <dfn>ill-typed</dfn> literal is one whose datatype IRI is <a>recognize</a>d, but whose character string is assigned no value by the <a>lexical-to-value mapping</a> for that datatype. </p>
+<p>RDF literals and datatypes are fully described in <a data-cite="RDF-CONCEPTS#section-Datatypes"> Section 5</a> of [[!RDF11-CONCEPTS]]. In summary: with one exception, RDF literals combine a string and an IRI <a>identify</a>ing a datatype. The exception is <a data-cite="RDF-CONCEPTS#dfn-language-tagged-string">language-tagged strings</a>, which have two syntactic components, a string and a language tag, and are assigned the type <code>rdf:langString</code>. A datatype is understood to define a partial mapping, called the <dfn>lexical-to-value mapping</dfn>, from a lexical space (a set of character strings) to values. The function <dfn>L2V</dfn> maps datatypes to their lexical-to-value mapping. A literal with datatype d <a>denotes</a> the value obtained by applying this mapping to the character string sss: L2V(d)(sss). If the literal string is not in the lexical space, so that the lexical-to-value mapping gives no value for the literal string, then the literal has no referent. The <dfn>value space</dfn> of a datatype is the range of the <a>lexical-to-value mapping</a>. Every literal with that type either <a>refers to</a> a value in the value space of the type, or fails to refer at all. An  <dfn>ill-typed</dfn> literal is one whose datatype IRI is <a>recognize</a>d, but whose character string is assigned no value by the <a>lexical-to-value mapping</a> for that datatype. </p>
 
-<p> RDF processors are not required to <a>recognize</a> any datatype IRIs other than <a href="http://www.w3.org/TR/rdf11-concepts/#dfn-language-tagged-string"><code>rdf:langString</code></a> and <a href="http://www.w3.org/TR/xmlschema11-2/#string"><code>xsd:string</code></a>, but when IRIs listed in <a href="http://www.w3.org/TR/rdf11-concepts/#section-Datatypes">Section 5</a> of [[!RDF11-CONCEPTS]] are <a>recognize</a>d, they MUST be interpreted as described there, and when the IRI <code>rdf:PlainLiteral</code> is <a>recognize</a>d, it MUST be interpreted to refer to the datatype defined in [[!RDF-PLAIN-LITERAL]]. RDF processors MAY recognize other datatype IRIs, but when other datatype IRIs are <a>recognize</a>d, the mapping between the datatype IRI and the datatype it refers to MUST be specified unambiguously, and MUST be fixed during all RDF transformations or manipulations. In practice, this can be achieved by the IRI linking to an external specification of the datatype which describes both the components of the datatype itself and the fact that the IRI identifies the datatype, thereby fixing a value of the <a>datatype map</a> of this IRI.</p>
+<p> RDF processors are not required to <a>recognize</a> any datatype IRIs other than <a data-cite="RDF-CONCEPTS#dfn-language-tagged-string"><code>rdf:langString</code></a> and <a data-cite="XMLSCHEMA11-2#string"><code>xsd:string</code></a>, but when IRIs listed in <a data-cite="RDF-CONCEPTS#section-Datatypes">Section 5</a> of [[!RDF11-CONCEPTS]] are <a>recognize</a>d, they MUST be interpreted as described there, and when the IRI <code>rdf:PlainLiteral</code> is <a>recognize</a>d, it MUST be interpreted to refer to the datatype defined in [[!RDF-PLAIN-LITERAL]]. RDF processors MAY recognize other datatype IRIs, but when other datatype IRIs are <a>recognize</a>d, the mapping between the datatype IRI and the datatype it <a>refers to</a> MUST be specified unambiguously, and MUST be fixed during all RDF transformations or manipulations. In practice, this can be achieved by the IRI linking to an external specification of the datatype which describes both the components of the datatype itself and the fact that the IRI identifies the datatype, thereby fixing a value of the <a>datatype map</a> of this IRI.</p>
 
-<p>Literals with <a href="http://www.w3.org/TR/rdf11-concepts/#dfn-language-tagged-string"><code>rdf:langString</code></a> as their datatype are an exceptional case which are given a special treatment. The IRI <code>rdf:langString</code> is classified as a datatype IRI, and interpreted to refer to a datatype, even though no L2V mapping is defined for it. The value space of <code>rdf:langString</code> is the set of all pairs of a string with a language tag. The semantics of literals with this as their type are given below. </p>
+<p>Literals with <a data-cite="RDF-CONCEPTS#dfn-language-tagged-string"><code>rdf:langString</code></a> as their datatype are an exceptional case which are given a special treatment. The IRI <code>rdf:langString</code> is classified as a datatype IRI, and interpreted to refer to a datatype, even though no <a>L2V</a> mapping is defined for it. The <a>value space</a> of <code>rdf:langString</code> is the set of all pairs of a string with a language tag. The semantics of literals with this as their type are given below. </p>
 
 <p>RDF literal syntax allows any IRI to be used in a typed literal, even when it is not <a>recognize</a>d as referring to a datatype. Literals with such an "unknown" datatype IRI, which is not in the set of <a>recognize</a>d datatypes, SHOULD NOT be treated as errors, although RDF applications MAY issue a warning. Such literals SHOULD be treated like IRIs and assumed to denote some thing in the universe IR. RDF processors which do not <a>recognize</a> a datatype IRI will not be able to detect some entailments which are visible to one which does.  For example, the fact that </p><p><code>ex:a ex:p "20.0000"^^xsd:decimal .</code></p><p>entails </p><p><code>ex:a ex:p "20.0"^^xsd:decimal .</code></p><p>will not be visible to a processor which does not <a>recognize</a> the datatype IRI <code>xsd:decimal</code>.</p>
 
@@ -536,7 +565,7 @@ I(<code>ex:Alice</code>)=Alice, I(<code>ex:Bob</code>)=Bob, IEXT(I(<code>ex:hasC
 
 <p>If the literal is <a>ill-typed</a> then the L2V(I(aaa)) mapping has no value, and so the literal cannot denote anything. In this case, any triple containing the literal must be false. Thus, any triple, and hence any graph, containing an <a>ill-typed</a> literal will be  <a>D-unsatisfiable</a>, i.e. false in every D-interpretation. This applies only to literals typed with recognized datatype IRIs in D; literals with an unrecognized type IRI are not <a>ill-typed</a> and cannot give rise to a <a>D-unsatisfiable</a> graph. </p>
 
-<p>The special datatype <a href="http://www.w3.org/TR/rdf11-concepts/#dfn-language-tagged-string"><code>rdf:langString</code></a> has no <a>ill-typed</a> literals. Any syntactically legal literal with this type will denote a value in every D-interpretation where D includes <code>rdf:langString</code>. The only ill-typed literals of type <a href="http://www.w3.org/TR/xmlschema11-2/#string"><code>xsd:string</code></a> are those containing a Unicode code point which does not match the <a href="http://www.w3.org/TR/xml11/#NT-Char"><em>Char</em> production</a> in [[XML10]]. Such strings cannot be written in an XML-compatible surface syntax.
+<p>The special datatype <a data-cite="RDF-CONCEPTS#dfn-language-tagged-string"><code>rdf:langString</code></a> has no <a>ill-typed</a> literals. Any syntactically legal literal with this type will denote a value in every D-interpretation where D includes <code>rdf:langString</code>. The only ill-typed literals of type <a data-cite="XMLSCHEMA11-2#string"><code>xsd:string</code></a> are those containing a Unicode code point which does not match the <a data-cite="XML11#NT-Char"><em>Char</em> production</a> in [[XML10]]. Such strings cannot be written in an XML-compatible surface syntax.
 
 </p>
 
@@ -545,27 +574,27 @@ I(<code>ex:Alice</code>)=Alice, I(<code>ex:Bob</code>)=Bob, IEXT(I(<code>ex:hasC
 
 
 
-<p class="changenote">  In the 2004 RDF 1.0 specification, ill-typed literals were required to denote a value in IR, and <a title="D-unsatisfiable">D-unsatisfiability</a> could be recognized only by using the RDFS semantics. </p>
+<p class="changenote">  In the 2004 RDF 1.0 specification, ill-typed literals were required to denote a value in IR, and <a>D-unsatisfiability</a> could be recognized only by using the RDFS semantics. </p>
 
 
 </section>
 <section>
 <h3 id="D_entailment">Datatype entailment</h3>
 
-<p>A graph is (simply) <dfn>D-satisfiable</dfn> or <dfn>satisfiable recognizing D</dfn> when it has the value true in some D-interpretation, and a graph S (simply) <dfn>D-entails</dfn> or <dfn>entails recognizing D</dfn> a graph G when every D-interpretation which satisfies S also D-satisfies G.</p>
+<p>A graph is (simply) <dfn class="export">D-satisfiable</dfn> or <dfn class="export">satisfiable recognizing D</dfn> when it has the value true in some D-interpretation, and a graph S (simply) <dfn>D-entails</dfn> or <dfn>entails recognizing D</dfn> a graph G when every D-interpretation which <a>satisfies</a> S also D-satisfies G.</p>
 
-<p> Unlike the case with <a>simple interpretation</a>s, it is possible for a graph to have no satisfying D-interpretations, i.e. to be <dfn>D-unsatisfiable</dfn>. RDF processors MAY treat an unsatisfiable graph as signaling an error condition, but this is not required.</p>
+<p> Unlike the case with <a>simple interpretation</a>s, it is possible for a graph to have no satisfying D-interpretations, i.e. to be <dfn data-lt="D-unsatisfiability">D-unsatisfiable</dfn>. RDF processors MAY treat an unsatisfiable graph as signaling an error condition, but this is not required.</p>
 
-<p> A <a>D-unsatisfiable</a> graph D-entails any graph.</p>
+<p> A <a>D-unsatisfiable</a> graph <a>D-entails</a> any graph.</p>
 
-<p class="technote">The fact that an unsatisfiable statement entails any other statement has been known since antiquity. It is called the principle of <em>ex falso quodlibet</em>. It should not be interpreted to mean that it is necessary, or even permissible, to actually draw any conclusion from an unsatisfiable graph.</p>
+<p class="technote">The fact that an <a>unsatisfiable</a> statement entails any other statement has been known since antiquity. It is called the principle of <em>ex falso quodlibet</em>. It should not be interpreted to mean that it is necessary, or even permissible, to actually draw any conclusion from an <a>unsatisfiable</a> graph.</p>
 
-<p>In all of this language, 'D' is being used as a parameter to represent some set of datatype IRIs, and different D sets will yield different notions of satisfiability and entailment. The more datatypes are <a>recognize</a>d, the stronger is the entailment, so that if D &subset; E and S E-entails G then S must D-entail G. Simple entailment is {&nbsp;}-entailment, i.e. D-entailment when D is the empty set, so if S D-entails G  then S simply entails G. </p>
+<p>In all of this language, 'D' is being used as a parameter to represent some set of datatype IRIs, and different D sets will yield different notions of satisfiability and entailment. The more datatypes are <a>recognize</a>d, the stronger is the entailment, so that if D &subset; E and S E-entails G then S must <a>D-entail</a> G. Simple entailment is {&nbsp;}-entailment, i.e. D-entailment when D is the empty set, so if S <a>D-entails</a> G  then S <a>simply entails</a> G. </p>
 
 
 
 <section class="informative"> <h4 id="datatype_entailment_patterns">Patterns of datatype entailment (Informative)</h4>
-<p>Unlike <a title="entail">simple entailment</a>, it is not possible to give a single syntactic criterion to detect all D-entailments, which
+<p>Unlike <a>simple entailment</a>, it is not possible to give a single syntactic criterion to detect all D-entailments, which
 can hold because of particular properties of the lexical-to-value mappings of the  <a>recognize</a>d datatypes. For example, if D contains <code>xsd:decimal</code> then </p>
 
 <p><code>ex:a ex:p "25.0"^^xsd:decimal .</code></p>
@@ -575,15 +604,15 @@ can hold because of particular properties of the lexical-to-value mappings of th
 <p><code>ex:a ex:p "25"^^xsd:decimal .</code>
 </p>
 
-<p>In general, any triple containing a literal with a <a>recognize</a>d datatype IRI D-entails another literal when the lexical strings of the literals map to the same value under the lexical-to-value map of the datatype.  If two different datatypes in D map lexical strings to a common value, then a triple containing a literal typed with one datatype may D-entail another triple containing a literal typed with a different datatype. For example, <code>"25"^^xsd:integer</code> and <code>"25.0"^^xsd:decimal</code> have the same value, so the above also D-entails  </p>
+<p>In general, any triple containing a literal with a <a>recognize</a>d datatype IRI <a>D-entails</a> another literal when the lexical strings of the literals map to the same value under the lexical-to-value map of the datatype.  If two different datatypes in D map lexical strings to a common value, then a triple containing a literal typed with one datatype may <a>D-entail</a> another triple containing a literal typed with a different datatype. For example, <code>"25"^^xsd:integer</code> and <code>"25.0"^^xsd:decimal</code> have the same value, so the above also <a>D-entails</a>  </p>
 
 <p><code>ex:a ex:p "25"^^xsd:integer .</code></p>
 
 <p>when D also contains <code>xsd:integer</code>.
 
-<p>(There is a W3C Note [[SWBP-XSCH-DATATYPES]] containing a long <a href="http://www.w3.org/TR/swbp-xsch-datatypes/#sec-values">discussion</a> of literal values.)</p>
+<p>(There is a W3C Note [[SWBP-XSCH-DATATYPES]] containing a long <a data-cite="SWBP-XSCH-DATATYPES#sec-values">discussion</a> of literal values.)</p>
 
-<p><a>Ill-typed</a> literals are the only way in which a graph can be simply <a>D-unsatisfiable</a>, but datatypes can give rise to a variety of other unsatisfiable graphs when combined with the RDFS vocabulary, defined later.</p>
+<p><a>Ill-typed</a> literals are the only way in which a graph can be simply <a>D-unsatisfiable</a>, but datatypes can give rise to a variety of other <a>unsatisfiable</a> graphs when combined with the RDFS vocabulary, defined later.</p>
 </section>
 
 </section>
@@ -596,7 +625,7 @@ can hold because of particular properties of the lexical-to-value mappings of th
       <table>
         <tbody>
           <tr>
-            <td ><dfn>RDF vocabulary</dfn></td>
+            <td ><dfn data-cite="RDF11-CONCEPTS#dfn-rdf-vocabulary">RDF vocabulary</dfn></td>
           </tr>
 
           <tr>
@@ -620,10 +649,10 @@ can hold because of particular properties of the lexical-to-value mappings of th
       <td class="semantictable" id="rdfsemcond1">x is
         in IP if and only if &lt;x, I(<code>rdf:Property</code>)&gt; is in IEXT(I(<code>rdf:type</code>))</td>
     </tr>
-<tr><td class="semantictable" id="rdfsemcond3">For every IRI aaa in D, &lt; x, I(aaa) &gt; is in IEXT(I(<code>rdf:type</code>)) if and only if x is in the value space of I(aaa)</td></tr>
+<tr><td class="semantictable" id="rdfsemcond3">For every IRI aaa in D, &lt; x, I(aaa) &gt; is in IEXT(I(<code>rdf:type</code>)) if and only if x is in the <a>value space</a> of I(aaa)</td></tr>
   </tbody>
 </table>
-    <p>and satisfies every triple in the following infinite set:</p>
+    <p>and <a>satisfies</a> every triple in the following infinite set:</p>
 
 <table>
  <caption>RDF axioms.</caption>
@@ -648,18 +677,18 @@ can hold because of particular properties of the lexical-to-value mappings of th
 <p>RDF imposes no particular normative meanings on the rest of the RDF vocabulary.  <a href="#whatnot">Appendix D</a> describes the intended uses of some of this vocabulary.</p>
 
 
-<p>The datatype IRIs <a href="http://www.w3.org/TR/rdf11-concepts/#dfn-language-tagged-string"><code>rdf:langString</code></a> and <a href="http://www.w3.org/TR/xmlschema11-2/#string"><code>xsd:string</code></a> MUST be <a>recognize</a>d by all RDF interpretations. </p>
+<p>The datatype IRIs <a data-cite="RDF-CONCEPTS#dfn-language-tagged-string"><code>rdf:langString</code></a> and <a data-cite="XMLSCHEMA11-2#string"><code>xsd:string</code></a> MUST be <a>recognize</a>d by all RDF interpretations. </p>
 
-<p>Two other datatypes <a href="http://www.w3.org/TR/rdf11-concepts/#section-XMLLiteral"><code>rdf:XMLLiteral</code></a> and <a href="http://www.w3.org/TR/rdf11-concepts/#section-html"><code>rdf:HTML</code></a> are defined in [[!RDF11-CONCEPTS]]. RDF-D interpretations MAY fail to <a>recognize</a> these datatypes. </p>
+<p>Two other datatypes <a data-cite="RDF-CONCEPTS#section-XMLLiteral"><code>rdf:XMLLiteral</code></a> and <a data-cite="RDF-CONCEPTS#section-html"><code>rdf:HTML</code></a> are defined in [[!RDF11-CONCEPTS]]. RDF-D interpretations MAY fail to <a>recognize</a> these datatypes. </p>
 
 
 <section>
 
 <h3 id="rdf_entail">RDF entailment</h3>
 
-<p>S <dfn>RDF entail</dfn><strong>s</strong> E <strong>recognizing D</strong> when every <a>RDF interpretation</a> recognizing D which satisfies  S also satisfies E. When D is {<code>rdf:langString</code>, <code>xsd:string</code>} then we simply say S <strong>RDF entails</strong> E. E is <dfn>RDF unsatisfiable</dfn><strong> (recognizing D)</strong> when it has no satisfying <a>RDF interpretation</a> (recognizing D).</p>
+<p>S <dfn>RDF entail</dfn><strong>s</strong> E <strong>recognizing D</strong> when every <a>RDF interpretation</a> recognizing D which <a>satisfies</a>  S also satisfies E. When D is {<code>rdf:langString</code>, <code>xsd:string</code>} then we simply say S <strong>RDF entails</strong> E. E is <dfn>RDF unsatisfiable</dfn><strong> (recognizing D)</strong> when it has no satisfying <a>RDF interpretation</a> (recognizing D).</p>
 
-<p>The properties of simple entailment described earlier do not all apply to <a>RDF entail</a>ment. For example, all the RDF axioms are true in every <a>RDF interpretation</a>, and so are <a>RDF entail</a>ed by the empty graph, contradicting <a>interpolation</a> for RDF entailment. </p>
+<p>The properties of <a>simple entailment</a> described earlier do not all apply to <a>RDF entail</a>ment. For example, all the RDF axioms are true in every <a>RDF interpretation</a>, and so are <a>RDF entail</a>ed by the empty graph, contradicting <a>interpolation</a> for RDF entailment. </p>
 
 
 <section class="informative"><h4 id="rdf_entailment_patterns">Patterns of RDF entailment (Informative)</h4>
@@ -729,7 +758,7 @@ ex:v rdf:type xsd:boolean .</code></p>
 
 <p> recognizing {<code>xsd:boolean</code>}.</p>
 
-<p>In addition, the semantic conditions on value spaces may produce other unsatisfiable graphs. For example, when D contains <code>xsd:integer</code> and <code>xsd:boolean</code>, then the following is <a>RDF unsatisfiable</a> recognizing D:</p>
+<p>In addition, the semantic conditions on <a>value spaces</a> may produce other <a>unsatisfiable</a> graphs. For example, when D contains <code>xsd:integer</code> and <code>xsd:boolean</code>, then the following is <a>RDF unsatisfiable</a> recognizing D:</p>
 
 <p><code>_:x rdf:type xsd:boolean .<br/>
 _:x rdf:type xsd:integer . </code></p>
@@ -738,7 +767,7 @@ _:x rdf:type xsd:integer . </code></p>
 </section>
 </section>
 <section><h2 id="rdfs_interpretations">RDFS Interpretations</h2>
-<p>RDF Schema [[RDF11-SCHEMA]]
+<p>RDF Schema [[RDF-SCHEMA]]
   extends RDF to a larger vocabulary
   with more complex semantic constraints:</p>
 
@@ -777,7 +806,7 @@ _:x rdf:type xsd:integer . </code></p>
 
 
 <p> An <dfn>RDFS interpretation</dfn> (<strong>recognizing D</strong>) is an <a>RDF interpretation</a> (recognizing D) I
-   which satisfies the semantic conditions in the following table, and all the triples in the subsequent table of RDFS axiomatic triples. </p>
+   which <a>satisfies</a> the semantic conditions in the following table, and all the triples in the subsequent table of RDFS axiomatic triples. </p>
 
   <table>
   <caption>RDFS semantic conditions.</caption>
@@ -788,7 +817,7 @@ _:x rdf:type xsd:integer . </code></p>
         <p>LV is defined to be ICEXT(I(<code>rdfs:Literal</code>))</p>
         <p>ICEXT(I(<code>rdfs:Resource</code>)) = IR</p>
 <p>ICEXT(I(<code>rdf:langString</code>)) is the set {I(E) : E a language-tagged string }</p>
-<p>for every other IRI aaa in D, ICEXT(I(aaa)) is the value space of I(aaa)</p>
+<p>for every other IRI aaa in D, ICEXT(I(aaa)) is the <a>value space</a> of I(aaa)</p>
 <p>for every IRI aaa in D, I(aaa) is in ICEXT(I(<code>rdfs:Datatype</code>)) </p>
 </td>
     </tr>
@@ -918,7 +947,7 @@ _:x rdf:type xsd:integer . </code></p>
 
 <p>Since I is an <a>RDF interpretation</a>, the first condition implies that IP
   = ICEXT(I(<code>rdf:Property</code>)).</p>
- <p>The semantic conditions on <a>RDF interpretation</a>s, together with the RDFS conditions on ICEXT, mean that every <a>recognize</a>d datatype can be treated as a class whose extension is the value space of the datatype, and every literal with that datatype either fails to refer, or refers to a value in that class.</p>
+ <p>The semantic conditions on <a>RDF interpretation</a>s, together with the RDFS conditions on ICEXT, mean that every <a>recognize</a>d datatype can be treated as a class whose extension is the <a>value space</a> of the datatype, and every literal with that datatype either fails to refer, or <a>refers to</a> a value in that class.</p>
 <p>When using RDFS semantics, the referents of all <a>recognize</a>d datatype IRIs can be considered to be in the <a>class</a> <code>rdfs:Datatype</code>. </p>
 <p>The axioms and conditions listed above have some redundancy. For example, all but one
   of the RDF axiomatic triples can be derived from the RDFS axiomatic triples
@@ -969,13 +998,13 @@ rdf:HTML rdf:type rdfs:Class .<br/>
 
     <p>is consistent even though its subject is an IRI rather
     than a literal. It says that the IRI '<code>ex:a</code>'
-    refers to a literal value, which is quite possible since literal values are things in the universe. Blank nodes may range over literal values, for the same reason. </p>
+    <a>refers to</a> a literal value, which is quite possible since literal values are things in the universe. Blank nodes may range over literal values, for the same reason. </p>
 </section>
 <section>
 
 <h3 id="rdfs_entailment">RDFS entailment</h3>
 <p>S <dfn>RDFS entails</dfn> E <strong>recognizing D</strong> when every <a>RDFS interpretation</a> recognizing D
-  which satisfies S also satisfies E.</p>
+  which <a>satisfies</a> S also satisfies E.</p>
 <p> Since every <a>RDFS interpretation</a> is an <a>RDF interpretation</a>, if S <a>RDFS entails</a>
   E then S also <a>RDF entail</a>s E; but RDFS entailment is stronger than RDF entailment.
   Even the empty graph has a large number of RDFS entailments which are not RDF entailments,
@@ -993,81 +1022,81 @@ rdf:HTML rdf:type rdfs:Class .<br/>
     <tr >
       <th ></th>
       <th >If S contains:</th>
-      <th >then S RDFS entails recognizing D:</th>
+      <th >then S RDFS <a>entails recognizing D</a>:</th>
     </tr>
     <tr >
-     <td class="othertable"><dfn>rdfs1</dfn></td>
+     <td class="othertable"><dfn class="export">rdfs1</dfn></td>
      <td class="othertable">any IRI aaa in D</td>
      <td class="othertable">aaa <code>rdf:type rdfs:Datatype . </code></td>
     </tr>
     <tr >
-      <td class="othertable"><dfn>rdfs2</dfn></td>
+      <td class="othertable"><dfn class="export">rdfs2</dfn></td>
       <td class="othertable"> aaa <code>rdfs:domain</code> xxx <code>.</code><br />
           yyy aaa zzz <code>.</code></td>
       <td class="othertable">yyy <code>rdf:type</code> xxx <code>.</code></td>
     </tr>
     <tr >
-      <td class="othertable"><dfn>rdfs3</dfn></td>
+      <td class="othertable"><dfn class="export">rdfs3</dfn></td>
       <td class="othertable">aaa <code>rdfs:range</code> xxx <code>.</code><br />
           yyy aaa zzz <code>.</code></td>
       <td class="othertable">zzz <code>rdf:type</code> xxx <code>.</code></td>
     </tr>
     <tr >
-      <td class="othertable"><dfn>rdfs4a</dfn></td>
+      <td class="othertable"><dfn class="export">rdfs4a</dfn></td>
       <td class="othertable">xxx aaa yyy <code>.</code></td>
       <td class="othertable">xxx <code>rdf:type rdfs:Resource .</code></td>
     </tr>
     <tr >
-      <td class="othertable"><dfn>rdfs4b</dfn></td>
+      <td class="othertable"><dfn class="export">rdfs4b</dfn></td>
       <td class="othertable">xxx aaa yyy<code>.</code></td>
       <td class="othertable">yyy <code>rdf:type rdfs:Resource .</code></td>
     </tr>
     <tr >
-      <td class="othertable"><dfn>rdfs5</dfn></td>
+      <td class="othertable"><dfn class="export">rdfs5</dfn></td>
       <td class="othertable"> xxx <code>rdfs:subPropertyOf</code> yyy <code>.</code><br />
           yyy <code>rdfs:subPropertyOf</code> zzz <code>.</code></td>
       <td class="othertable">xxx <code>rdfs:subPropertyOf</code> zzz <code>.</code></td>
     </tr>
     <tr >
-      <td class="othertable"><dfn>rdfs6</dfn></td>
+      <td class="othertable"><dfn class="export">rdfs6</dfn></td>
       <td class="othertable">xxx <code>rdf:type rdf:Property .</code></td>
       <td class="othertable">xxx <code>rdfs:subPropertyOf</code> xxx <code>.</code></td>
     </tr>
     <tr >
-      <td class="othertable"><dfn>rdfs7</dfn></td>
+      <td class="othertable"><dfn class="export">rdfs7</dfn></td>
       <td class="othertable"> aaa <code>rdfs:subPropertyOf</code> bbb <code>.</code><br />
           xxx aaa yyy <code>.</code></td>
       <td class="othertable">xxx bbb yyy <code>.</code></td>
     </tr>
     <tr >
-      <td class="othertable"><dfn>rdfs8</dfn></td>
+      <td class="othertable"><dfn class="export">rdfs8</dfn></td>
       <td class="othertable">xxx <code>rdf:type rdfs:Class .</code></td>
       <td class="othertable">xxx <code>rdfs:subClassOf rdfs:Resource .</code></td>
     </tr>
     <tr >
-      <td class="othertable"><dfn>rdfs9</dfn></td>
+      <td class="othertable"><dfn class="export">rdfs9</dfn></td>
       <td class="othertable">xxx <code>rdfs:subClassOf</code> yyy <code>.</code><br />
           zzz <code>rdf:type</code> xxx <code>.</code></td>
       <td class="othertable">zzz <code>rdf:type</code> yyy <code>.</code></td>
     </tr>
     <tr >
-      <td class="othertable"><dfn>rdfs10</dfn></td>
+      <td class="othertable"><dfn class="export">rdfs10</dfn></td>
       <td class="othertable">xxx <code>rdf:type rdfs:Class .</code></td>
       <td class="othertable">xxx <code>rdfs:subClassOf</code> xxx <code>.</code></td>
     </tr>
     <tr >
-      <td class="othertable"><dfn>rdfs11</dfn></td>
+      <td class="othertable"><dfn class="export">rdfs11</dfn></td>
       <td class="othertable"> xxx <code>rdfs:subClassOf</code> yyy <code>.</code><br />
           yyy <code>rdfs:subClassOf</code> zzz <code>.</code></td>
       <td class="othertable">xxx <code>rdfs:subClassOf</code> zzz <code>.</code></td>
     </tr>
     <tr >
-      <td class="othertable"><dfn>rdfs12</dfn></td>
+      <td class="othertable"><dfn class="export">rdfs12</dfn></td>
       <td class="othertable">xxx <code>rdf:type rdfs:ContainerMembershipProperty .</code></td>
       <td class="othertable">xxx <code>rdfs:subPropertyOf rdfs:member .</code></td>
     </tr>
     <tr >
-      <td class="othertable"><dfn>rdfs13</dfn></td>
+      <td class="othertable"><dfn class="export">rdfs13</dfn></td>
       <td class="othertable">xxx <code>rdf:type rdfs:Datatype .</code></td>
       <td class="othertable">xxx <code>rdfs:subClassOf rdfs:Literal .</code></td>
     </tr>
@@ -1075,7 +1104,7 @@ rdf:HTML rdf:type rdfs:Class .<br/>
 </table>
 
 
-<p>RDFS provides for several new ways to be unsatisfiable recognizing D. For example, the following graph is RDFS unsatisfiable recognizing {<code>xsd:integer</code>, <code>xsd:boolean</code>}:</p>
+<p>RDFS provides for several new ways to be <a>unsatisfiable</a> recognizing D. For example, the following graph is RDFS unsatisfiable recognizing {<code>xsd:integer</code>, <code>xsd:boolean</code>}:</p>
 
 <p><code>ex:p rdfs:domain xsd:boolean .<br/>
 ex:a rdf:type xsd:integer .<br/>
@@ -1087,10 +1116,10 @@ ex:a ex:p ex:c .</code></p>
 <section><h2 id="rdf_datasets">RDF Datasets</h2>
 
 <!--
-<p>An RDF <a href="http://www.w3.org/TR/rdf11-concepts/#section-dataset" class="externalDFN">dataset</a> (see [[!RDF11-CONCEPTS]]) is a finite set of RDF graphs each paired with an IRI or blank node called the <strong>graph name</strong>, plus a <strong>default graph</strong>, without a name. Graphs in a single dataset may share blank nodes. The association of graph name IRIs with graphs is used by SPARQL [[RDF-SPARQL-QUERY]] to allow queries to be directed against particular graphs.</p>
+<p>An RDF <a data-cite="RDF-CONCEPTS#section-dataset" class="externalDFN">dataset</a> (see [[!RDF11-CONCEPTS]]) is a finite set of RDF graphs each paired with an IRI or blank node called the <strong>graph name</strong>, plus a <strong>default graph</strong>, without a name. Graphs in a single dataset may share blank nodes. The association of graph name IRIs with graphs is used by SPARQL [[RDF-SPARQL-QUERY]] to allow queries to be directed against particular graphs.</p>
 -->
 
-<p><a class="externalDFN" href="http://www.w3.org/TR/rdf11-concepts/#section-dataset">RDF datasets</a>, defined in RDF Concepts [[!RDF11-CONCEPTS]], package up zero or more named RDF graphs along with a single unnamed, default RDF graph.  The graphs in a single dataset may share blank nodes. The association of graph name IRIs with graphs is used by SPARQL [[SPARQL11-QUERY]] to allow queries to be directed against particular graphs.</p>
+<p><a data-cite="RDF-CONCEPTS#section-dataset">RDF datasets</a>, defined in RDF Concepts [[!RDF11-CONCEPTS]], package up zero or more named RDF graphs along with a single unnamed, default RDF graph.  The graphs in a single dataset may share blank nodes. The association of graph name IRIs with graphs is used by SPARQL [[SPARQL11-QUERY]] to allow queries to be directed against particular graphs.</p>
 
 <p>Graph names in a dataset may refer to something other than the graph they are paired with. This allows IRI referring to other kinds of entities, such as persons, to be used in a dataset to <a>identify</a> graphs of information relevant to the entity <a>denote</a>d by the graph name IRI.</p>
 
@@ -1112,7 +1141,7 @@ ex:a ex:p ex:c .</code></p>
 <p>1. Add to S all the RDF (or RDF and RDFS) axiomatic triples except those containing the container membership property IRIs <code>rdf:_1, rdf:_2, ...</code>.<br/>
 2. For every container membership property IRI which occurs in E, add the RDF (or RDF and RDFS) axiomatic triples which contain that IRI.<br/>
 3. Apply the RDF (or RDF and RDFS) inference patterns as rules, adding each conclusion to the graph, to exhaustion; that is, until they generate no new triples. <br/>
-4. Determine if E has an instance which is a subset of the set, i.e. whether the enlarged set simply entails E.</p>
+4. Determine if E has an instance which is a subset of the set, i.e. whether the enlarged set <a>simply entails</a> E.</p>
 
 <p>This process is clearly correct, in that if it gives a positive result then indeed S does RDF (RDFS) entail E. It is not, however, complete: there are cases of S entailing E which are not detectable by this process. Examples include:</p>
 
@@ -1151,7 +1180,7 @@ ex:d ex:a ex:e .</code></td>
 <p> Both of these can be handled by allowing the rules to apply to a generalization of the RDF syntax in which literals may occur in subject position and blank nodes may occur in predicate position. </p>
 
 <!--<p>Define a <dfn>generalized RDF triple</dfn> to be a triple &lt;x, y, z&gt; where x and z can be an IRI, a blank node or a literal, and y can be an IRI or a blank node; and extend this to the rest of RDF, so that a generalized RDF graph is a set of generalized RDF triples. -->
-<p>Consider <a class="externalDFN" href="http://www.w3.org/TR/rdf11-concepts/#section-generalized-rdf">generalized RDF triples, graphs, and datasets</a> instead of RDF triples, graphs and datasets (extending the generalization used in [[HORST04]] and following exactly the terms used in [[OWL2-PROFILES]]).  The semantics described in this document applies to the generalization without change, so that the notions of interpretation, satisfiability and entailment can be used freely. Then we can replace the first RDF entailment pattern with the simpler and more direct</p>
+<p>Consider <a data-cite="RDF-CONCEPTS#section-generalized-rdf">generalized RDF triples, graphs, and datasets</a> instead of RDF triples, graphs and datasets (extending the generalization used in [[HORST04]] and following exactly the terms used in [[OWL2-PROFILES]]).  The semantics described in this document applies to the generalization without change, so that the notions of interpretation, satisfiability and entailment can be used freely. Then we can replace the first RDF entailment pattern with the simpler and more direct</p>
 
 <table>
 <caption>G-RDF-D entailment pattern.</caption>
@@ -1194,7 +1223,7 @@ ex:d _:b ex:c .</code>  by <a>rdfs7</a><br/>
 4. Apply the rules <a>GrdfD1</a> and <a>rdfD2</a> (and the rules <a>rdfs1</a> through <a>rdfs13</a>), with D={<code>rdf:langString</code>, <code>xsd:string</code>), to the set in all possible ways, to exhaustion. </p>
 
 <p>Then we have the completeness result:</p>
-<p class="fact">If S is RDF (RDFS) consistent, then S RDF entails (RDFS entails) E just when the <a>generalized RDF (RDFS) closure</a> of S towards E simply entails E. </p>
+<p class="fact">If S is RDF (RDFS) consistent, then S RDF entails (RDFS entails) E just when the <a>generalized RDF (RDFS) closure</a> of S towards E <a>simply entails</a> E. </p>
 
 <p>The closures are finite. The generation process is decidable and of polynomial complexity. Detecting simple entailment is NP-complete in general, but of low polynomial order when E contains no blank nodes. </p>
 
@@ -1212,9 +1241,9 @@ ex:d _:b ex:c .</code>  by <a>rdfs7</a><br/>
 
 <p>Basically, it is only necessary for an interpretation structure to interpret the <a>name</a>s actually used in the graphs whose entailment is being considered, and to consider interpretations whose universes are at most as big as the number of names and blank nodes in the graphs.  More formally, we can define a <dfn>pre-interpretation</dfn> over a <a>vocabulary</a> V to be a structure I similar to a <a>simple interpretation</a> but with a mapping only from V to its universe IR.  Then when determining whether G entails E, consider only pre-interpretations over the finite vocabulary of <a>name</a>s actually used in G union E. The universe of such a pre-interpretation can be restricted to the cardinality N+B+1, where N is the size of the vocabulary and B is the number of blank nodes in the graphs. Any such pre-interpretation may be extended to <a>simple interpretation</a>s, all of which which will give the same truth values for any triples in G or E. Satisfiability, entailment and so on can then be defined with respect to these finite pre-interpretations, and shown to be identical to the ideas defined in the body of the specification.</p>
 
-<p>When considering D-entailment, pre-interpretations may be kept finite by weakening the semantic conditions for datatyped literals so that IR need contain literal values only for literals which actually occur in G or E, and the size of the universe restricted to (N+B)×(D+1), where D is the number of recognized datatypes. (A tighter bound is possible.) For RDF entailment, only the finite part of the RDF vocabulary which includes those container membership properties which actually occur in the graphs need to be interpreted, and the second RDF semantic condition is weakened to apply only to values which are values of literals which actually occur in the vocabulary. For RDFS interpretations, again only that finite part of the infinite container membership property vocabulary which actually occurs in the graphs under consideration needs to be interpreted. In all these cases, a pre-interpretation of the vocabulary of a graph may be extended to a full interpretation of the appropriate type without changing the truth-values of any triples in the graphs.</p>
+<p>When considering D-entailment, <a>pre-interpretation</a>s may be kept finite by weakening the semantic conditions for datatyped literals so that IR need contain literal values only for literals which actually occur in G or E, and the size of the universe restricted to (N+B)×(D+1), where D is the number of recognized datatypes. (A tighter bound is possible.) For RDF entailment, only the finite part of the RDF vocabulary which includes those container membership properties which actually occur in the graphs need to be interpreted, and the second RDF semantic condition is weakened to apply only to values which are values of literals which actually occur in the vocabulary. For RDFS interpretations, again only that finite part of the infinite container membership property vocabulary which actually occurs in the graphs under consideration needs to be interpreted. In all these cases, a <a>pre-interpretation</a> of the vocabulary of a graph may be extended to a full interpretation of the appropriate type without changing the truth-values of any triples in the graphs.</p>
 
-<p>The whole semantics could be stated in terms of pre-interpretations, yielding the same entailments, and allowing finite RDF graphs to be interpreted in finite structures, if the <em>finite model property</em> is considered important.
+<p>The whole semantics could be stated in terms of <a>pre-interpretation</a>s, yielding the same entailments, and allowing finite RDF graphs to be interpreted in finite structures, if the <em>finite model property</em> is considered important.
 
 </section>
 
@@ -1228,35 +1257,35 @@ ex:d _:b ex:c .</code>  by <a>rdfs7</a><br/>
 
 <p>The empty graph is true in all simple interpretations, so is entailed by any graph. If G contains a triple &lt;a b c&gt;, then any simple interpretation I with IEXT(I(b))={ } makes G false; so the empty graph does not entail G. QED.</p>
 
-<p class="fact"> A graph simply entails all its subgraphs.
+<p class="fact"> A graph <a>simply entails</a> all its <a>subgraphs</a>.
 <!-- <a href="#subglemprf" class="termref">[Proof]</a> -->
 </p>
-<p>If I satisfies G then it satisfies every triple in G, hence every triple in any subset of G. QED.</p>
+<p>If I <a>satisfies</a> G then it satisfies every triple in G, hence every triple in any subset of G. QED.</p>
 
 <p class="fact"> A graph
   is simply entailed by any of its <a>instance</a>s.
 <!-- <a href="#instlemprf" class="termref"> [Proof]</a> -->
 </p>
-<p>Suppose H is an instance of G with the instantiation mapping M, and that I satisfies H. For blank nodes n in G which are not in H define A(n)=I(M(n)); then I+A satisfies G, so I satisfies G. QED.</p>
+<p>Suppose H is an instance of G with the instantiation mapping M, and that I <a>satisfies</a> H. For blank nodes n in G which are not in H define A(n)=I(M(n)); then I+A satisfies G, so I satisfies G. QED.</p>
 
-<p class="fact">Every graph is simply satisfiable.</p>
+<p class="fact">Every graph is simply <a>satisfiable</a>.</p>
 <p>Consider the simple interpretation with universe {x}, IEXT(x)= &lt;x,x &gt; and I(aaa)=x for any IRI aaa. This interpretation satisfies every RDF graph. QED.</p>
 
 <p class="fact">
-  G simply entails a graph E if and only if a subgraph of G is an instance of E.
+  G <a>simply entails</a> a graph E if and only if a <a>subgraph</a> of G is an instance of E.
 </p>
 
-<p>If a subgraph E' of G is an instance of E then G entails E' which entails E, so G entails E. Now suppose G entails E, and consider the <a href="http://en.wikipedia.org/wiki/Herbrand_interpretation">Herbrand interpretation</a> I of G defined as follows.  IR contains the <a>name</a>s and blank nodes which occur in the graph, with I(n)=n for each <a>name</a> n; n is in IP and &lt;a, b&gt; in IEXT(n) just when the triple &lt;a n b&gt; is in the graph. (For IRIs which do not occur in the graph, assign them values in IR at random.) I satisfies every triple &lt;s p o&gt; in E; that is, for some mapping A from the blank nodes of E to the vocabulary of G, the triple &lt;[I+A](s) I(p) [I+A](o)&gt; occurs in G. But this is an instance of &lt;s p o&gt; under the instance mapping A; so an instance of E is a subgraph of G. QED.</p>
+<p>If a <a>subgraph</a> E' of G is an instance of E then G entails E' which entails E, so G entails E. Now suppose G entails E, and consider the <a href="http://en.wikipedia.org/wiki/Herbrand_interpretation">Herbrand interpretation</a> I of G defined as follows.  IR contains the <a>name</a>s and blank nodes which occur in the graph, with I(n)=n for each <a>name</a> n; n is in IP and &lt;a, b&gt; in IEXT(n) just when the triple &lt;a n b&gt; is in the graph. (For IRIs which do not occur in the graph, assign them values in IR at random.) I <a>satisfies</a> every triple &lt;s p o&gt; in E; that is, for some mapping A from the blank nodes of E to the vocabulary of G, the triple &lt;[I+A](s) I(p) [I+A](o)&gt; occurs in G. But this is an instance of &lt;s p o&gt; under the instance mapping A; so an instance of E is a <a>subgraph</a> of G. QED.</p>
 
 <p class="fact">if E is lean and E' is a proper instance of E, then E does not simply entail E'.</p>
-<p>Suppose E entails E', then a subgraph of E is an instance of E', which is a proper instance of E; so a subgraph of E is a proper instance of E, so E is not lean. QED.</p>
+<p>Suppose E entails E', then a <a>subgraph</a> of E is an instance of E', which is a proper instance of E; so a <a>subgraph</a> of E is a proper instance of E, so E is not lean. QED.</p>
 <p class="fact">If E contains an IRI which does not occur in S, then S does not simply entail E.</p>
-<p>IF S entails E then a subgraph of S is an instance of E, so every IRI in E must occur in that subgraph, so must occur in S. QED.</p>
+<p>IF S entails E then a <a>subgraph</a> of S is an instance of E, so every IRI in E must occur in that <a>subgraph</a>, so must occur in S. QED.</p>
 
-<p class="fact">For any graph H, if sk(G) simply entails H there there is a graph H' such that G entails H' and H=sk(H').</p>
-<p>The skolemization mapping sk substitutes a unique new IRI for each blank node, so it is 1:1, so has an inverse. Define ks to be the inverse mapping which replaces each skolem IRI by the blank node it replaced. Since sk(G) entails H, a subgraph of sk(G) is an instance of H, say A(H) for some instance mapping A on the blank nodes in H. Then ks(A(H)) is a subgraph of G; and ks(A(H))=A(ks(H)) since the domains of A and ks are disjoint. So ks(H) has an instance which is a subgraph of G, so is entailed by G; and H=sk(ks(H)). QED.</p>
+<p class="fact">For any graph H, if sk(G) <a>simply entails</a> H there there is a graph H' such that G entails H' and H=sk(H').</p>
+<p>The skolemization mapping sk substitutes a unique new IRI for each blank node, so it is 1:1, so has an inverse. Define ks to be the inverse mapping which replaces each skolem IRI by the blank node it replaced. Since sk(G) entails H, a <a>subgraph</a> of sk(G) is an instance of H, say A(H) for some instance mapping A on the blank nodes in H. Then ks(A(H)) is a <a>subgraph</a> of G; and ks(A(H))=A(ks(H)) since the domains of A and ks are disjoint. So ks(H) has an instance which is a <a>subgraph</a> of G, so is entailed by G; and H=sk(ks(H)). QED.</p>
 
-<p class="fact">For any graph H which does not contain any of the "new" IRIs introduced into sk(G), sk(G) simply entails H if and only if G simply entails H.</p>
+<p class="fact">For any graph H which does not contain any of the "new" IRIs introduced into sk(G), sk(G) <a>simply entails</a> H if and only if G <a>simply entails</a> H.</p>
 <p>Using the terminology in the previous proof: if H does not contain any skolem IRIs, then H=ks(H). So if sk(G) entails H then G entails ks(H)=H; and if G entails H then sk(G) entails G entails H, so sk(G) entails H. QED.</p>
 
 
@@ -1313,7 +1342,7 @@ ex:d _:b ex:c .</code>  by <a>rdfs7</a><br/>
 <p>  Reification is not a form of quotation. Rather, the reification describes the
     relationship between a token of a triple and the resources that the triple refers
     to. The value of the <code>rdf:subject</code> property is not the
-    subject IRI itself but the thing it denotes, and similarly for <code>rdf:predicate</code> and <code>rdf:object</code>. For example, if the referent of <code>ex:a</code> is Mount Everest, then the subject of the reified triple is also the mountain, not the IRI which refers to it.
+    subject IRI itself but the thing it <a>denotes</a>, and similarly for <code>rdf:predicate</code> and <code>rdf:object</code>. For example, if the referent of <code>ex:a</code> is Mount Everest, then the subject of the reified triple is also the mountain, not the IRI which refers to it.
 
 </p>
 
@@ -1526,7 +1555,7 @@ ex:d _:b ex:c .</code>  by <a>rdfs7</a><br/>
   in order to rule out such graphs. They may
   exclude interpretations of the collection vocabulary which violate the convention
   that the subject of a 'linked' collection of two-triple items of the form described
-  above, ending with an item ending with <code>rdf:nil</code>, denotes a totally
+  above, ending with an item ending with <code>rdf:nil</code>, <a>denotes</a> a totally
   ordered sequence whose members are the denotations of the <code>rdf:first</code>
   values of the items, in the order got by tracing the <code>rdf:rest</code> properties
   from the subject to <code>rdf:nil</code>. This permits sequences which contain
