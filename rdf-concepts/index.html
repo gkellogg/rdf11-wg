@@ -9,6 +9,20 @@
       var respecConfig = {
           // extend the bibliography entries
           //localBiblio: localBibliography,
+          localBiblio: {
+            "RDF-XML": {
+              id: "RDF-XML",
+              title: "RDF 1.1 XML Syntax",
+              editors: [
+                "Fabien Gandon",
+                "Guus Schreiber"
+              ],
+              date: "2014-11-25",
+              href: "https://www.w3.org/TR/2014/REC-rdf-syntax-grammar-20140225/",
+              status: "REC",
+              publisher: "W3C"
+            }
+          },
 
           // specification status (e.g. WD, LC, WG-NOTE, etc.). If in doubt use ED.
           specStatus:              "ED",
@@ -127,7 +141,7 @@
       to organize collections of RDF graphs, and comprise a default graph
       and zero or more named graphs. RDF&nbsp;1.1 Concepts and Abstract Syntax
       also introduces key concepts and terminology, and discusses
-      datatyping and the handling of fragment identifiers in IRIs within
+      datatyping and the handling of <a>fragment identifiers</a> in IRIs within
       RDF graphs.</p>
   </section>
 
@@ -211,7 +225,7 @@
     <a>resources</a> <a>denoted</a> by
     the <a>subject</a> and <a>object</a></em>. This statement corresponding
     to an RDF triple is known as an <dfn data-lt="statement">RDF statement</dfn>.
-    The predicate itself is an <a>IRI</a> and denotes a <dfn>property</dfn>,
+    The predicate itself is an <a>IRI</a> and denotes a <dfn class="export">property</dfn>,
     that is, a <a>resource</a> that can be thought of as a binary relation.
     (Relations that involve more than two entities can only be
     <a href="http://www.w3.org/TR/swbp-n-aryRelations/">indirectly
@@ -332,7 +346,7 @@
       RDF data model. They are merely a syntactic convenience for
       abbreviating IRIs.</p>
 
-    <p>The term “<dfn>namespace</dfn>” on its own does not have a
+    <p>The term “<dfn class="lint-ignore">namespace</dfn>” on its own does not have a
       well-defined meaning in the context of RDF, but is sometimes informally
       used to mean “<a>namespace IRI</a>” or “<a>RDF vocabulary</a>”.</p>
 </section>
@@ -412,7 +426,7 @@
     <h3>Equivalence, Entailment and Inconsistency</h3>
 
     <p>An <a>RDF triple</a> encodes a <a>statement</a>—a
-    simple <dfn>logical expression</dfn>, or claim about the world.
+    simple <dfn class="export">logical expression</dfn>, or claim about the world.
     An <a>RDF graph</a> is the conjunction (logical <em>AND</em>) of
     its triples.   The precise details of this meaning of RDF triples and graphs are
     the subject of the RDF Semantics specification [[RDF11-MT]], which yields the
@@ -426,7 +440,7 @@
     entails <em>B</em>, if the truth of <em>A</em> is presumed or demonstrated
     then the truth of <em>B</em> is established.</dd>
 
-    <dt><dfn>Equivalence</dfn></dt>
+    <dt><dfn data-lt="equivalent">Equivalence</dfn></dt>
     <dd>Two <a>RDF graphs</a> <em>A</em> and <em>B</em>
     are equivalent if they make the same claim about the world.
     <em>A</em> is equivalent to <em>B</em> if and only if
@@ -441,7 +455,7 @@
 
     <p>An <dfn>entailment regime</dfn> [[RDF11-MT]] is a specification that
     defines precise conditions that make these relationships hold.
-    RDF itself recognizes only some basic cases of entailment, equivalence
+    RDF itself recognizes only some basic cases of entailment, <a>equivalence</a>
     and inconsistency. Other specifications, such as
     [[[RDF-SCHEMA]]] [[RDF-SCHEMA]]
     and <a data-cite="owl2-overview#">OWL 2</a>
@@ -472,7 +486,7 @@
     many different ways to encode the same <a>RDF graph</a> or
     <a>RDF dataset</a>, for example through the use of
     <a>namespace prefixes</a>,
-    relative IRIs, <a>blank node identifiers</a>,
+    <a>relative IRIs</a>, <a>blank node identifiers</a>,
     and different ordering of statements. While these aspects can have great
     effect on the convenience of working with the <a>RDF document</a>,
     they are not significant for its meaning.</p>
@@ -550,7 +564,7 @@
     contain a fragment identifier.</p>
 
     <p><dfn>IRI equality</dfn>:
-    Two IRIs are equal if and only if they are equivalent
+    Two IRIs are equal if and only if they are <a>equivalent</a>
     under Simple String Comparison according to
     <a data-cite="rfc3987#section-5.1">section 5.1</a>
     of [[!RFC3987]]. Further normalization MUST NOT be performed when
@@ -559,7 +573,7 @@
     <div class="note" id="note-iris">
     <p><strong>URIs and IRIs:</strong>
     IRIs are a generalization of
-    <dfn><abbr title="Uniform Resource Identifier">URI</abbr>s</dfn>
+    <dfn data-lt="URI" data-lt-noDefault><abbr title="Uniform Resource Identifier">URI</abbr>s</dfn>
     [[RFC3986]] that permits a wider range of Unicode characters.
     Every absolute URI and URL is an IRI, but not every IRI is an URI.
     When IRIs are used in operations that are only
@@ -577,7 +591,7 @@
     that allows authoring of documents independently from their final
     publishing location. Relative IRIs must be
     <a data-cite="rfc3986#section-5.2">resolved
-    against</a> a <dfn>base IRI</dfn> to make them absolute.
+    against</a> a <dfn class="export">base IRI</dfn> to make them absolute.
     Therefore, the RDF graph serialized in such syntaxes is well-defined only
     if a <a data-cite="rfc3986#section-5.1">base IRI
     can be established</a> [[RFC3986]].</p>
@@ -607,7 +621,7 @@
         <li>Punycode-encoding of Internationalized Domain Names
           in IRIs</li>
         <li>IRIs that are not in Unicode Normalization
-          Form C [[!NFC]]</li>
+          Form C [[NFC]]</li>
       </ul>
     </div>
 </section>
@@ -641,7 +655,7 @@
       case.</p>
 
     <p>Please note that concrete syntaxes MAY support
-      <dfn>simple literals</dfn> consisting of only a
+      <dfn class="export">simple literals</dfn> consisting of only a
       <a>lexical form</a> without any <a>datatype IRI</a> or <a>language tag</a>.
       Simple literals are syntactic sugar for abstract syntax
       <a>literals</a>
@@ -737,7 +751,7 @@
     systematically replace some or all of the blank nodes in an RDF graph
     with <a>IRIs</a>.  Systems wishing to do this SHOULD
     mint a new, globally
-    unique IRI (a <dfn>Skolem IRI</dfn>) for each blank node so replaced.</p>
+    unique IRI (a <dfn class="export">Skolem IRI</dfn>) for each blank node so replaced.</p>
 
     <p>This transformation does not appreciably change the meaning of an
     RDF graph, provided that the Skolem IRIs do not occur anywhere else.
@@ -763,7 +777,7 @@
 
     <p class="note">RFC 5785 [[RFC5785]] only specifies well-known URIs,
     not IRIs. For the purpose of this document, a well-known IRI is any
-    IRI that results in a well-known URI after IRI-to-URI mapping [[!RFC3987]].</p>
+    IRI that results in a well-known <a>URI</a> after IRI-to-URI mapping [[!RFC3987]].</p>
 </section>
 
 
@@ -772,7 +786,7 @@
 
     <p id="section-graph-equality">Two
     <a>RDF graphs</a> <var>G</var> and <var>G'</var> are
-    <dfn data-lt="graph isomorphism">isomorphic</dfn> (that is, they have an identical
+    <dfn data-lt="graph isomorphism|isomorphic" data-lt-noDefault class="export">isomorphic</dfn> (that is, they have an identical
     form) if there is a bijection <var>M</var> between the sets of nodes of the two
     graphs, such that:</p>
 
@@ -851,13 +865,13 @@
       (the RDF dataset <var>D1</var> with default graph <var>DG1</var> and any named
       graph <var>NG1</var> and the RDF dataset <var>D2</var> with default graph
       <var>DG2</var> and any named graph <var>NG2</var>)
-      are <dfn data-lt="dataset isomorphism">dataset-isomorphic</dfn> if and only if
+      are <dfn data-lt="dataset isomorphism" class="export">dataset-isomorphic</dfn> if and only if
       there is a bijection <var>M</var> between the nodes, triples and graphs in
       <var>D1</var> and those in <var>D2</var> such that:</p>
 
     <ol>
-      <li><var>M</var> maps blank nodes to blank nodes;</li>
-      <li><var>M</var> is the identity map on literals and URIs;</li>
+      <li><var>M</var> maps <a>blank nodes</a> to blank nodes;</li>
+      <li><var>M</var> is the identity map on <a>literals</a> and URIs;</li>
       <li>For every triple &lt;s p o&gt;, <var>M</var>(&lt;s, p, o&gt;)=
         &lt;<var>M(s)</var>, <var>M(p)</var>, <var>M(o)</var>&gt;;</li>
       <li>For every graph <var>G</var>={t1, ..., tn},
@@ -1180,8 +1194,8 @@
       (<code>xml:base</code>) desired in the XML content must be included
       explicitly in the XML literal. Note that some concrete RDF syntaxes
       may define mechanisms for inheriting them from the context (e.g.,
-      <a data-cite="rdf-syntax-grammar#parseTypeLiteralPropertyElt"><code>@parseType="literal"</code></a>
-      in RDF/XML [[rdf-syntax-grammar]] <span class="ednote">was RDF11-XML</span>).</p>
+      <a data-cite="RDF-XML#parseTypeLiteralPropertyElt"><code>@parseType="literal"</code></a>
+      in RDF/XML [[RDF-XML]].</p>
 </section>
 
 <section>
@@ -1224,7 +1238,7 @@
 
     <p class="note" id="note-custom-datatypes">The Web Ontology Language
       [[OWL2-OVERVIEW]] offers facilities for formally defining
-      <a data-cite="owl2-syntax#Datatype_Definitions">custom
+      <a data-cite="OWL2-SYNTAX#Datatype_Definitions">custom
       datatypes</a> that can be used with RDF. Furthermore, a practice for
       identifying
       <a data-cite="swbp-xsch-datatypes#sec-userDefined">
@@ -1266,7 +1280,7 @@
     non-web or abstract entities that the <a>RDF graph</a> may describe.</p>
 
   <p>In cases where other specifications constrain the semantics of
-    fragment identifiers in RDF-bearing representations, the encoded
+    <a>fragment identifiers</a> in RDF-bearing representations, the encoded
     <a>RDF graph</a> should use fragment identifiers in a way that is consistent
     with these constraints. For example, in an HTML+RDFa document [[HTML-RDFA]],
     the fragment <code>chapter1</code> may identify a document section
@@ -1292,14 +1306,13 @@
     of the RDFS entailment rules is easier to show with a
     generalization of RDF triples.</p>
 
-    <p>A <dfn>generalized RDF
-      triple</dfn> is a triple having a subject, a predicate,
-      and object, where each can be an <a>IRI</a>, a
+    <p>A <dfn class="export">generalized RDF triple</dfn> is a triple having a subject,
+      a predicate, and object, where each can be an <a>IRI</a>, a
       <a>blank node</a> or a
       <a>literal</a>. A
-      <dfn>generalized RDF graph</dfn>
+      <dfn class="export">generalized RDF graph</dfn>
       is a set of generalized RDF triples. A
-      <dfn>generalized RDF dataset</dfn>
+      <dfn class="export">generalized RDF dataset</dfn>
       comprises a distinguished generalized RDF graph, and zero
       or more pairs each associating an IRI, a blank node or a literal
       to a generalized RDF graph.</p>
