@@ -4,17 +4,26 @@
     <title>RDF 1.1 N-Quads</title>
     <meta http-equiv='Content-Type' content='text/html;charset=utf-8'/>
     <script src="../local-biblio.js" class="remove"></script>
-    <script src="https://www.w3.org/Tools/respec/respec-w3c-common" class="remove"></script>
+    <script src="https://www.w3.org/Tools/respec/respec-w3c" class="remove"></script>
     <script class='remove'>
       var respecConfig = {
           // extend the bibliography entries
-          localBiblio: localBibliography,
+          //localBiblio: localBibliography,
+          localBiblio: {
+            "EBNF-NOTATION": {
+              id: "EBNF-NOTATION",
+              title: "EBNF Notation",
+              editors: ["Tim Bray", "Jean Paoli", "C. M. Sperberg-McQueen", "Eve Maler", "François Yergeau"],
+              date: "2008-11-26",
+              href: "http://www.w3.org/TR/REC-xml/#sec-notation",
+              status: "REC",
+              publisher: "W3C"
+            }
+          },
 
           // specification status (e.g. WD, LCWD, NOTE, etc.). If in doubt use ED.
-          specStatus:              "REC",
-          errata:                  "http://www.w3.org/2014/rdf1.1-errata",
-          implementationReportURI: "http://www.w3.org/2013/N-QuadsReports/index.html",
-          testSuiteURI:            "http://www.w3.org/TR/2014/NOTE-rdf11-testcases-20140225/", 
+          specStatus:              "ED",
+          testSuiteURI:            "https://w3c.github.io/rdf-tests/nquads/", 
 
           // the specification's short name, as in http://www.w3.org/TR/short-name/
           shortName:            "n-quads",
@@ -24,7 +33,7 @@
           subtitle   :  "A line-based syntax for RDF datasets",
 
           // if you wish the publication date to be other than today, set this
-          publishDate:  "2014-02-25",
+          //publishDate:  "2014-02-25",
           // prEnd:        "2014-02-09",
 
           // if the specification's copyright date is a range of years, specify
@@ -33,16 +42,8 @@
 
           // if there is a previously published draft, uncomment this and set its YYYY-MM-DD date
           // and its maturity status
-          previousPublishDate:  "2014-01-09",
-          previousMaturity:  "PR",
-
-          // if there a publicly available Editor's Draft, this is the link
-          // edDraftURI:           "https://dvcs.w3.org/hg/rdf/raw-file/default/nquads/index.html",
-
-          // if this is a LCWD, uncomment and set the end of its review period
-          // lcEnd: "2013-10-14",
-          // crEnd: "2013-11-26",
-          // prEnd: "2013-02-04",
+          previousPublishDate:  "2014-02-25",
+          previousMaturity:  "REC",
 
           // editors, add as many as you like
           // only "name" is required
@@ -55,24 +56,13 @@
           // This is optional, uncomment if you have authors as well as editors.
           // only "name" is required. Same format as editors.
 
+          github: "https://github.com/gellogg/rdf11-wg/",
+
           // name of the WG
-          wg:           "RDF Working Group",
+          group:           "rdf-star",
 
-          // URI of the public WG page
-          wgURI:        "http://www.w3.org/2011/rdf-wg/",
-
-          // name (with the @w3c.org) of the public mailing to which comments are due
-          wgPublicList: "public-rdf-comments",
-
-          // URI of the patent status for this WG, for Rec-track documents
-          // !!!! IMPORTANT !!!!
-          // This is important for Rec-track documents, do not copy a patent URI from a random
-          // document unless you know what you're doing. If in doubt ask your friendly neighbourhood
-          // Team Contact.
-          wgPatentURI:  "http://www.w3.org/2004/01/pp-impl/46168/status",
-
-          doRDFa: "1.1",
-	  
+          doJsonLd:     true,
+          wgPublicList: "public-rdf-star-wg"	  
       };
     </script>
       <style type="text/css">
