@@ -3,15 +3,14 @@
   <head>
     <meta charset="utf-8">
     <title>RDF 1.2 Concepts and Abstract Syntax</title>
-    <script src="../local-biblio.js" class="remove"></script>
     <script src="https://www.w3.org/Tools/respec/respec-w3c" class="remove"></script>
     <script class='remove'>
       var respecConfig = {
           // extend the bibliography entries
           //localBiblio: localBibliography,
           localBiblio: {
-            "RDF-XML": {
-              id: "RDF-XML",
+            "RDF11-XML": {
+              id: "RDF11-XML",
               title: "RDF 1.1 XML Syntax",
               editors: [
                 "Fabien Gandon",
@@ -228,7 +227,7 @@
     The predicate itself is an <a>IRI</a> and denotes a <dfn class="export">property</dfn>,
     that is, a <a>resource</a> that can be thought of as a binary relation.
     (Relations that involve more than two entities can only be
-    <a href="http://www.w3.org/TR/swbp-n-aryRelations/">indirectly
+    <a data-cite="SWBP-N-ARYRELATIONS#">indirectly
     expressed in RDF</a> [[SWBP-N-ARYRELATIONS]].)</p>
 
     <p>Unlike <a>IRIs</a> and <a>literals</a>,
@@ -252,17 +251,17 @@
 
     <p>Guidelines for determining the <a>referent</a> of an <a>IRI</a> are
     provided in other documents, like
-    <em><a href="http://www.w3.org/TR/webarch/">Architecture of the World Wide Web, Volume One</a></em> [[WEBARCH]]
-    and <em><a href="http://www.w3.org/TR/cooluris/">Cool URIs for the Semantic Web</a></em> [[COOLURIS]].
+    [[[WEBARCH]]] [[WEBARCH]]
+    and [[[COOLURIS]]] [[COOLURIS]].
     A very brief, informal, and partial account follows:</p>
 
     <ul>
       <li>By design, IRIs have global scope. Thus, two different appearances of an IRI
         <a>denote</a> the same <a>resource</a>. Violating this principle constitutes
-        an <a href="http://www.w3.org/TR/webarch/#URI-collision">IRI collision</a> [[WEBARCH]].</li>
+        an <a data-cite="WEBARCH#URI-collision">IRI collision</a> [[WEBARCH]].</li>
 
       <li>By social convention, the
-        <a href="http://www.w3.org/TR/webarch/#uri-ownership">IRI owner</a>
+        <a data-cite="WEBARCH#uri-ownership">IRI owner</a>
         [[WEBARCH]] gets to say what the intended (or usual)
         referent of an <a>IRI</a> is.  Applications and users need not
         abide by this intended denotation, but there may be a loss of
@@ -272,13 +271,13 @@
       <li>The IRI owner can establish the intended <a>referent</a>
         by means of a specification or other document that explains
         what is denoted. For example, the
-        <a href="http://www.w3.org/TR/vocab-org/">Organization Ontology document</a> [[VOCAB-ORG]]
+        [[[VOCAB-ORG]]] [[VOCAB-ORG]]
         specifies the intended referents of various IRIs that start with
         <code>http://www.w3.org/ns/org#</code>.</li>
 
       <li>A good way of communicating the intended referent
         is to set up the IRI so that it
-        <a href="http://www.w3.org/TR/webarch/#uri-dereference">dereferences</a> [[WEBARCH]]
+        <a data-cite="WEBARCH#uri-dereference">dereferences</a> [[WEBARCH]]
         to such a document.</li>
 
       <li>Such a document can, in fact, be an <a>RDF document</a>
@@ -288,13 +287,13 @@
 
     <p>Perhaps the most important characteristic of <a>IRIs</a>
       in web architecture is that they can be
-      <a href="http://www.w3.org/TR/webarch/#uri-dereference">dereferenced</a>,
+      <a data-cite="WEBARCH#uri-dereference">dereferenced</a>,
       and hence serve as starting points for interactions with a remote server.
       This specification is not concerned with such interactions.
       It does not define an interaction model. It only treats IRIs as globally
       unique identifiers in a graph data model that describes resources.
       However, those interactions are critical to the concept of
-      <em><a href="http://www.w3.org/DesignIssues/LinkedData.html">Linked Data</a></em> [[LINKED-DATA]],
+      [[[LINKED-DATA]]], [[LINKED-DATA]],
       which makes use of the RDF data model and serialization formats.</p>
 </section>
 
@@ -322,11 +321,11 @@
       </tr>
       <tr>
         <td>rdf</td>
-        <td><a href="http://www.w3.org/1999/02/22-rdf-syntax-ns#"><code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code></a></td>
-        <td>The RDF built-in vocabulary [[RDF-SCHEMA]]</td>
+        <td><a data-cite="RDF-SYNTAX#"><code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code></a></td>
+        <td>The RDF built-in vocabulary [[RDF-SYNTAX]]</td>
       </tr>
       <tr><td>rdfs</td>
-        <td><a href="http://www.w3.org/2000/01/rdf-schema#"><code>http://www.w3.org/2000/01/rdf-schema#</code></a></td>
+        <td><a data-cite="RDF-SCHEMA#"><code>http://www.w3.org/2000/01/rdf-schema#</code></a></td>
         <td>The RDF Schema vocabulary [[RDF-SCHEMA]]</td>
       </tr>
       <tr><td>xsd</td>
@@ -382,7 +381,7 @@
     <ul>
       <li>An <a>IRI</a>, once minted, should never
         change its intended <a>referent</a>. (See
-        <a href="http://www.w3.org/TR/webarch/#URI-persistence">URI persistence</a>
+        <a data-cite="WEBARCH#URI-persistence">URI persistence</a>
         [[WEBARCH]].)</li>
       <li><a>Literals</a>, by design, are constants and
         never change their <a data-lt="literal value">value</a>.</li>
@@ -1099,12 +1098,12 @@
 
       <dt>The value space</dt>
       <dd>is a set of DOM
-        <a href="http://www.w3.org/TR/dom/#interface-documentfragment"><code>DocumentFragment</code></a>
+        <a data-cite="DOM4#interface-documentfragment"><code>DocumentFragment</code></a>
         nodes [[DOM4]]. Two
-        <a href="http://www.w3.org/TR/dom/#interface-documentfragment"><code>DocumentFragment</code></a>
+        <a data-cite="DOM4#interface-documentfragment"><code>DocumentFragment</code></a>
         nodes <em>A</em> and <em>B</em> are considered equal if and only if
         the DOM method
-        <code><em>A</em>.<a href="http://www.w3.org/TR/dom/#dom-node-isequalnode">isEqualNode</a>(<em>B</em>)</code>
+        <code><em>A</em>.<a data-cite="DOM4#dom-node-isequalnode">isEqualNode</a>(<em>B</em>)</code>
         [[DOM4]] returns <code>true</code>.</dd>
 
       <dt>The lexical-to-value mapping</dt>
@@ -1112,14 +1111,14 @@
         <p>Each member of the lexical space is associated with the result
           of applying the following algorithm:</p>
         <ul>
-          <li>Let <code>domnodes</code> be the list of <a href="http://www.w3.org/TR/dom/#node">DOM nodes</a> [[DOM4]]
+          <li>Let <code>domnodes</code> be the list of <a data-cite="DOM4#node">DOM nodes</a> [[DOM4]]
             that result from applying the
-            <a href="http://www.w3.org/TR/html5/syntax.html#parsing-html-fragments">HTML fragment parsing algorithm</a> [[HTML5]]
+            <a data-cite="HTML5#parsing-html-fragments">HTML fragment parsing algorithm</a> [[HTML5]]
             to the input string, without a context element.</li>
           <li>Let <code>domfrag</code> be a DOM
-            <a href="http://www.w3.org/TR/dom/#interface-documentfragment"><code>DocumentFragment</code></a> [[DOM4]]
+            <a data-cite="DOM4#interface-documentfragment"><code>DocumentFragment</code></a> [[DOM4]]
             whose <code>childNodes</code> attribute is equal to <code>domnodes</code></li>
-            <li>Return <code>domfrag.<a href="http://www.w3.org/TR/dom/#dom-node-normalize">normalize</a>()</code></li>
+            <li>Return <code>domfrag.<a data-cite="DOM4#dom-node-normalize">normalize</a>()</code></li>
         </ul>
       </dd>
     </dl>
@@ -1153,19 +1152,18 @@
 
       <dt id="XMLLiteral-lexical-space">The <a>lexical space</a></dt>
       <dd>is the set of all strings which are well-balanced, self-contained
-        <a href="http://www.w3.org/TR/2000/REC-xml-20001006#NT-content">XML content</a>
+        <a data-cite="XML10#NT-content">XML content</a>
         [[XML10]]; and for which embedding between an arbitrary
         XML start tag and an end tag yields a document conforming to
-        <a href="http://www.w3.org/TR/1999/REC-xml-names-19990114/">XML Namespaces</a>
-        [[XML-NAMES]].</dd>
+       [[[XML-NAMES]]] [[XML-NAMES]].</dd>
 
       <dt id="XMLLiteral-value-space">The <a>value space</a></dt>
         <dd>is a set of DOM
-        <a href="http://www.w3.org/TR/dom/#interface-documentfragment"><code>DocumentFragment</code></a>
+        <a data-cite="DOM4#interface-documentfragment"><code>DocumentFragment</code></a>
         nodes [[DOM4]]. Two
-        <a href="http://www.w3.org/TR/dom/#interface-documentfragment"><code>DocumentFragment</code></a>
+        <a data-cite="DOM4#interface-documentfragment"><code>DocumentFragment</code></a>
         nodes <em>A</em> and <em>B</em> are considered equal if and only if the DOM method
-        <code><em>A</em>.<a href="http://www.w3.org/TR/dom/#dom-node-isequalnode">isEqualNode</a>(<em>B</em>)</code>
+        <code><em>A</em>.<a data-cite="DOM4#dom-node-isequalnode">isEqualNode</a>(<em>B</em>)</code>
         returns <code>true</code>.</dd>
 
       <dt id="XMLLiteral-mapping">The <a>lexical-to-value mapping</a></dt>
@@ -1173,9 +1171,9 @@
         <p>Each member of the lexical space is associated with the result of applying the following algorithm:</p>
         <ul>
           <li>Let <code>domfrag</code> be a DOM
-            <a href="http://www.w3.org/TR/dom/#interface-documentfragment"><code>DocumentFragment</code></a>
+            <a data-cite="DOM4#interface-documentfragment"><code>DocumentFragment</code></a>
             node [[DOM4]] corresponding to the input string</li>
-          <li>Return <code>domfrag.<a href="http://www.w3.org/TR/dom/#dom-node-normalize">normalize</a>()</code></li>
+          <li>Return <code>domfrag.<a data-cite="DOM4#dom-node-normalize">normalize</a>()</code></li>
         </ul>
       </dd>
 
@@ -1183,9 +1181,9 @@
       <dd>defines a
         <a data-cite="xmlschema11-2#dt-canonical-mapping">canonical lexical form</a> [[XMLSCHEMA11-2]]
         for each member of the value space. The <code>rdf:XMLLiteral</code> canonical mapping is the
-        <a href="http://www.w3.org/TR/2002/REC-xml-exc-c14n-20020718/#def-exclusive-XML-canonicalization-method">exclusive XML canonicalization method</a>
+        <a data-cite="XML-EXC-C14N#def-exclusive-XML-canonicalization-method">exclusive XML canonicalization method</a>
         (<em>with comments, with empty
-        <a href="http://www.w3.org/TR/2002/REC-xml-exc-c14n-20020718/#def-InclusiveNamespaces-PrefixList">InclusiveNamespaces PrefixList</a></em>)
+        <a data-cite="XML-EXC-C14N#def-InclusiveNamespaces-PrefixList">InclusiveNamespaces PrefixList</a></em>)
         [[XML-EXC-C14N]].</dd>
     </dl>
 
@@ -1194,8 +1192,8 @@
       (<code>xml:base</code>) desired in the XML content must be included
       explicitly in the XML literal. Note that some concrete RDF syntaxes
       may define mechanisms for inheriting them from the context (e.g.,
-      <a data-cite="RDF-XML#parseTypeLiteralPropertyElt"><code>@parseType="literal"</code></a>
-      in RDF/XML [[RDF-XML]].</p>
+      <a data-cite="RDF11-XML#parseTypeLiteralPropertyElt"><code>@parseType="literal"</code></a>
+      in RDF/XML [[RDF11-XML]].</p>
 </section>
 
 <section>
