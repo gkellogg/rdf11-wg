@@ -2,49 +2,30 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>RDF 1.1 Primer</title>
-    <script src="../local-biblio.js" class="remove"></script>
-    <script src="https://www.w3.org/Tools/respec/respec-w3c-common" class="remove"></script>
+    <title>RDF 1.2 Primer</title>
+    <script src="https://www.w3.org/Tools/respec/respec-w3c" class="remove"></script>
     <script class='remove'>
       var respecConfig = {
           // extend the bibliography entries
-          localBiblio: localBibliography,
+          localBiblio: {
+            
+          },
 
           // specification status (e.g. WD, LC, WG-NOTE, etc.). If in doubt use ED.
-          specStatus:           "WG-NOTE",
-          errata:               "http://www.w3.org/2014/rdf1.1-errata",
+          specStatus:           "DNOTE",
+          edDraftURI:           "https://w3c.github.io/rdf12-primer/",
           noRecTrack:           true,
 
           // the specification's short name, as in http://www.w3.org/TR/short-name/
           shortName:            "rdf11-primer",
 
-          // if your specification has a subtitle that goes below the main
-          // formal title, define it here
-          // subtitle   :  "an excellent document",
-
-          // if you wish the publication date to be other than today, set this
-          publishDate:  "2014-06-24",
-
-
-          // if the specification's copyright date is a range of years, specify
-          // the start date here:
           copyrightStart: "2003",
 
           // if there is a previously published draft, uncomment this and set its YYYY-MM-DD date
           // and its maturity status
-          previousPublishDate:  "2014-02-25",
+          previousPublishDate:  "2014-06-24",
           previousMaturity:  "WG-NOTE",
-
-          // if there a publicly available Editor's Draft, this is the link
-          edDraftURI:           "https://dvcs.w3.org/hg/rdf/raw-file/default/rdf-primer/index.html",
-
-          // if this is a LCWD, uncomment and set the end of its review period
-          // lcEnd: "2013-09-06",
-
-          // if there is an earlier version of this specification at the Recommendation level,
-          // set this to the shortname of that version. This is optional and not usually
-          // necessary.
-          prevRecShortname: "rdf-primer",
+          prevRecShortname: "rdf11-primer",
 
           // editors, add as many as you like
           // only "name" is required
@@ -58,55 +39,24 @@
               },
           ],
 
-          otherLinks: [
-              {
-                  key: "Previous Editors",
-                  data: [
-                      {
-                          value: "Frank Manola",
-                      }, {
-                          value: "Eric Miller"
-                      }, {
-                          value: "Brian McBride"
-                      }
-                  ]
-              }
+          formerEditors: [
+            { name: "Frank Manola" },
+            { name: "Eric Miller" },
+            { name: "Brian McBride" }
           ],
 
-          // authors, add as many as you like.
-          // This is optional, uncomment if you have authors as well as editors.
-          // only "name" is required. Same format as editors.
-
-          //authors:  [
-          //    { name: "Your Name", url: "http://example.org/",
-          //      company: "Your Company", companyURL: "http://example.com/" },
-          //],
+          github: "https://github.com/gkellogg/rdf11-wg/",
 
           // name of the WG
-          wg:           "RDF Working Group",
+          group:           "rdf-star",
 
-          // URI of the public WG page
-          wgURI:        "http://www.w3.org/2011/rdf-wg/",
+          doJsonLd:     true,
+          wgPublicList: "public-rdf-star-wg"    
 
-          // name (with the @w3c.org) of the public mailing to which comments are due
-          wgPublicList: "public-rdf-comments",
-
-          // URI of the patent status for this WG, for Rec-track documents
-          // !!!! IMPORTANT !!!!
-          // This is important for Rec-track documents, do not copy a patent URI from a random
-          // document unless you know what you're doing. If in doubt ask your friendly neighborhood
-          // Team Contact.
-          wgPatentURI:  "http://www.w3.org/2004/01/pp-impl/46168/status",
-
-          // if this parameter is set to true, ReSpec.js will embed various RDFa attributes
-          // throughout the generated specification. The triples generated use vocabulary items
-          // from the dcterms, foaf, and bibo. The parameter defaults to false.
-          doRDFa: "1.1",
-
-          alternateFormats: [ { uri: "http://www.asahi-net.or.jp/~ax2s-kmtn/internet/rdf/NOTE-rdf11-primer-20140225.html", label: "Japanese translation" } ],
+          //alternateFormats: [ { uri: "http://www.asahi-net.or.jp/~ax2s-kmtn/internet/rdf/NOTE-rdf11-primer-20140225.html", label: "Japanese translation" } ],
       };
     </script>
-    <style type="text/css">
+    <style>
       figure { text-align: center; }
       img.graph { width: 66%; }
       table td, table th { border: 1px solid #ddd; padding: 0.2em 0.5em; }
@@ -184,10 +134,10 @@
 	  <li>RDFa [[RDFA-PRIMER]] (for HTML embedding)</li>
 	  <li>N-Triples [[N-TRIPLES]] and N-Quads [[N-QUADS]]
           (line-based exchange formats)</li>
-	  <li>RDF/XML [[RDF11-XML]] (the original 2004 syntax, updated
+	  <li>RDF/XML [[RDF-SYNTAX-GRAMMAR]] (the original 2004 syntax, updated
           for RDF 1.1)</li>
 	</ul></li> 
-      <li>A document describing RDF Schema [[RDF11-SCHEMA]], which
+      <li>A document describing RDF Schema [[RDF-SCHEMA]], which
     provides a data-modeling vocabulary for RDF data. </li>
     </ul>
     
@@ -523,7 +473,7 @@
 
     <p>To support the definition of vocabularies RDF provides
     the RDF Schema language
-    [[RDF11-SCHEMA]]. This language allows one to define semantic
+    [[RDF-SCHEMA]]. This language allows one to define semantic
     characteristics of
     RDF data. For example, one can state that the IRI 
     <code>http://www.example.org/friendOf</code> can be used as a property and that the
@@ -1229,7 +1179,7 @@ omitted (line 14) and no language tag is present the literal is
 considered to have the datatype <code>xsd:string</code>.
 
 <p>The example shows the baseline syntax; please consult the RDF/XML
-document [[RDF11-XML]] for a more in-depth treatment of the syntax. It
+document [[RDF-SYNTAX-GRAMMAR]] for a more in-depth treatment of the syntax. It
 might seem strange that the attribute values contain full IRIs,
 despite the fact that for some of these namespace prefixes were
 defined. This is because these prefixes can only be used for XML

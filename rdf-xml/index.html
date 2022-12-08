@@ -2,28 +2,53 @@
 <html lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>RDF 1.1 XML Syntax</title>
-    <script src="../local-biblio.js" class="remove"></script>
-    <script src="https://www.w3.org/Tools/respec/respec-w3c-common" class="remove"></script>
+    <title>RDF 1.2 XML Syntax</title>
+    <script src="https://www.w3.org/Tools/respec/respec-w3c" class="remove"></script>
     <script class='remove'>
       var respecConfig = {
           // extend the bibliography entries
-          localBiblio: localBibliography,
+          localBiblio: {
+            "STRIPEDRDF": {
+              id: "STRIPEDRDF",
+              title: "RDF: Understanding the Striped RDF/XML Syntax",
+              editors: ["D. Brickley"],
+              date: "2001",
+              href: "http://www.w3.org/2001/10/stripes/",
+              status: "Team Submission",
+              publisher: "W3C"              
+            },
+            "RELAXNG": {
+              id: "RELAXNG",
+              title: "RELAX NG Specification",
+              editors: ["James Clark", "Murata Makoto"],
+              date: "2001-12-03",
+              href: "http://www.oasis-open.org/committees/relax-ng/spec-20011203.html",
+              status: "Committee Specification",
+              publisher: "OASIS"              
+            },
+            "RELAXNG-COMPACT": {
+              id: "RELAXNG",
+              title: "RELAX NG Compact Syntax",
+              editors: ["James Clark"],
+              date: "2002-11-21",
+              href: "http://www.oasis-open.org/committees/relax-ng/compact-20021121.html",
+              status: "Committee Specification",
+              publisher: "OASIS"              
+            }
+          },
 
           // specification status (e.g. WD, LCWD, NOTE, etc.). If in doubt use ED.
-          specStatus:         "REC",
-          errata:             "http://www.w3.org/2014/rdf1.1-errata",
-          testSuiteURI:       "http://www.w3.org/TR/2014/NOTE-rdf11-testcases-20140225/", 
-          
-          // the specification's short name, as in http://www.w3.org/TR/short-name/
-          shortName:            "rdf-syntax-grammar",
+          specStatus:         "ED",
+          edDraftURI:         "https://w3c.github.io/rdf-syntax-grammar12/",
+          shortName:          "rdf-syntax-grammar12",
+          testSuiteURI:       "https://w3c.github.io/rdf-tests/rdf-xml/", 
 
           // if your specification has a subtitle that goes below the main
           // formal title, define it here
           // subtitle   :  "an excellent document",
 
           // if you wish the publication date to be other than today, set this
-          publishDate:  "2014-02-25",
+          //publishDate:  "2014-02-25",
 
           // if the specification's copyright date is a range of years, specify
           // the start date here:
@@ -31,23 +56,9 @@
 
           // if there is a previously published draft, uncomment this and set its YYYY-MM-DD date
           // and its maturity status
-          previousPublishDate:  "2014-01-09",
-          previousMaturity:  "PER",
-
-          // if there a publicly available Editor's Draft, this is the link
-          // edDraftURI:           "http://dvcs.w3.org/hg/rdf/raw-file/default/rdf-xml/index.html",
-
-          // if this is a LCWD, uncomment and set the end of its review period
-          // lcEnd: "2009-08-05",
-
-          // if there is an earler version of this specification at the Recommendation level,
-          // set this to the shortname of that version. This is optional and not usually
-          // necessary.
-          // prevRecShortname: "rdf-syntax",
-
-          // if you want to have extra CSS, append them to this list
-          // it is recommended that the respec.css stylesheet be kept
-          // extraCSS:             ["http://dvcs.w3.org/hg/rdf/raw-file/default/ReSpec.js/css/respec.css"],
+          previousPublishDate:  "2014-02-25",
+          previousMaturity:  "REC",
+          prevRecShortname: "rdf-syntax-grammar",
 
           // editors, add as many as you like
           // only "name" is required
@@ -59,52 +70,22 @@
                 company: "VU University Amsterdam", companyURL: "http://www.vu.nl",
               },
           ],
-          otherLinks: [
-              {
-                  key: "Previous Editors",
-                  data: [
-                      {
-                          value: "Dave Beckett",
-                      }, 
-                  ]
-              }
-          ],         
-
-          // authors, add as many as you like. 
-          // This is optional, uncomment if you have authors as well as editors.
-          // only "name" is required. Same format as editors.
-
-          //authors:  [
-          //    { name: "Your Name", url: "http://example.org/",
-          //      company: "Your Company", companyURL: "http://example.com/" },
-          //],
+          previousEditors: [
+            { name: "Dave Beckett"}
+          ],
           
+          github: "https://github.com/gkellogg/rdf11-wg/",
+
           // name of the WG
-          wg:           "RDF Working Group",
-          
-          // URI of the public WG page
-          wgURI:        "http://www.w3.org/2011/rdf-wg/",
-          
-          // name (with the @w3c.org) of the public mailing to which comments are due
-          wgPublicList: "public-rdf-comments",
-          
-          // URI of the patent status for this WG, for Rec-track documents
-          // !!!! IMPORTANT !!!!
-          // This is important for Rec-track documents, do not copy a patent URI from a random
-          // document unless you know what you're doing. If in doubt ask your friendly neighbourhood
-          // Team Contact.
-          wgPatentURI:  "http://www.w3.org/2004/01/pp-impl/46168/status",
+          group:           "rdf-star",
+          doJsonLd:     true,
+          wgPublicList: "public-rdf-star-wg"
 
-          // if this parameter is set to true, ReSpec.js will embed various RDFa attributes
-          // throughout the generated specification. The triples generated use vocabulary items
-          // from the dcterms, foaf, and bibo. The parameter defaults to false.
-          doRDFa: "1.1",
-
-          alternateFormats: [ { uri: "diff.html", label: "diff w.r.t. 2004 Recommendation" } ]
+          //alternateFormats: [ { uri: "diff.html", label: "diff w.r.t. 2004 Recommendation" } ]
       };
 
     </script>
-    <style type="text/css">
+    <style>
      figure { width: 76% ;  text-align: center}
      table { border-collapse:collapse; }
      table, td, th { border:1px solid black; }
@@ -145,15 +126,15 @@
         <h2>Introduction</h2>
   
         <p>This document defines the
-        XML [[!XML10]] syntax for RDF graphs. </p>
+        XML [[XML10]] syntax for RDF graphs. </p>
   
-        <p>This document revises the original RDF/XML grammar [[RDFMS]]
-        in terms of XML Information Set [[!XML-INFOSET]] information items which moves
+        <p>This document revises the original RDF/XML grammar [[rdf-syntax-grammar-19990222]]
+        in terms of XML Information Set [[XML-INFOSET]] information items which moves
         away from the rather low-level details of XML, such as particular
         forms of empty elements.  This allows the grammar to be more
         precisely recorded and the mapping from the XML syntax to the RDF
         Graph more clearly shown.  The mapping to the RDF graph is done by
-        emitting statements in the N-Triples [[!N-TRIPLES]] format. </p>
+        emitting statements in the N-Triples [[N-TRIPLES]] format. </p>
 
         <p>This document is part of the suite of RDF 1.1
         documents. Other documents in this suite are: </p>
@@ -161,17 +142,17 @@
     <ul>
       <li>A document describing the basic concepts underlying RDF, as
       well as abstract syntax ("RDF Concepts and Abstract Syntax")
-      [[!RDF11-CONCEPTS]]</li>
+      [[RDF11-CONCEPTS]]</li>
       <li>A document describing the formal model-theoretic semantics
-      of RDF ("RDF Semantics") [[!RDF11-MT]]</li>
+      of RDF ("RDF Semantics") [[RDF11-MT]]</li>
       <li>Specifications of concrete syntaxes for RDF:
         <ul>
-	  <li>Turtle [[!TURTLE]] and TriG [[!TRIG]]</li>
-	  <li>JSON-LD [[!JSON-LD]] (JSON based)</li>
-	  <li>RDFa [[!RDFA-PRIMER]] (for HTML embedding)</li>
+	  <li>Turtle [[TURTLE]] and TriG [[TRIG]]</li>
+	  <li>JSON-LD [[JSON-LD]] (JSON based)</li>
+	  <li>RDFa [[RDFA-PRIMER]] (for HTML embedding)</li>
 	  <li>N-Triples and N-Quads (line-based exchange formats)</li>
 	</ul></li> 
-      <li>A document describing RDF Schema [[!RDF11-SCHEMA]], which
+      <li>A document describing RDF Schema [[RDF-SCHEMA]], which
     provides a data-modeling vocabulary for RDF data. </li>
     </ul>
          <p>For a longer introduction to the RDF/XML syntax with a historical
@@ -224,7 +205,7 @@
         and attribute values.
         RDF/XML uses XML
         <a href="http://www.w3.org/TR/1999/REC-xml-names-19990114/#NT-QName">QNames</a>
-        as defined in Namespaces in XML [[!XML-NAMES]] to represent IRIs. 
+        as defined in Namespaces in XML [[XML-NAMES]] to represent IRIs. 
         All QNames have a <a
         href="http://www.w3.org/TR/1999/REC-xml-names-19990114/#dt-NSName">namespace
         name</a> which is an IRI 
@@ -569,7 +550,7 @@
 
         <p>RDF/XML permits the use of the <code>xml:lang</code> attribute as defined by
         <a href="http://www.w3.org/TR/REC-xml#sec-lang-tag">2.12 Language Identification</a>
-        of XML 1.0 [[!XML10]]
+        of XML 1.0 [[XML10]]
         to allow the identification of content language.
         The <code>xml:lang</code> attribute can be used on any node element or property element
         to indicate that the included content is in the given language.  
@@ -681,7 +662,7 @@
         typed literal
         ("123", <code>http://www.w3.org/2001/XMLSchema#int</code>)
         to be interpreted as an
-        XML Schema [[!XMLSCHEMA-2]] datatype <code>int</code>.
+        XML Schema [[XMLSCHEMA-2]] datatype <code>int</code>.
         </p>
 
 <pre class="example" id="example10">
@@ -863,7 +844,7 @@
         </p>
 
         <p>The typed node elements are commonly used in RDF/XML with the built-in
-        classes in the <a href="#section-Namespace">RDF vocabulary</a>:
+        classes in the <a>RDF vocabulary</a>:
         <code>rdf:Seq</code>, <code>rdf:Bag</code>, <code>rdf:Alt</code>,
 
         <code>rdf:Statement</code>, <code>rdf:Property</code> and
@@ -1109,18 +1090,11 @@
 
     <!-- SECOND PART : TERMINILOGY -->
 
-    <section id="section-Terminology">
-      <h2>Terminology</h2>
-
-      <p>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL
-        NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in
-        this document are to be interpreted as described in
-        RFC 2119 [[RFC2119]].</p>
-
-        <p>All use of string without further qualification refers to
-        a Unicode [[UNICODE]] character string; 
-        a sequence of characters represented by a code point in
-        Unicode.
+    <section id="conformance">
+      <p>All use of string without further qualification refers to
+      a Unicode [[UNICODE]] character string; 
+      a sequence of characters represented by a code point in
+      Unicode.</p>
 	
     </section>
 
@@ -1132,7 +1106,7 @@
 
         <p>The Internet media type / MIME type for RDF/XML is
         <code>application/rdf+xml</code> &mdash; 
-        RFC 3023 [[!RFC3023]], section 8.18.
+        RFC 3023 [[RFC3023]], section 8.18.
         </p>
 
         <p class="note"><strong>(Informative): </strong>
@@ -1163,7 +1137,7 @@
         <code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code>
         and is typically used in XML with the prefix <code>rdf</code>
         although other prefix strings may be used.
-        The <dfn id="rdf-vocabulary">RDF Vocabulary</dfn>
+        The <dfn>RDF Vocabulary</dfn>
         is identified by this namespace name and consists of the following names only:</p>
 
         <dl>
@@ -1421,7 +1395,7 @@
 
         <dt>Conformance:<br /></dt>
           <dd>An <a href="#dfn-rdf-xml-document" class="termref">RDF/XML Document</a> is a
-          <dfn id="dfn-conforming-document">conforming RDF/XML document</dfn>
+          <dfn data-lt="conforming document" class="export">conforming RDF/XML document</dfn>
           if it adheres to the specification defined in this document.</dd>
         </dl>
         </section>
@@ -1488,7 +1462,7 @@
         </p>
 
         <p>This specification requires an
-        XML Information Set [[!XML-INFOSET]]
+        XML Information Set [[XML-INFOSET]]
         which supports at least the following information items and
         properties for RDF/XML:</p>
 
@@ -1658,7 +1632,7 @@
         <a href="#eventterm-element-URI" class="termref"><span
         class="arrow">·</span>URI<span class="arrow">·</span></a> 
         accessor uses the N-Triples escapes for
-        IRIs [[N_TRIPLES]].
+        IRIs [[N-TRIPLES]].
         </p>
 
           </dd>
@@ -1752,7 +1726,7 @@
 
            <p>The support for a limited set of non-namespaced names is
            REQUIRED and intended to allow RDF/XML documents specified in
-           [[RDFMS]] to remain valid; new documents
+           [[RDF-SYNTAX-GRAMMAR-19990222]] to remain valid; new documents
            SHOULD NOT use these unqualified attributes and applications MAY
            choose to warn when the unqualified form is seen in a document.</p>
 
@@ -2555,7 +2529,7 @@
 
         </p></div></div>
 
-        <p>These are the names from the <a href="#section-Namespace">RDF vocabulary</a>
+        <p>These are the names from the <a>RDF vocabulary</a>
         that have been withdrawn from the language.  See the resolutions of
         Issue <a href="http://www.w3.org/2000/03/rdf-tracking/#rdfms-aboutEach-on-object">rdfms-aboutEach-on-object</a>,
         Issue <a href="http://www.w3.org/2000/03/rdf-tracking/#rdfms-abouteachprefix">rdfms-abouteachprefix</a> and

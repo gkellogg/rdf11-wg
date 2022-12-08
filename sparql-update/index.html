@@ -21,11 +21,10 @@
         },
 
         // specification status (e.g. WD, LCWD, NOTE, etc.). If in doubt use ED.
-        specStatus:              "ED",
-        testSuiteURI:            "https://w3c.github.io/rdf-tests/sparql-update/", 
-
-        // the specification's short name, as in http://www.w3.org/TR/short-name/
-        shortName:            "sparql12-update",
+        specStatus:        "ED",
+        testSuiteURI:      "https://w3c.github.io/rdf-tests/sparql11/", 
+        shortName:         "sparql12-update",
+        edDraftURI:        "https://w3c.github.io/sparql12-update/",
 
         // if you wish the publication date to be other than today, set this
         //publishDate:  "2014-02-25",
@@ -37,8 +36,9 @@
 
         // if there is a previously published draft, uncomment this and set its YYYY-MM-DD date
         // and its maturity status
-        previousPublishDate:  "2013-03-21",
+        previousPublishDate:  "2014-02-25",
         previousMaturity:  "REC",
+        prevRecShortname: "trig",
 
         // editors, add as many as you like
         // only "name" is required
@@ -1676,7 +1676,7 @@ The <code><a href="#add">ADD</a></code> operation reproduces all data from one g
             </p>
             <p>Dataset(<em>QuadPattern</em>,  μ, DS, GS )
               is the Dataset consisting of only a default graph composed by all
-              <a data-cite="RDF-CONCEPTS#dfn-rdf-triple">valid RDF triples</a>
+              <a data-cite="RDF11-CONCEPTS#dfn-rdf-triple">valid RDF triples</a>
               obtained from substituting the variables in
               sk<sub>μ</sub>(<code><a data-cite="SPARQL11-QUERY#rTriplesTemplate">TriplesTemplate</a></code>)
               according to μ and combining these triples into a single

@@ -2,27 +2,34 @@
 <html lang="en">
   <head>
     <meta content="text/html; charset=utf-8" http-equiv="content-type">
-    <title>RDF Schema 1.1</title>
-    <script src="../local-biblio.js" class="remove"></script>
-    <script src="https://www.w3.org/Tools/respec/respec-w3c-common" class="remove"></script>
+    <title>RDF 1.2 Schema</title>
+    <script src="https://www.w3.org/Tools/respec/respec-w3c" class="remove"></script>
     <script class="remove">
       var respecConfig = {
           // extend the bibliography entries
-          localBiblio: localBibliography,
+          localBiblio: {
+            "BERNERS-LEE98": {
+              id: "BERNERS-LEE98",
+              title: "What the Semantic Web can represent",
+              editors: ["Tim Berners-Lee"],
+              date: "1998",
+              href: "http://www.w3.org/DesignIssues/RDFnot.html",
+              status: "Team Submission",
+              publisher: "W3C"              
+            }
+          },
 
           // specification status (e.g. WD, LC, WG-NOTE, etc.). If in doubt use ED.
-          specStatus:         "REC",
-          errata:             "http://www.w3.org/2014/rdf1.1-errata",
-
-          // the specification's short name, as in http://www.w3.org/TR/short-name/
-          shortName:            "rdf-schema",
+          specStatus:         "ED",
+          edDraftURI:         "https://w3c.github.io/rdf12-schema/",
+          shortName:          "rdf12-schema",
 
           // if your specification has a subtitle that goes below the main
           // formal title, define it here
           // subtitle   :  "an excellent document",
 
           // if you wish the publication date to be other than today, set this
-          publishDate:  "2014-02-25",
+          //publishDate:  "2014-02-25",
   
 
           // if the specification's copyright date is a range of years, specify
@@ -31,19 +38,9 @@
 
           // if there is a previously published draft, uncomment this and set its YYYY-MM-DD date
           // and its maturity status
-          previousPublishDate:  "2014-01-09",
-          previousMaturity:  "PER",
-
-          // if there a publicly available Editor's Draft, this is the link
-          // edDraftURI: "https://dvcs.w3.org/hg/rdf/raw-file/default/rdf-schema/index.html",
-
-          // if this is a LCWD, uncomment and set the end of its review period
-          // lcEnd: "",
-
-          // if there is an earlier version of this specification at the Recommendation level,
-          // set this to the shortname of that version. This is optional and not usually
-          // necessary.
-          // prevRecShortname: "rdf-concepts",
+          previousPublishDate:  "2014-02-25",
+          previousMaturity:  "REC",
+          prevRecShortname: "rdf-schema",
 
           // editors, add as many as you like
           // only "name" is required
@@ -55,48 +52,19 @@
                 company: "Google", //companyURL: "",
               },
           ],
-          otherLinks: [
-              {
-                  key: "Previous Editors",
-                  data: [
-                      {
-                          value: "Brian McBride"
-                      }
-                  ]
-              }
+          formerEditors: [
+            { name: "Brian McBride" }
           ],
 
-          // authors, add as many as you like.
-          // This is optional, uncomment if you have authors as well as editors.
-          // only "name" is required. Same format as editors.
-
-          //authors:  [
-          //    { name: "Your Name", url: "http://example.org/",
-          //      company: "Your Company", companyURL: "http://example.com/" },
-          //],
+          github: "https://github.com/gkellogg/rdf11-wg/",
 
           // name of the WG
-          wg:           "RDF Working Group",
+          group:           "rdf-star",
 
-          // URI of the public WG page
-          wgURI:        "http://www.w3.org/2011/rdf-wg/",
+          doJsonLd:     true,
+          wgPublicList: "public-rdf-star-wg"    
 
-          // name (with the @w3c.org) of the public mailing to which comments are due
-          wgPublicList: "public-rdf-comments",
-
-          // URI of the patent status for this WG, for Rec-track documents
-          // !!!! IMPORTANT !!!!
-          // This is important for Rec-track documents, do not copy a patent URI from a random
-          // document unless you know what you're doing. If in doubt ask your friendly neighbourhood
-          // Team Contact.
-          wgPatentURI:  "http://www.w3.org/2004/01/pp-impl/46168/status",
-
-          // if this parameter is set to true, ReSpec.js will embed various RDFa attributes
-          // throughout the generated specification. The triples generated use vocabulary items
-          // from the dcterms, foaf, and bibo. The parameter defaults to false.
-          doRDFa: "1.1",
-
-          alternateFormats: [ { uri: "diff.html", label: "diff w.r.t. 2004 Recommendation" } ]
+          //alternateFormats: [ { uri: "diff.html", label: "diff w.r.t. 2004 Recommendation" } ]
       };
     </script>
     <style type="text/css">
@@ -133,9 +101,9 @@
       <p>RDF Schema provides a data-modelling vocabulary for RDF data.
         It is complemented by several companion documents which
         describe the basic concepts and abstract syntax of RDF
-        [[!RDF11-CONCEPTS]], the formal semantics of RDF [[!RDF11-MT]], and
-        various concrete syntaxes for RDF, such as Turtle [[!TURTLE]],
-        TriG, [[!TRIG]], and JSON-LD [[!JSON-LD]]. The RDF Primer
+        [[RDF11-CONCEPTS]], the formal semantics of RDF [[RDF11-MT]], and
+        various concrete syntaxes for RDF, such as Turtle [[TURTLE]],
+        TriG, [[TRIG]], and JSON-LD [[JSON-LD]]. The RDF Primer
         [[RDF11-PRIMER]] provides an informal introduction and
         examples of the use of the concepts specified in this document.</p>
       <p>This document is intended to provide a clear specification of RDF
@@ -723,9 +691,9 @@ literal
       <section id="ch_reificationvocab" class="informative">
       <h3>Reification Vocabulary</h3>
         <!--
-<p>The 1999 RDF Model and Syntax Specification [[RDFMS]] defined a vocabulary for describing RDF statements without stating them. 
+<p>The 1999 RDF Model and Syntax Specification [[RDF-SYNTAX-GRAMMAR-19990222]] defined a vocabulary for describing RDF statements without stating them. 
 The 2004 RDF specification did not assign a normative formal semantics to this vocabulary.  However, an intended meaning of 
-this vocabulary (which generally clarifies the intent of the RDFMS definition) is described here.
+this vocabulary (which generally clarifies the intent of the RDF XML Syntax definition) is described here.
 An informal introduction to the reification vocabulary, with examples, may be found in the <a
 href="http://www.w3.org/TR/2004/REC-rdf-primer-20040210/#reification">RDF2004 primer</a>.
 </p>-->

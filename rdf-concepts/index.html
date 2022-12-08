@@ -25,12 +25,7 @@
 
           // specification status (e.g. WD, LC, WG-NOTE, etc.). If in doubt use ED.
           specStatus:              "ED",
-          //errata:                  "http://www.w3.org/2014/rdf1.1-errata",
-          // prEnd:        "2014-02-09",
-          // crEnd:        "2013-11-26",
-          // lcEnd:        "2013-09-06",
-
-          // the specification's short name, as in http://www.w3.org/TR/short-name/
+          edDraftURI:              "https://w3c.github.io/rdf12-concepts/",
           shortName:            "rdf12-concepts",
 
           // if you wish the publication date to be other than today, set this
@@ -44,16 +39,6 @@
           // and its maturity status
           previousPublishDate: "2014-02-25",
           previousMaturity:    "REC",
-          // previousDiffURI:     "http://www.w3.org/TR/2013/CR-rdf11-concepts-20131105/",
-
-          // if there a publicly available Editor's Draft, this is the link
-          // edDraftURI:           "https://dvcs.w3.org/hg/rdf/raw-file/default/rdf-concepts/index.html",
-
-          // if this is a LCWD, uncomment and set the end of its review period
-
-          // if there is an earlier version of this specification at the Recommendation level,
-          // set this to the shortname of that version. This is optional and not usually
-          // necessary.
           prevRecShortname: "rdf11-concepts",
 
           // editors, add as many as you like
@@ -69,51 +54,16 @@
                 company: "Graz University of Technology", companyURL: "http://www.tugraz.at/" }
           ],
 
-          otherLinks: [
-              {
-                  key: "Previous Editors",
-                  data: [
-                      {
-                          value: "Graham Klyne"
-                      }, {
-                          value: "Jeremy J. Carroll"
-                      }, {
-                          value: "Brian McBride"
-                      }
-                  ]
-              }
+          formerEditors: [
+            { name: "Graham Klyne" },
+            { name: "Jeremy J. Carroll" },
+            { name: "Brian McBride" }
           ],
-
-          // authors, add as many as you like.
-          // This is optional, uncomment if you have authors as well as editors.
-          // only "name" is required. Same format as editors.
-
-          //authors:  [
-          //    { name: "Your Name", url: "http://example.org/",
-          //      company: "Your Company", companyURL: "http://example.com/" },
-          //],
 
           github: "https://github.com/gkellogg/rdf11-wg/",
 
           // name of the WG
           group:           "rdf-star",
-
-          // URI of the public WG page
-          //wgURI:        "http://www.w3.org/2011/rdf-wg/",
-
-          // name (with the @w3c.org) of the public mailing to which comments are due
-          //wgPublicList: "public-rdf-comments",
-
-          // URI of the patent status for this WG, for Rec-track documents
-          // !!!! IMPORTANT !!!!
-          // This is important for Rec-track documents, do not copy a patent URI from a random
-          // document unless you know what you're doing. If in doubt ask your friendly neighborhood
-          // Team Contact.
-          //wgPatentURI:  "http://www.w3.org/2004/01/pp-impl/46168/status",
-
-          // if this parameter is set to true, ReSpec.js will embed various RDFa attributes
-          // throughout the generated specification. The triples generated use vocabulary items
-          // from the dcterms, foaf, and bibo. The parameter defaults to false.
           doJsonLd:     true,
           wgPublicList: "public-rdf-star-wg"
 
@@ -150,8 +100,7 @@
     RDF 1.1 is the notion of an RDF dataset to represent multiple
     graphs. Test suites and implementation reports of a number of RDF 1.1
     specifications that build on this document are available through the  
-    <a href="http://www.w3.org/TR/2014/NOTE-rdf11-testcases-20140225/">RDF 1.1 Test Cases</a> 
-    document [[RDF11-TESTCASES]].
+    [[[RDF11-TESTCASES]]] document [[RDF11-TESTCASES]].
     There have been no changes to this document since its publication as
     Proposed Recommendation.</p>
   </section>
