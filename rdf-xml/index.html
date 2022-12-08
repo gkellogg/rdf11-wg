@@ -83,20 +83,56 @@
 
           //alternateFormats: [ { uri: "diff.html", label: "diff w.r.t. 2004 Recommendation" } ]
       };
+    </script>
+    <script>
+      require(["core/pubsubhub"], (respecEvents) => {
+        respecEvents.sub('end-all', (documentElement) => {
+          // Add highlighting and remove comment from pre elements
+          for (const pre of document.querySelectorAll("pre")) {
+            // First pre element of aside
+            const content = pre.innerHTML
+              .replace(/\*\*\*\*([^*]*)\*\*\*\*/g, '<span class="hl-bold">$1</span>')
+              .replace(/####([^#]*)####/g, '<span class="comment">$1</span>');
+            pre.innerHTML = content;
+          }
+        });
+      });
 
+      function _esc(s) {
+        return s.replace(/&/g,'&amp;')
+          .replace(/>/g,'&gt;')
+          .replace(/"/g,'&quot;')
+          .replace(/</g,'&lt;');
+      }
+
+      function updateExample(doc, content) {
+        // perform transformations to make it render and prettier
+        return _esc(unComment(doc, content));
+      }
+
+      function unComment(doc, content) {
+        // perform transformations to make it render and prettier
+        return content
+          .replace(/<!--/, '')
+          .replace(/-->/, '')
+          .replace(/< !\s*-\s*-/g, '<!--')
+          .replace(/-\s*- >/g, '-->')
+          .replace(/-\s*-\s*&gt;/g, '--&gt;');
+      }
     </script>
     <style>
      figure { width: 76% ;  text-align: center}
      table { border-collapse:collapse; }
      table, td, th { border:1px solid black; }
      caption { font-weight: bold; text-align: left ; }
+     .hl-bold { font-weight: bold; color: #0a3; }
     </style>
   </head>
 
   <body>
 
     <section id="abstract">
-        <p>This document defines an XML
+      <p>This document defines an XML
         syntax for RDF called RDF/XML in terms of
         Namespaces in XML, the XML Information Set
         and XML Base.</p>
@@ -104,7 +140,7 @@
     </section>
 
     <section id="sotd">
-        <p>This document is an edited version of the 2004 RDF XML Syntax
+      <p>This document is an edited version of the 2004 RDF XML Syntax
         Specification Recommendation. The purpose of this revision is
         to make this 
         document available as part of the RDF 1.1 document set. Changes are
@@ -123,12 +159,11 @@
      </section>
 
     <section id="section-Introduction">
-        <h2>Introduction</h2>
+      <h2>Introduction</h2>
   
-        <p>This document defines the
-        XML [[XML10]] syntax for RDF graphs. </p>
+      <p>This document defines the XML [[XML10]] syntax for RDF graphs. </p>
   
-        <p>This document revises the original RDF/XML grammar [[rdf-syntax-grammar-19990222]]
+      <p>This document revises the original RDF/XML grammar [[RDF-SYNTAX-GRAMMAR-19990222]]
         in terms of XML Information Set [[XML-INFOSET]] information items which moves
         away from the rather low-level details of XML, such as particular
         forms of empty elements.  This allows the grammar to be more
@@ -136,26 +171,27 @@
         Graph more clearly shown.  The mapping to the RDF graph is done by
         emitting statements in the N-Triples [[N-TRIPLES]] format. </p>
 
-        <p>This document is part of the suite of RDF 1.1
+      <p>This document is part of the suite of RDF 1.1
         documents. Other documents in this suite are: </p>
 
-    <ul>
-      <li>A document describing the basic concepts underlying RDF, as
-      well as abstract syntax ("RDF Concepts and Abstract Syntax")
-      [[RDF11-CONCEPTS]]</li>
-      <li>A document describing the formal model-theoretic semantics
-      of RDF ("RDF Semantics") [[RDF11-MT]]</li>
-      <li>Specifications of concrete syntaxes for RDF:
-        <ul>
-	  <li>Turtle [[TURTLE]] and TriG [[TRIG]]</li>
-	  <li>JSON-LD [[JSON-LD]] (JSON based)</li>
-	  <li>RDFa [[RDFA-PRIMER]] (for HTML embedding)</li>
-	  <li>N-Triples and N-Quads (line-based exchange formats)</li>
-	</ul></li> 
-      <li>A document describing RDF Schema [[RDF-SCHEMA]], which
-    provides a data-modeling vocabulary for RDF data. </li>
-    </ul>
-         <p>For a longer introduction to the RDF/XML syntax with a historical
+      <ul>
+        <li>A document describing the basic concepts underlying RDF, as
+          well as abstract syntax ("RDF Concepts and Abstract Syntax")
+          [[RDF11-CONCEPTS]]</li>
+        <li>A document describing the formal model-theoretic semantics
+          of RDF ("RDF Semantics") [[RDF11-MT]]</li>
+        <li>Specifications of concrete syntaxes for RDF:
+          <ul>
+            <li>Turtle [[TURTLE]] and TriG [[TRIG]]</li>
+            <li>JSON-LD [[JSON-LD]] (JSON based)</li>
+            <li>RDFa [[RDFA-PRIMER]] (for HTML embedding)</li>
+            <li>N-Triples [N-TRIPLES] and N-Quads [N-QUADS] (line-based exchange formats)</li>
+          </ul>
+        </li> 
+        <li>A document describing RDF Schema [[RDF-SCHEMA]], which
+          provides a data-modeling vocabulary for RDF data. </li>
+      </ul>
+      <p>For a longer introduction to the RDF/XML syntax with a historical
         perspective, see "RDF: Understanding the Striped RDF/XML
         Syntax" [[STRIPEDRDF]].</p>
 
@@ -177,7 +213,7 @@
       </p>
 
         <!-- intro -->
-        <section id="section-Syntax-intro">
+      <section id="section-Syntax-intro">
         <h3>Introduction</h3>
 
         <p>The RDF Concepts and Abstract Syntax document [[RDF11-CONCEPTS]]
@@ -203,24 +239,20 @@
         <p>In order to encode the graph in XML, the nodes and predicates have to be
         represented in XML terms &mdash; element names, attribute names, element contents
         and attribute values.
-        RDF/XML uses XML
-        <a href="http://www.w3.org/TR/1999/REC-xml-names-19990114/#NT-QName">QNames</a>
+        RDF/XML uses XML <a data-cite="XML-NAMES#NT-QName">QNames</a>
         as defined in Namespaces in XML [[XML-NAMES]] to represent IRIs. 
-        All QNames have a <a
-        href="http://www.w3.org/TR/1999/REC-xml-names-19990114/#dt-NSName">namespace
-        name</a> which is an IRI 
+        All QNames have a <a data-cite="XML-NAMES#dt-NSName">namespace name</a> which is an IRI 
         and a short
-        <a href="http://www.w3.org/TR/1999/REC-xml-names-19990114/#NT-LocalPart">local name</a>.
+        <a data-cite="XML-NAMES#NT-LocalPart">local name</a>.
         In addition, QNames can either have a short 
-        <a href="http://www.w3.org/TR/1999/REC-xml-names-19990114/#NT-Prefix">prefix</a>
+        <a data-cite="XML-NAMES#NT-Prefix">prefix</a>
         or be declared with the default namespace declaration and have none (but
         still have a namespace name)</p>
 
         <p>The IRI represented by a QName is determined by appending the
-        <a href="http://www.w3.org/TR/1999/REC-xml-names-19990114/#NT-LocalPart">local name</a>
+        <a data-cite="XML-NAMES#NT-LocalPart">local name</a>
         part of the QName after the
-        <a href="http://www.w3.org/TR/1999/REC-xml-names-19990114/#dt-NSName">namespace
-        name</a> (IRI) part of the QName. 
+        <a data-cite="XML-NAMES#dt-NSName">namespace name</a> (IRI) part of the QName. 
         This is used to shorten the IRI 
         of all predicates and some nodes.
         IRIs identifying
@@ -243,13 +275,11 @@
         <p>Several RDF/XML examples are given in the following sections
         building up to complete RDF/XML documents.  <a href="#example7">Example 7</a>
         is the first complete RDF/XML document.</p>
-        </section>
-        
-        
-        <!-- node and property elements -->
-        <section id="section-Syntax-node-property-elements">
-        <h3>Node Elements and Property Elements</h3>
+      </section>
 
+      <!-- node and property elements -->
+      <section id="section-Syntax-node-property-elements">
+        <h3>Node Elements and Property Elements</h3>
 
         <figure id="figure1">
           <img src="figure1.png" alt="Graph for RDF/XML Example" />
@@ -257,14 +287,12 @@
         </figure>
 
         <p>An RDF graph is given in <a href="#figure1">Figure 1</a>
-        where the nodes are represented as ovals and contain their
-        IRIs where they have them, all the predicate arcs are labeled with
-        IRIs and string literals nodes have been written in rectangles.</p>
-
+          where the nodes are represented as ovals and contain their
+          IRIs where they have them, all the predicate arcs are labeled with
+          IRIs and string literals nodes have been written in rectangles.</p>
 
         <p>If we follow one node, predicate arc ... , node path through the
-        graph shown in <a href="#figure2">Figure 2</a>:
-        </p>
+          graph shown in <a href="#figure2">Figure 2</a>:</p>
 
         <figure id="figure2">
           <img src="figure2.png" alt="One Path Through the Graph" />
@@ -272,107 +300,105 @@
         </figure>
 
         <p>The left hand side of the <a href="#figure2">Figure 2</a>
-        graph corresponds to the node/predicate arc stripes:</p> 
+          graph corresponds to the node/predicate arc stripes:</p> 
 
         <ol>
-
-        <li>Node with IRI <code>http://www.w3.org/TR/rdf-syntax-grammar</code></li>
-        <li>Predicate Arc labeled with IRI <code>http://example.org/terms/editor</code></li>
-        <li>Node with no IRI</li>
-        <li>Predicate Arc labeled with IRI  <code>http://example.org/terms/homePage</code></li>
-
-        <li>Node with IRI <code>http://purl.org/net/dajobe/</code></li>
+          <li>Node with IRI <code>http://www.w3.org/TR/rdf-syntax-grammar</code></li>
+          <li>Predicate Arc labeled with IRI <code>http://example.org/terms/editor</code></li>
+          <li>Node with no IRI</li>
+          <li>Predicate Arc labeled with IRI  <code>http://example.org/terms/homePage</code></li>
+          <li>Node with IRI <code>http://purl.org/net/dajobe/</code></li>
         </ol>
 
         <p>In RDF/XML, the sequence of 5 nodes and predicate arcs on
-        the left hand side of <a href="#figure2">Figure 2</a> corresponds to 
-        the usage of five XML elements of two types, for the graph nodes and
-        predicate arcs. These are conventionally called <em>node elements</em> and
-        <em>property elements</em> respectively.  In the striping shown in
+          the left hand side of <a href="#figure2">Figure 2</a> corresponds to 
+          the usage of five XML elements of two types, for the graph nodes and
+          predicate arcs. These are conventionally called <em>node elements</em> and
+          <em>property elements</em> respectively.  In the striping shown in
+          <a href="#example1">Example 1</a>, <code>rdf:Description</code> is the
+          node element (used three times for the three nodes) and
+          <code>ex:editor</code> and <code>ex:homePage</code> are the two
+          property elements.</p>
 
-        <a href="#example1">Example 1</a>, <code>rdf:Description</code> is the
-        node element (used three times for the three nodes) and
-        <code>ex:editor</code> and <code>ex:homePage</code> are the two
-        property elements.
-        </p>
-
-<pre class="example" id="example1">
-<strong>Striped RDF/XML (nodes and predicate arcs)</strong>
-	
-<code>&lt;rdf:Description&gt;</code>
-  &lt;ex:editor&gt;
-    <code>&lt;rdf:Description&gt;</code>
-      &lt;ex:homePage&gt;
-        <code>&lt;rdf:Description&gt;</code>
-        <code>&lt;/rdf:Description&gt;</code>
-      &lt;/ex:homePage&gt;
-    <code>&lt;/rdf:Description&gt;</code>
-  &lt;/ex:editor&gt;
-<code>&lt;/rdf:Description&gt;</code>
-</pre>
+        <pre class="example rdf" id="example1"
+             data-transform="updateExample"
+             title="Striped RDF/XML (nodes and predicate arcs)">
+          <!--
+          ****<rdf:Description>****
+          <ex:editor>
+            ****<rdf:Description>****
+              <ex:homePage>
+                <rdf:Description>
+                </rdf:Description>
+              </ex:homePage>
+            ****</rdf:Description>****
+          </ex:editor>
+          ****</rdf:Description>****
+          -->
+        </pre>
 
         <p>The <a href="#figure2">Figure 2</a> graph consists of some nodes
-        that are
-        IRIs
+          that are IRIs (and others that are not) and this can be added
+          to the RDF/XML using the <code>rdf:about</code> attribute on node
+          elements to give the result in <a href="#example2">Example 2</a>:</p>
 
-        (and others that are not) and this can be added
-        to the RDF/XML using the <code>rdf:about</code> attribute on node
-        elements to give the result in <a href="#example2">Example 2</a>:</p>
-
-<pre class="example" id="example2">
-<strong>Node Elements with IRIs added</strong>
-	
-&lt;rdf:Description rdf:about="http://www.w3.org/TR/rdf-syntax-grammar"&gt;
-  &lt;ex:editor&gt;
-    &lt;rdf:Description&gt;
-      &lt;ex:homePage&gt;
-        &lt;rdf:Description rdf:about="http://purl.org/net/dajobe/"&gt;
-        &lt;/rdf:Description&gt;
-      &lt;/ex:homePage&gt;
-    &lt;/rdf:Description&gt;
-  &lt;/ex:editor&gt;
-&lt;/rdf:Description&gt;
-</pre>
+        <pre class="example rdf" id="example2"
+           data-transform="updateExample"
+           title="Node Elements with IRIs added">
+        <!--
+        <rdf:Description rdf:about="http://www.w3.org/TR/rdf-syntax-grammar">
+          <ex:editor>
+            <rdf:Description>
+              <ex:homePage>
+                <rdf:Description rdf:about="http://purl.org/net/dajobe/">
+                </rdf:Description>
+              </ex:homePage>
+            </rdf:Description>
+          </ex:editor>
+        </rdf:Description>
+        -->
+        </pre>
 
         <p>Adding the other two paths through the <a href="#figure1">Figure 1</a>
-        graph to the RDF/XML in
-        <a href="#example2">Example 2</a>
-        gives the result in <a href="#example3">Example 3</a>
-        (this example fails to show that the blank node is
-        shared between the two paths, see 
-        <a href="#section-Syntax-blank-nodes">2.10</a>):</p>
+          graph to the RDF/XML in
+          <a href="#example2">Example 2</a>
+          gives the result in <a href="#example3">Example 3</a>
+          (this example fails to show that the blank node is
+          shared between the two paths, see 
+          <a href="#section-Syntax-blank-nodes">2.10</a>):</p>
 
-<pre class="example" id="example3">
-<strong>Complete description of all graph paths</strong>
+        <pre class="example rdf" id="example3"
+           data-transform="updateExample"
+           title="Complete description of all graph paths">
+          <!--
+          <rdf:Description rdf:about="http://www.w3.org/TR/rdf-syntax-grammar">
+            <ex:editor>
+              <rdf:Description>
+                <ex:homePage>
+                  <rdf:Description rdf:about="http://purl.org/net/dajobe/">
+                  </rdf:Description>
+                </ex:homePage>
+              </rdf:Description>
+            </ex:editor>
+          </rdf:Description>
 
-&lt;rdf:Description rdf:about="http://www.w3.org/TR/rdf-syntax-grammar"&gt;
-  &lt;ex:editor&gt;
-    &lt;rdf:Description&gt;
-      &lt;ex:homePage&gt;
-        &lt;rdf:Description rdf:about="http://purl.org/net/dajobe/"&gt;
-        &lt;/rdf:Description&gt;
-      &lt;/ex:homePage&gt;
-    &lt;/rdf:Description&gt;
-  &lt;/ex:editor&gt;
-&lt;/rdf:Description&gt;
+          <rdf:Description rdf:about="http://www.w3.org/TR/rdf-syntax-grammar">
+            <ex:editor>
+              <rdf:Description>
+                <ex:fullName>Dave Beckett</ex:fullName>
+              </rdf:Description>
+            </ex:editor>
+          </rdf:Description>
 
-&lt;rdf:Description rdf:about="http://www.w3.org/TR/rdf-syntax-grammar"&gt;
-  &lt;ex:editor&gt;
-    &lt;rdf:Description&gt;
-      &lt;ex:fullName&gt;Dave Beckett&lt;/ex:fullName&gt;
-    &lt;/rdf:Description&gt;
-  &lt;/ex:editor&gt;
-&lt;/rdf:Description&gt;
-
-&lt;rdf:Description rdf:about="http://www.w3.org/TR/rdf-syntax-grammar"&gt;
-  &lt;dc:title&gt;RDF 1.1 XML Syntax&lt;/dc:title&gt;
-&lt;/rdf:Description&gt;
-</pre>
-
-        </section>
+          <rdf:Description rdf:about="http://www.w3.org/TR/rdf-syntax-grammar">
+            <dc:title>RDF 1.1 XML Syntax</dc:title>
+          </rdf:Description>
+          -->
+        </pre>
+      </section>
         
-        <!-- multiple properties -->
-        <section id="section-Syntax-multiple-property-elements" >
+      <!-- multiple properties -->
+      <section id="section-Syntax-multiple-property-elements" >
         <h3>Multiple Property Elements</h3>
 
         <p>There are several abbreviations that can be used to make common
@@ -388,33 +414,34 @@
         The subject node with IRI
         <code>http://www.w3.org/TR/rdf-syntax-grammar</code>
         has property elements <code>ex:editor</code> and <code>ex:title</code>
-
         and the node element for the blank node can take <code>ex:homePage</code>
         and <code>ex:fullName</code>.  This abbreviation
         gives the result shown in <a href="#example4">Example 4</a>
         (this example does show that there is a single blank node):</p>
 
-<pre class="example" id="example4">
-<strong>Using multiple property elements on a node element</strong>
-	  
-&lt;rdf:Description rdf:about="http://www.w3.org/TR/rdf-syntax-grammar"&gt;
-  &lt;ex:editor&gt;
-    &lt;rdf:Description&gt;
-      &lt;ex:homePage&gt;
-        &lt;rdf:Description rdf:about="http://purl.org/net/dajobe/"&gt;
-        &lt;/rdf:Description&gt;
-      &lt;/ex:homePage&gt;
-      &lt;ex:fullName&gt;Dave Beckett&lt;/ex:fullName&gt;
-    &lt;/rdf:Description&gt;
-  &lt;/ex:editor&gt;
-  &lt;dc:title&gt;RDF 1.1 XML Syntax&lt;/dc:title&gt;
-&lt;/rdf:Description&gt;
-</pre>
+        <pre class="example rdf" id="example4"
+              data-transform="updateExample"
+              title="Using multiple property elements on a node element">
+          <!--
+          <rdf:Description rdf:about="http://www.w3.org/TR/rdf-syntax-grammar">
+            <ex:editor>
+              <rdf:Description>
+                <ex:homePage>
+                  <rdf:Description rdf:about="http://purl.org/net/dajobe/">
+                  </rdf:Description>
+                </ex:homePage>
+                <ex:fullName>Dave Beckett</ex:fullName>
+              </rdf:Description>
+            </ex:editor>
+            <dc:title>RDF 1.1 XML Syntax</dc:title>
+          </rdf:Description>
+          -->
+        </pre>
 
-        </section>
+      </section>
 
-        <!-- empty property elements -->
-        <section id="section-Syntax-empty-property-elements">
+      <!-- empty property elements -->
+      <section id="section-Syntax-empty-property-elements">
         <h3>Empty Property Elements</h3>
 
         <p>When a predicate arc in an RDF graph points to an object node which has no
@@ -428,30 +455,31 @@
         </p>
 
         <p>In this example, the property element <code>ex:homePage</code>
-        contains an empty node element with the
-        IRI
+        contains an empty node element with the IRI
         <code>http://purl.org/net/dajobe/</code>.  This can be replaced with
         the empty property element form giving the result shown in
         <a href="#example5">Example 5</a>:</p>
 
-<pre class="example" id="example5">
-<strong>Empty property elements</strong>
-	  
-&lt;rdf:Description rdf:about="http://www.w3.org/TR/rdf-syntax-grammar"&gt;
-  &lt;ex:editor&gt;
-    &lt;rdf:Description&gt;
-      &lt;ex:homePage rdf:resource="http://purl.org/net/dajobe/"/&gt;
-      &lt;ex:fullName&gt;Dave Beckett&lt;/ex:fullName&gt;
-    &lt;/rdf:Description&gt;
-  &lt;/ex:editor&gt;
-  &lt;dc:title&gt;RDF 1.1 XML Syntax&lt;/dc:title&gt;
-&lt;/rdf:Description&gt;
-</pre>
+        <pre class="example rdf" id="example5"
+             data-transform="updateExample"
+             title="Empty property elements">
+           <!--
+          <rdf:Description rdf:about="http://www.w3.org/TR/rdf-syntax-grammar">
+            <ex:editor>
+              <rdf:Description>
+                <ex:homePage rdf:resource="http://purl.org/net/dajobe/"/>
+                <ex:fullName>Dave Beckett</ex:fullName>
+              </rdf:Description>
+            </ex:editor>
+            <dc:title>RDF 1.1 XML Syntax</dc:title>
+          </rdf:Description>
+           -->
+        </pre>
 
-        </section>
+      </section>
 
-        <!-- empty property attributes -->
-        <section id="section-Syntax-property-attributes">
+      <!-- empty property attributes -->
+      <section id="section-Syntax-property-attributes">
         <h3>Property Attributes</h3>
 
         <p>When a property element's content is string literal,
@@ -477,23 +505,25 @@
         property elements.  These can be replaced with property attributes
         giving the result shown in <a href="#example6">Example 6</a>:</p>
 
-<pre class="example" id="example6">
-<strong>Replacing property elements with string literal content into property attributes</strong>
-	  
-&lt;rdf:Description rdf:about="http://www.w3.org/TR/rdf-syntax-grammar"
-           dc:title="RDF 1.1 XML Syntax"&gt;
-  &lt;ex:editor&gt;
-    &lt;rdf:Description ex:fullName="Dave Beckett"&gt;
-      &lt;ex:homePage rdf:resource="http://purl.org/net/dajobe/"/&gt;
-    &lt;/rdf:Description&gt;
-  &lt;/ex:editor&gt;
-&lt;/rdf:Description&gt;
-</pre>
+        <pre class="example rdf" id="example6"
+             data-transform="updateExample"
+             title="Replacing property elements with string literal content into property attributes">
+          <!--
+          <rdf:Description rdf:about="http://www.w3.org/TR/rdf-syntax-grammar"
+                     dc:title="RDF 1.1 XML Syntax">
+            <ex:editor>
+              <rdf:Description ex:fullName="Dave Beckett">
+                <ex:homePage rdf:resource="http://purl.org/net/dajobe/"/>
+              </rdf:Description>
+            </ex:editor>
+          </rdf:Description>
+          -->
+        </pre>
 
-        </section>
+      </section>
 
-        <!-- complete rdf/xml document -->
-        <section id="section-Syntax-complete-document">
+      <!-- complete rdf/xml document -->
+      <section id="section-Syntax-complete-document">
         <h3>Completing the Document: Document Element and XML Declaration</h3>
 
         <p>To create a complete RDF/XML document, the serialization of the
@@ -517,35 +547,39 @@
         <a href="#figure1">Figure 1</a> graph
         in <a href="#example7">Example 7</a>:</p>
 
-<pre class="example" id="example7">
-<strong>Complete RDF/XML description of Figure 1 graph 
-(<a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example07.rdf">example07.rdf</a>, output <a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example07.nt">example07.nt</a>)</strong>
+        <aside class="example" id="example7"
+             title="Complete RDF/XML description of Figure 1">
 
-&lt;?xml version="1.0"?&gt;
-&lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-            xmlns:dc="http://purl.org/dc/elements/1.1/"
-            xmlns:ex="http://example.org/stuff/1.0/"&gt;
-
-  &lt;rdf:Description rdf:about="http://www.w3.org/TR/rdf-syntax-grammar"
-             dc:title="RDF1.1 XML Syntax"&gt;
-    &lt;ex:editor&gt;
-      &lt;rdf:Description ex:fullName="Dave Beckett"&gt;
-        &lt;ex:homePage rdf:resource="http://purl.org/net/dajobe/" /&gt;
-      &lt;/rdf:Description&gt;
-    &lt;/ex:editor&gt;
-  &lt;/rdf:Description&gt;
-
-&lt;/rdf:RDF&gt;
-</pre>
+          <p>Description of <a href="#figure1">Figure 1</a> graph (<a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example07.rdf">example07.rdf</a>, output <a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example07.nt">example07.nt</a>)</p>
+          <pre class="rdf" data-transform="updateExample">
+           <!--
+           <?xml version="1.0"?>
+           <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                       xmlns:dc="http://purl.org/dc/elements/1.1/"
+                       xmlns:ex="http://example.org/stuff/1.0/">
+           
+             <rdf:Description rdf:about="http://www.w3.org/TR/rdf-syntax-grammar"
+                        dc:title="RDF1.1 XML Syntax">
+               <ex:editor>
+                 <rdf:Description ex:fullName="Dave Beckett">
+                   <ex:homePage rdf:resource="http://purl.org/net/dajobe/" />
+                 </rdf:Description>
+               </ex:editor>
+             </rdf:Description>
+           
+           </rdf:RDF>
+           -->
+          </pre>
+        </aside>
 
         <p>It is possible to omit <code>rdf:RDF</code> in
         <a href="#example7">Example 7</a> above since there is only one
         <code>rdf:Description</code> inside <code>rdf:RDF</code> but this
         is not shown here.</p>
-        </section>
+      </section>
 
-        <!-- language attribute -->
-        <section id="section-Syntax-languages">
+      <!-- language attribute -->
+      <section id="section-Syntax-languages">
         <h3>Languages: <code>xml:lang</code></h3>
 
         <p>RDF/XML permits the use of the <code>xml:lang</code> attribute as defined by
@@ -565,33 +599,38 @@
         <p>Some examples of marking content languages for RDF properties are shown in
         <a href="#example8">Example 8</a>:</p>
 
-<pre class="example" id="example8">
-<strong>Complete example of <code>xml:lang</code>
-(<a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example08.rdf">example08.rdf</a>, output <a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example08.nt">example08.nt</a>)</strong>
+        <aside class="example" id="example8"
+             title="Complete example of xml:lang">
+          <p><strong>Complete example of <code>xml:lang</code>
+            (<a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example08.rdf">example08.rdf</a>, output <a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example08.nt">example08.nt</a>)</strong></p>
 
-&lt;?xml version="1.0" encoding="utf-8"?&gt;
-&lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-            xmlns:dc="http://purl.org/dc/elements/1.1/"&gt;
+          <pre class="rdf" data-transform="updateExample">
+            <!--
+            <?xml version="1.0" encoding="utf-8"?>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:dc="http://purl.org/dc/elements/1.1/">
 
-  &lt;rdf:Description rdf:about="http://www.w3.org/TR/rdf-syntax-grammar"&gt;
-    &lt;dc:title&gt;RDF 1.1 XML Syntax&lt;/dc:title&gt;
-    &lt;dc:title xml:lang="en"&gt;RDF 1.1 XML Syntax&lt;/dc:title&gt;
-    &lt;dc:title xml:lang="en-US"&gt;RDF 1.1 XML Syntax&lt;/dc:title&gt;
-  &lt;/rdf:Description&gt;
+              <rdf:Description rdf:about="http://www.w3.org/TR/rdf-syntax-grammar">
+                <dc:title>RDF 1.1 XML Syntax</dc:title>
+                <dc:title xml:lang="en">RDF 1.1 XML Syntax</dc:title>
+                <dc:title xml:lang="en-US">RDF 1.1 XML Syntax</dc:title>
+              </rdf:Description>
 
-  &lt;rdf:Description rdf:about="http://example.org/buecher/baum" xml:lang="de"&gt;
-    &lt;dc:title&gt;Der Baum&lt;/dc:title&gt;
-    &lt;dc:description&gt;Das Buch ist außergewöhnlich&lt;/dc:description&gt;
-    &lt;dc:title xml:lang="en"&gt;The Tree&lt;/dc:title&gt;
-  &lt;/rdf:Description&gt;
+              <rdf:Description rdf:about="http://example.org/buecher/baum" xml:lang="de">
+                <dc:title>Der Baum</dc:title>
+                <dc:description>Das Buch ist außergewöhnlich</dc:description>
+                <dc:title xml:lang="en">The Tree</dc:title>
+              </rdf:Description>
 
-&lt;/rdf:RDF&gt;
-</pre>
+            </rdf:RDF>
+            -->
+          </pre>
+        </aside>
 
-        </section>
+      </section>
 
-        <!-- XML Literal -->
-        <section id="section-Syntax-XML-literals" class="informative">
+      <!-- XML Literal -->
+      <section id="section-Syntax-XML-literals" class="informative">
         <h3>XML Literals: <code>rdf:parseType="Literal"</code></h3>
 
         <p>RDF allows XML literals [RDF11-CONCEPTS]
@@ -613,30 +652,33 @@
         content beginning <code>a:Box</code>.
         </p>
 
-<pre class="example" id="example9">
-<strong>Complete example of <code>rdf:parseType="Literal"</code>
-(<a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example09.rdf">example09.rdf</a>, output <a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example09.nt">example09.nt</a>)</strong>
-	  
-&lt;?xml version="1.0"?&gt;
-&lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-            xmlns:ex="http://example.org/stuff/1.0/"&gt;
+        <aside class="example" id="example9" title="Complete example of rdf:parseType=Literal">
+        <strong>Complete example of <code>rdf:parseType="Literal"</code>
+          (<a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example09.rdf">example09.rdf</a>, output <a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example09.nt">example09.nt</a>)</strong>
+          <pre class="rdf" data-transform="updateExample">
+            <!--
+            <?xml version="1.0"?>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                     xmlns:ex="http://example.org/stuff/1.0/">
 
-  &lt;rdf:Description rdf:about="http://example.org/item01"&gt; 
-    &lt;ex:prop rdf:parseType="Literal" xmlns:a="http://example.org/a#"&gt;
-      &lt;a:Box required="true"&gt;
-        &lt;a:widget size="10" /&gt;
-        &lt;a:grommit id="23" /&gt;
-      &lt;/a:Box&gt;
-    &lt;/ex:prop&gt;
-  &lt;/rdf:Description&gt;
+              <rdf:Description rdf:about="http://example.org/item01"> 
+                <ex:prop rdf:parseType="Literal" xmlns:a="http://example.org/a#">
+                  <a:Box required="true">
+                    <a:widget size="10" />
+                    <a:grommit id="23" />
+                  </a:Box>
+                </ex:prop>
+              </rdf:Description>
 
-&lt;/rdf:RDF&gt;
-</pre>
+            </rdf:RDF>
+            -->
+          </pre>
+        </aside>
 
-        </section>
+      </section>
 
-        <!-- datatyped literals -->    
-        <section id="section-Syntax-datatyped-literals">
+      <!-- datatyped literals -->    
+      <section id="section-Syntax-datatyped-literals">
         <h3>Typed Literals: <code>rdf:datatype</code></h3>
 
         <p>RDF allows typed literals
@@ -665,25 +707,28 @@
         XML Schema [[XMLSCHEMA-2]] datatype <code>int</code>.
         </p>
 
-<pre class="example" id="example10">
-<strong>Complete example of <code>rdf:datatype</code>
-(<a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example10.rdf">example10.rdf</a>,  output <a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example10.nt">example10.nt</a>)</strong>
-	  
-&lt;?xml version="1.0"?&gt;
-&lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-            xmlns:ex="http://example.org/stuff/1.0/"&gt;
+        <aside class="example" id="example10" title="Complete example of rdf:datatype">
+          <strong>Complete example of <code>rdf:datatype</code>
+          (<a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example10.rdf">example10.rdf</a>,  output <a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example10.nt">example10.nt</a>)</strong>
+          <pre class="rdf" data-transform="updateExample">
+            <!--
+            <?xml version="1.0"?>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                        xmlns:ex="http://example.org/stuff/1.0/">
 
-  &lt;rdf:Description rdf:about="http://example.org/item01"&gt;
-    &lt;ex:size rdf:datatype="http://www.w3.org/2001/XMLSchema#int"&gt;123&lt;/ex:size&gt;
-  &lt;/rdf:Description&gt;
+              <rdf:Description rdf:about="http://example.org/item01">
+                <ex:size rdf:datatype="http://www.w3.org/2001/XMLSchema#int">123</ex:size>
+              </rdf:Description>
 
-&lt;/rdf:RDF&gt;
-</pre>
+            </rdf:RDF>
+            -->
+          </pre>
+        </aside>
 
-        </section>
-        
-        <!-- blank nodes -->
-        <section id="section-Syntax-blank-nodes">
+      </section>
+      
+      <!-- blank nodes -->
+      <section id="section-Syntax-blank-nodes">
         <h3>Identifying Blank Nodes: <code>rdf:nodeID</code></h3>
 
         <p>Blank nodes in the RDF graph are distinct but have no 
@@ -710,32 +755,34 @@
         The second <code>rdf:Description</code> property element is
         about the blank node.</p>
 
+        <aside class="example" id="example11" title="Complete RDF/XML description of graph using rdf:nodeID">
+          <strong>Complete RDF/XML description of graph using <code>rdf:nodeID</code> identifying the blank node
+          (<a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example11.rdf">example11.rdf</a>,  output <a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example11.nt">example11.nt</a>)</strong>
+          <pre class="rdf" data-transform="updateExample">
+            <!--
+            <?xml version="1.0"?>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                        xmlns:dc="http://purl.org/dc/elements/1.1/"
+                        xmlns:ex="http://example.org/stuff/1.0/">
 
-<pre class="example" id="example11">
-<strong>Complete RDF/XML description of graph using <code>rdf:nodeID</code> identifying the blank node
-(<a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example11.rdf">example11.rdf</a>,  output <a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example11.nt">example11.nt</a>)</strong>
+              <rdf:Description rdf:about="http://www.w3.org/TR/rdf-syntax-grammar"
+                         dc:title="RDF 1.1 XML Syntax">
+                <ex:editor rdf:nodeID="abc"/>
+              </rdf:Description>
 
-&lt;?xml version="1.0"?&gt;
-&lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-            xmlns:dc="http://purl.org/dc/elements/1.1/"
-            xmlns:ex="http://example.org/stuff/1.0/"&gt;
+              <rdf:Description rdf:nodeID="abc" ex:fullName="Dave Beckett">
+                <ex:homePage rdf:resource="http://purl.org/net/dajobe/"/>
+              </rdf:Description>
 
-  &lt;rdf:Description rdf:about="http://www.w3.org/TR/rdf-syntax-grammar"
-             dc:title="RDF 1.1 XML Syntax"&gt;
-    &lt;ex:editor rdf:nodeID="abc"/&gt;
-  &lt;/rdf:Description&gt;
+            </rdf:RDF>
+            -->
+          </pre>
+        </aside>
 
-  &lt;rdf:Description rdf:nodeID="abc" ex:fullName="Dave Beckett"&gt;
-    &lt;ex:homePage rdf:resource="http://purl.org/net/dajobe/"/&gt;
-  &lt;/rdf:Description&gt;
+      </section>
 
-&lt;/rdf:RDF&gt;
-</pre>
-
-        </section>
-
-        <!-- parsetype resource -->    
-        <section id="section-Syntax-parsetype-resource">
+      <!-- parsetype resource -->    
+      <section id="section-Syntax-parsetype-resource">
         <h3>Omitting Blank Nodes: <code>rdf:parseType="Resource"</code></h3>
 
         <p>Blank nodes (not IRI nodes) in RDF graphs can be written
@@ -748,37 +795,38 @@
         that turns the property element into a property-and-node element,
         which can itself have both property elements and property attributes.
         Property attributes and the <code>rdf:nodeID</code> attribute
-        are not permitted on property-and-node elements.
-
-        </p>
+        are not permitted on property-and-node elements.</p>
 
         <p>Taking the earlier <a href="#example7">Example 7</a>,
         the contents of the <code>ex:editor</code> property element
         could be alternatively done in this fashion to give
         the form shown in <a href="#example12">Example 12</a>:</p>
 
-<pre class="example" id="example12">
-<strong>Complete example using <code>rdf:parseType="Resource"</code>
-(<a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example12.rdf">example12.rdf</a>, output: <a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example12.nt">example12.nt</a>)</strong>
-	  
-&lt;?xml version="1.0"?&gt;
-&lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-            xmlns:dc="http://purl.org/dc/elements/1.1/"
-            xmlns:ex="http://example.org/stuff/1.0/"&gt;
-  &lt;rdf:Description rdf:about="http://www.w3.org/TR/rdf-syntax-grammar"
-                   dc:title="RDF 1.1 XML Syntax"&gt;
-    &lt;ex:editor rdf:parseType="Resource"&gt;
-      &lt;ex:fullName&gt;Dave Beckett&lt;/ex:fullName&gt;
-      &lt;ex:homePage rdf:resource="http://purl.org/net/dajobe/"/&gt;
-    &lt;/ex:editor&gt;
-  &lt;/rdf:Description&gt;
-&lt;/rdf:RDF&gt;
-</pre>
+        <aside class="example" id="example12" title="Complete example using rdf:parseType=Resource">
+        <strong>Complete example using <code>rdf:parseType="Resource"</code>
+        (<a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example12.rdf">example12.rdf</a>, output: <a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example12.nt">example12.nt</a>)</strong>
+        <pre class="rdf" data-transform="updateExample">
+          <!--
+          <?xml version="1.0"?>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                      xmlns:dc="http://purl.org/dc/elements/1.1/"
+                      xmlns:ex="http://example.org/stuff/1.0/">
+            <rdf:Description rdf:about="http://www.w3.org/TR/rdf-syntax-grammar"
+                             dc:title="RDF 1.1 XML Syntax">
+              <ex:editor rdf:parseType="Resource">
+                <ex:fullName>Dave Beckett</ex:fullName>
+                <ex:homePage rdf:resource="http://purl.org/net/dajobe/"/>
+              </ex:editor>
+            </rdf:Description>
+          </rdf:RDF>
+          -->
+        </pre>
+        </aside>
 
-        </section>
+      </section>
 
-        <!-- attributes on property elements -->    
-        <section id="section-Syntax-property-attributes-on-property-element">
+      <!-- attributes on property elements -->    
+      <section id="section-Syntax-property-attributes-on-property-element">
         <h3>Omitting Nodes: Property Attributes on an empty Property Element</h3>
 
         <p>If all of the property elements on a blank node element have
@@ -806,28 +854,29 @@
         <code>ex:editor</code> property element.  The result is shown in
         <a href="#example13">Example 13</a>.</p>
 
-<pre class="example" id="example13">
-<strong>Complete example of property attributes on an empty property element
-(<a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example13.rdf">example13.rdf</a>, output <a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example13.nt">example13.nt</a>)</strong>
+        <aside class="example" id="example13" title="Complete example of property attributes on an empty property element">
+        <strong>Complete example of property attributes on an empty property element
+        (<a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example13.rdf">example13.rdf</a>, output <a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example13.nt">example13.nt</a>)</strong>
+        <pre class="rdf">
+          &lt;?xml version="1.0"?&gt;
+          &lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                      xmlns:dc="http://purl.org/dc/elements/1.1/"
+                      xmlns:ex="http://example.org/stuff/1.0/"&gt;
 
-&lt;?xml version="1.0"?&gt;
-&lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-            xmlns:dc="http://purl.org/dc/elements/1.1/"
-            xmlns:ex="http://example.org/stuff/1.0/"&gt;
+            &lt;rdf:Description rdf:about="http://www.w3.org/TR/rdf-syntax-grammar"
+                      dc:title="RDF 1.1 XML Syntax"&gt;
+              &lt;ex:editor ex:fullName="Dave Beckett" /&gt;
+                      &lt;!-- Note the ex:homePage property has been ignored for this example --&gt;
+            &lt;/rdf:Description&gt;
 
-  &lt;rdf:Description rdf:about="http://www.w3.org/TR/rdf-syntax-grammar"
-            dc:title="RDF 1.1 XML Syntax"&gt;
-    &lt;ex:editor ex:fullName="Dave Beckett" /&gt;
-            &lt;!-- Note the ex:homePage property has been ignored for this example --&gt;
-  &lt;/rdf:Description&gt;
+          &lt;/rdf:RDF&gt;
+        </pre>
+        </aside>
 
-&lt;/rdf:RDF&gt;
-</pre>
+      </section>
 
-        </section>
-
-        <!-- typed nodes -->    
-        <section id="section-Syntax-typed-nodes">
+      <!-- typed nodes -->    
+      <section id="section-Syntax-typed-nodes">
         <h3>Typed Node Elements</h3>
 
         <p>It is common for RDF graphs to have <code>rdf:type</code> predicates
@@ -853,42 +902,49 @@
         <p>For example, the RDF/XML in <a href="#example14">Example 14</a>
         could be written as shown in <a href="#example15">Example 15</a>.</p>
 
-<pre class="example" id="example14">
-<strong>Complete example with <code>rdf:type</code>
-(<a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example14.rdf">example14.rdf</a>, output <a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example14.nt">example14.nt</a>)</strong>
+        <aside class="example" id="example14">
+          <strong>Complete example with <code>rdf:type</code>
+          (<a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example14.rdf">example14.rdf</a>, output <a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example14.nt">example14.nt</a>)</strong>
+          <pre class="rdf" data-transform="updateExample">
+            <!--
+            <?xml version="1.0"?>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                        xmlns:dc="http://purl.org/dc/elements/1.1/"
+                        xmlns:ex="http://example.org/stuff/1.0/">
 
-&lt;?xml version="1.0"?&gt;
-&lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-            xmlns:dc="http://purl.org/dc/elements/1.1/"
-            xmlns:ex="http://example.org/stuff/1.0/"&gt;
+              <rdf:Description rdf:about="http://example.org/thing">
+                <rdf:type rdf:resource="http://example.org/stuff/1.0/Document"/>
+                <dc:title>A marvelous thing</dc:title>
+              </rdf:Description>
+            </rdf:RDF>
+            -->
+          </pre>
 
-  &lt;rdf:Description rdf:about="http://example.org/thing"&gt;
-    &lt;rdf:type rdf:resource="http://example.org/stuff/1.0/Document"/&gt;
-    &lt;dc:title&gt;A marvelous thing&lt;/dc:title&gt;
-  &lt;/rdf:Description&gt;
-&lt;/rdf:RDF&gt;
-</pre>
+        </aside>
 
-<pre class="example" id="example15">
-<strong>Complete example using a typed node element to replace an <code>rdf:type</code>
-(<a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example15.rdf">example15.rdf</a>, output <a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example15.nt">example15.nt</a>)</strong>
+        <aside class="example" id="example15">
+          <strong>Complete example using a typed node element to replace an <code>rdf:type</code>
+          (<a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example15.rdf">example15.rdf</a>, output <a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example15.nt">example15.nt</a>)</strong>
+          <pre class="rdf" data-transform="updateExample">
+            <!--
+            <?xml version="1.0"?>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                        xmlns:dc="http://purl.org/dc/elements/1.1/"
+                        xmlns:ex="http://example.org/stuff/1.0/">
 
-&lt;?xml version="1.0"?&gt;
-&lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-            xmlns:dc="http://purl.org/dc/elements/1.1/"
-            xmlns:ex="http://example.org/stuff/1.0/"&gt;
+              <ex:Document rdf:about="http://example.org/thing">
+                <dc:title>A marvelous thing</dc:title>
+              </ex:Document>
 
-  &lt;ex:Document rdf:about="http://example.org/thing"&gt;
-    &lt;dc:title&gt;A marvelous thing&lt;/dc:title&gt;
-  &lt;/ex:Document&gt;
+            </rdf:RDF>
+            -->
+          </pre>
+        </aside>
 
-&lt;/rdf:RDF&gt;
-</pre>
+      </section>
 
-        </section>
-
-        <!-- xml base -->
-        <section id="section-Syntax-ID-xml-base">
+      <!-- xml base -->
+      <section id="section-Syntax-ID-xml-base">
         <h3>Abbreviating URIs: <code>rdf:ID</code> and <code>xml:base</code></h3>
 
         <p>RDF/XML allows further abbreviating IRIs in XML attributes in two
@@ -924,33 +980,35 @@
         using the in-scope base URI to give the
         IRI <code>http://example.org/here/fruit/apple</code>.</p>
 
-<pre class="example" id="example16">
-<strong>Complete example using <code>rdf:ID</code> and <code>xml:base</code> for shortening URIs
-(<a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example16.rdf">example16.rdf</a>, output <a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example16.nt">example16.nt</a>)</strong>
+        <aside class="example" id="example16" title="Complete example using rdf:ID> and xml:base">
+          <strong>Complete example using <code>rdf:ID</code> and <code>xml:base</code> for shortening URIs
+          (<a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example16.rdf">example16.rdf</a>, output <a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example16.nt">example16.nt</a>)</strong>
+          <pre class="rdf" data-transform="updateExample">
+            <!--
+            <?xml version="1.0"?>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                        xmlns:ex="http://example.org/stuff/1.0/"
+                        xml:base="http://example.org/here/">
 
-&lt;?xml version="1.0"?&gt;
-&lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-            xmlns:ex="http://example.org/stuff/1.0/"
-            xml:base="http://example.org/here/"&gt;
+              <rdf:Description rdf:ID="snack">
+                <ex:prop rdf:resource="fruit/apple"/>
+              </rdf:Description>
 
-  &lt;rdf:Description rdf:ID="snack"&gt;
-    &lt;ex:prop rdf:resource="fruit/apple"/&gt;
-  &lt;/rdf:Description&gt;
+            </rdf:RDF>
+            -->
+          </pre>
+        </aside>
 
-&lt;/rdf:RDF&gt;
-</pre>
+      </section>
 
-        </section>
-
-        <!-- list elements -->
-        <section id="section-Syntax-list-elements">
+      <!-- list elements -->
+      <section id="section-Syntax-list-elements">
         <h3>Container Membership Property Elements: <code>rdf:li</code> and <code>rdf:_</code><em>n</em></h3>
 
         <p>RDF has a set of container membership properties
         and corresponding property elements that are mostly used with
         instances of the
         <code>rdf:Seq</code>, <code>rdf:Bag</code> and <code>rdf:Alt</code>
-
         classes which may be written as typed node elements.  The list properties are
         <code>rdf:_1</code>, <code>rdf:_2</code> etc. and can be written
         as property elements or property attributes as shown in
@@ -965,42 +1023,50 @@
         in this form is shown in <a href="#example18">Example 18</a>.
         </p>
 
-<pre class="example" id="example17">
-<strong>Complex example using RDF list properties
-(<a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example17.rdf">example17.rdf</a>, output <a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example17.nt">example17.nt</a>)</strong>
+        <aside class="example" id="example17" title="Complex example using RDF list properties">
+        <strong>Complex example using RDF list properties
+        (<a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example17.rdf">example17.rdf</a>, output <a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example17.nt">example17.nt</a>)</strong>
 
-&lt;?xml version="1.0"?&gt;
-&lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"&gt;
+        <pre class="rdf" data-transform="updateExample">
+          <!--
+        <?xml version="1.0"?>
+        <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
 
-  &lt;rdf:Seq rdf:about="http://example.org/favourite-fruit"&gt;
-    &lt;rdf:_1 rdf:resource="http://example.org/banana"/&gt;
-    &lt;rdf:_2 rdf:resource="http://example.org/apple"/&gt;
-    &lt;rdf:_3 rdf:resource="http://example.org/pear"/&gt;
-  &lt;/rdf:Seq&gt;
+          <rdf:Seq rdf:about="http://example.org/favourite-fruit">
+            <rdf:_1 rdf:resource="http://example.org/banana"/>
+            <rdf:_2 rdf:resource="http://example.org/apple"/>
+            <rdf:_3 rdf:resource="http://example.org/pear"/>
+          </rdf:Seq>
 
-&lt;/rdf:RDF&gt;
-</pre>
+        </rdf:RDF>
+          -->
+        </pre>
+        </aside>
 
-<pre class="example" id="example18">
-<strong>Complete example using <code>rdf:li</code> property element for list properties
-(<a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example18.rdf">example18.rdf</a>, output <a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example18.nt">example18.nt</a>)</strong>
+        <aside class="example" id="example18" title="Complete example using rdf:li">
+        <strong>Complete example using <code>rdf:li</code> property element for list properties
+        (<a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example18.rdf">example18.rdf</a>, output <a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example18.nt">example18.nt</a>)</strong>
 
-&lt;?xml version="1.0"?&gt;
-&lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"&gt;
+        <pre class="rdf" data-transform="updateExample">
+          <!--
+          <?xml version="1.0"?>
+          <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
 
-  &lt;rdf:Seq rdf:about="http://example.org/favourite-fruit"&gt;
-    &lt;rdf:li rdf:resource="http://example.org/banana"/&gt;
-    &lt;rdf:li rdf:resource="http://example.org/apple"/&gt;
-    &lt;rdf:li rdf:resource="http://example.org/pear"/&gt;
-  &lt;/rdf:Seq&gt;
+            <rdf:Seq rdf:about="http://example.org/favourite-fruit">
+              <rdf:li rdf:resource="http://example.org/banana"/>
+              <rdf:li rdf:resource="http://example.org/apple"/>
+              <rdf:li rdf:resource="http://example.org/pear"/>
+            </rdf:Seq>
 
-&lt;/rdf:RDF&gt;
-</pre>
+          </rdf:RDF>
+          -->
+        </pre>
+        </aside>
 
-        </section>
+      </section>
 
-        <!-- parsetype collection -->
-        <section id="section-Syntax-parsetype-Collection">
+      <!-- parsetype collection -->
+      <section id="section-Syntax-parsetype-Collection">
         <h3>Collections: <code>rdf:parseType="Collection"</code></h3>
 
         <p>RDF/XML allows an <code>rdf:parseType="Collection"</code>
@@ -1021,29 +1087,33 @@
         nodes elements at the end of the <code>ex:hasFruit</code>
         property element using this form.</p>
 
-<pre class="example" id="example19">
-<strong>Complete example of a RDF collection of nodes using <code>rdf:parseType="Collection"</code>
-(<a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example19.rdf">example19.rdf</a>, output <a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example19.nt">example19.nt</a>)</strong>
+        <aside class="example" id="example19" title="Complete example of a RDF collection">
+          <strong>Complete example of a RDF collection of nodes using <code>rdf:parseType="Collection"</code>
+          (<a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example19.rdf">example19.rdf</a>, output <a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example19.nt">example19.nt</a>)</strong>
 
-&lt;?xml version="1.0"?&gt;
-&lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-            xmlns:ex="http://example.org/stuff/1.0/"&gt;
+          <pre class="rdf" data-transform="updateExample">
+            <!--
+            <?xml version="1.0"?>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                        xmlns:ex="http://example.org/stuff/1.0/">
 
-  &lt;rdf:Description rdf:about="http://example.org/basket"&gt;
-    &lt;ex:hasFruit rdf:parseType="Collection"&gt;
-      &lt;rdf:Description rdf:about="http://example.org/banana"/&gt;
-      &lt;rdf:Description rdf:about="http://example.org/apple"/&gt;
-      &lt;rdf:Description rdf:about="http://example.org/pear"/&gt;
-    &lt;/ex:hasFruit&gt;
-  &lt;/rdf:Description&gt;
+              <rdf:Description rdf:about="http://example.org/basket">
+                <ex:hasFruit rdf:parseType="Collection">
+                  <rdf:Description rdf:about="http://example.org/banana"/>
+                  <rdf:Description rdf:about="http://example.org/apple"/>
+                  <rdf:Description rdf:about="http://example.org/pear"/>
+                </ex:hasFruit>
+              </rdf:Description>
 
-&lt;/rdf:RDF&gt;
-</pre>
+            </rdf:RDF>
+            -->
+          </pre>
+        </aside>
 
-        </section>
+      </section>
 
-        <!-- reification -->
-        <section id="section-Syntax-reifying">
+      <!-- reification -->
+      <section id="section-Syntax-reifying">
         <h3>Reifying Statements: <code>rdf:ID</code></h3>
 
         <p>The <code>rdf:ID</code> attribute can be used on a property
@@ -1068,22 +1138,26 @@
         property element giving the reified triple the
         IRI <code>http://example.org/triples/#triple1</code>.</p>
 
-<pre class="example" id="example20">
-<strong>Complete example of <code>rdf:ID</code> reifying a property element
-(<a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example20.rdf">example20.rdf</a>, output <a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example20.nt">example20.nt</a>)</strong>
+        <aside class="example" id="example20">
+          <strong>Complete example of <code>rdf:ID</code> reifying a property element
+          (<a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example20.rdf">example20.rdf</a>, output <a href="http://www.w3.org/TR/2004/REC-rdf-syntax-grammar-20040210/example20.nt">example20.nt</a>)</strong>
 
-&lt;?xml version="1.0"?&gt;
-&lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-            xmlns:ex="http://example.org/stuff/1.0/"
-            xml:base="http://example.org/triples/"&gt;
-  &lt;rdf:Description rdf:about="http://example.org/"&gt;
-    &lt;ex:prop rdf:ID="triple1"&gt;blah&lt;/ex:prop&gt;
-  &lt;/rdf:Description&gt;
+          <pre class="rdf" data-transform="updateExample">
+            <!--
+            <?xml version="1.0"?>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                        xmlns:ex="http://example.org/stuff/1.0/"
+                        xml:base="http://example.org/triples/">
+              <rdf:Description rdf:about="http://example.org/">
+                <ex:prop rdf:ID="triple1">blah</ex:prop>
+              </rdf:Description>
 
-&lt;/rdf:RDF&gt;
-</pre>
+            </rdf:RDF>
+            -->
+          </pre>
+        </aside>
 
-        </section>
+      </section>
 
     </section>
 
@@ -1095,31 +1169,31 @@
       a Unicode [[UNICODE]] character string; 
       a sequence of characters represented by a code point in
       Unicode.</p>
-	
+  
     </section>
 
 
     <!-- THIRD PART : MIME Type -->
 
     <section id="section-MIME-Type">
-        <h2>RDF MIME Type, File Extension and Macintosh File Type</h2>
+      <h2>RDF MIME Type, File Extension and Macintosh File Type</h2>
 
-        <p>The Internet media type / MIME type for RDF/XML is
-        <code>application/rdf+xml</code> &mdash; 
-        RFC 3023 [[RFC3023]], section 8.18.
-        </p>
+      <p>The Internet media type / MIME type for RDF/XML is
+      <code>application/rdf+xml</code> &mdash; 
+      RFC 3023 [[RFC3023]], section 8.18.
+      </p>
 
-        <p class="note"><strong>(Informative): </strong>
-        For the state of the MIME type registration, consult
-        IANA MIME Media Types [[IANA-MEDIA-TYPES]]
-        </p>
+      <p class="note"><strong>(Informative): </strong>
+      For the state of the MIME type registration, consult
+      IANA MIME Media Types [[IANA-MEDIA-TYPES]]
+      </p>
 
-        <p>It is recommended that RDF/XML files have the extension
-        <code>".rdf"</code> (all lowercase) on all platforms.</p>
+      <p>It is recommended that RDF/XML files have the extension
+      <code>".rdf"</code> (all lowercase) on all platforms.</p>
 
-        <p>It is recommended that RDF/XML files stored on Macintosh HFS file
-        systems be given a file type of <code>"rdf&nbsp;"</code>
-        (all lowercase, with a space character as the fourth letter).</p>
+      <p>It is recommended that RDF/XML files stored on Macintosh HFS file
+      systems be given a file type of <code>"rdf&nbsp;"</code>
+      (all lowercase, with a space character as the fourth letter).</p>
     </section>
 
 
@@ -1202,11 +1276,10 @@
 
         <dt>IRI</dt>
         <dd>
-	<p>IRIs can act as node (both subject and object) and as
+  <p>IRIs can act as node (both subject and object) and as
         predicate. </p>
-	  
-        <p><a href="http://www.w3.org/TR/rdf11-concepts/#section-IRIs">IRIs</a> 
-        can be either:</p>
+    
+        <p><a data-cite="RDF11-CONCEPTS#dfn-iri">IRIs</a> can be either:</p>
         <ul>
         <li>given as XML attribute values interpreted as relative
         IRIs that are resolved against the in-scope base URI
@@ -1239,10 +1312,10 @@
 
         <dt>Literal</dt>
         <dd>
-	<p>Literals can only act as object nodes.</p>
-	  
+  <p>Literals can only act as object nodes.</p>
+    
         <p><a href="http://www.w3.org/TR/rdf11-concepts/#section-Graph-Literal">Literals</a>
-	always have a datatype. Language-tagged strings get 
+  always have a datatype. Language-tagged strings get 
         the datatype <code>rdf:langString</code>. When there is no
         language tag or datatype specified the literal is assumed to have the datatype
         <code>xsd:string</code>. </p>
@@ -1250,10 +1323,9 @@
 
         <dt>Blank Node</dt>
         <dd>
-	<p>Blank nodes can act as subject node and as object node.</p>
-	  
-	<p><a href="http://www.w3.org/TR/rdf11-concepts/#section-blank-nodes">Blank nodes</a>
-	have distinct identity in the RDF graph.
+        <p>Blank nodes can act as subject node and as object node.</p>
+        <p><a href="http://www.w3.org/TR/rdf11-concepts/#section-blank-nodes">Blank nodes</a>
+        have distinct identity in the RDF graph.
         When the graph is written in a syntax such as RDF/XML, these
         blank nodes may need graph-local identifiers and a syntax
         in order to preserve this distinction.  These local identifiers are called
@@ -1314,12 +1386,12 @@
 
         <p class="note"><strong>Test:</strong>
         indicated by: <br/>
-	<a href="http://www.w3.org/2013/RDFXMLTests/xmlbase/test001.rdf">test001.rdf</a> and
+  <a href="http://www.w3.org/2013/RDFXMLTests/xmlbase/test001.rdf">test001.rdf</a> and
         <a href="http://www.w3.org/2013/RDFXMLTests/xmlbase/test001.nt">test001.nt</a>
-	  <br/>
+    <br/>
         <a href="http://www.w3.org/2013/RDFXMLTests/xmlbase/test004.rdf">test004.rdf</a> and
         <a href="http://www.w3.org/2013/RDFXMLTests/xmlbase/test004.nt">test004.nt</a>
-	  <br/>
+    <br/>
         <a href="http://www.w3.org/2013/RDFXMLTests/xmlbase/test008.rdf">test008.rdf</a> and
         <a href="http://www.w3.org/2013/RDFXMLTests/xmlbase/test008.nt">test008.nt</a>
         </p>
@@ -1438,7 +1510,7 @@
         <p>In particular:</p>
         <ul>
         <li>This specification permits any
- 	representation of an RDF graph;
+  representation of an RDF graph;
         in particular, it does not require the use of N-Triples [[N-TRIPLES]].</li>
         <li>This specification does not require the use of
         [[XPATH]] or [[SAX]]</li>
@@ -1579,7 +1651,7 @@
 
           <dt id="eventterm-element-parent">parent</dt>
           <dd>Set to the value of element information item property [parent].</dd>
-		  
+      
           <dt id="eventterm-element-base-uri">base-uri</dt>
           <dd>Set to the value of element information item property [base URI].</dd>
 
@@ -1860,13 +1932,13 @@
         <section id="section-literal-node">
         <h3>Plain Literal Event</h3>
 
-	<p class="note">RDF/XML plain literals are in RDF 1.1 treated as 
-	syntactic sugar for a literal with datatype
-	<code>xsd:string</code> (in case no language tag is present)
-	or as a literal with datatype <code>rdf:langString</code> (in
-	case a language tag is present). The mapping to N-Triples as
-	defined in this subsection is not affected by this change. </p>
-	
+        <p class="note">RDF/XML plain literals are in RDF 1.1 treated as 
+        syntactic sugar for a literal with datatype
+        <code>xsd:string</code> (in case no language tag is present)
+        or as a literal with datatype <code>rdf:langString</code> (in
+        case a language tag is present). The mapping to N-Triples as
+        defined in this subsection is not affected by this change. </p>
+  
         <p>An event for a plain
         literal which can have the following accessors:</p> 
 
@@ -1924,7 +1996,7 @@
         class="arrow">·</span></a> accessors.</p> 
 
         <p class="note" id="literal-comb-char-note1">
-	<strong>Interoperability Note (Informative):</strong>
+  <strong>Interoperability Note (Informative):</strong>
         Literals beginning with a Unicode combining character are
         allowed however they may cause interoperability problems.
         See [[CHARMOD]] for further information.
@@ -1990,18 +2062,18 @@
         class="arrow">·</span></a> accessors.</p> 
 
         <p id="literal-comb-char-note2" class="note">
-	<strong>Interoperability Note (Informative):</strong>
+  <strong>Interoperability Note (Informative):</strong>
         Literals beginning with a Unicode combining character are
         allowed however they may cause interoperability problems.
         See [[CHARMOD]] for further information.
         </p>
 
         <p class="note" id="literal-white-space-normalization-note">
-	<strong>Implementation Note (Informative): </strong>
+  <strong>Implementation Note (Informative): </strong>
         In XML Schema (part 1) [[XMLSCHEMA-1]],
         <a
-	href="http://www.w3.org/TR/2001/REC-xmlschema-1-20010502/#section-White-Space-Normalization-during-Validation">white 
-	space normalization</a> 
+  href="http://www.w3.org/TR/2001/REC-xmlschema-1-20010502/#section-White-Space-Normalization-during-Validation">white 
+  space normalization</a> 
         occurs during validation according to the value of the whiteSpace
         facet.  The syntax mapping used in this document occurs after this,
         so the whiteSpace facet formally has no further effect.
@@ -2858,8 +2930,8 @@
         method &mdash; any other method that gives the same result may be used.</p>
 
         <ol>
-	<!-- old algorithm
-	<li>Use <em>l</em> to construct an XPath <a
+  <!-- old algorithm
+  <li>Use <em>l</em> to construct an XPath <a
         href="http://www.w3.org/TR/1999/REC-xpath-19991116#infoset">node-set</a> 
         (a <a href="http://www.w3.org/TR/2002/REC-xml-exc-c14n-20020718/#def-document-subset">document
         subset</a>)</li> 
@@ -2874,12 +2946,12 @@
         a UTF-8 encoding of some Unicode string <em>x</em> (sequence
         of Unicode characters)</li>
         -->
-	<li>Use <em>l</em> to construct an <a
+  <li>Use <em>l</em> to construct an <a
   href="http://www.w3.org/TR/xpath-datamodel-30/#sequences">XPath 
   sequence</a> [[XPATH-DATAMODEL-30]].</li> 
         <li>Apply <a
   href="http://www.w3.org/TR/xpath-functions-30/#func-serialize">http://www.w3.org/TR/xpath-functions-30/#func-serialize</a> [[XPATH-FUNCTIONS-30]]
-	to this sequence to give an xsd:string <em>x</em>.</li>
+  to this sequence to give an xsd:string <em>x</em>.</li>
         <li>The Unicode string <em>x</em> is used as the lexical form of <em>l</em></li>
         <li>This Unicode string <em>x</em> SHOULD be in NFC Normal Form C [[NFC]]</li>
         </ol>
@@ -3090,7 +3162,7 @@
         and
         <a href="http://www.w3.org/2013/RDFXMLTests/rdfms-empty-property-elements/test002.nt">test002.nt</a>
         </p>
-	
+  
         <p class="note"><strong>Test:</strong>
         Indicated by
         <a href="http://www.w3.org/2013/RDFXMLTests/rdfms-empty-property-elements/test005.rdf">test005.rdf</a>
@@ -3412,9 +3484,9 @@
           <a href="#syntaxTerms">syntaxTerms</a> production.
           </dd>
 
-	  <dt>Use the <code>rdf:HTML</code> datatype</dt>
-	  <dd>This datatype as introduced in RDF 1.1
-	  [[RDF11-CONCEPTS]]. </dd>
+    <dt>Use the <code>rdf:HTML</code> datatype</dt>
+    <dd>This datatype as introduced in RDF 1.1
+    [[RDF11-CONCEPTS]]. </dd>
 
         </dl>
 
@@ -3467,10 +3539,10 @@
         href="#parseTypeLiteralPropertyElt">Production
         parseTypeLiteralPropertyElt</a>. Ivan Herman provided valuable
         comments and reworked Figs 1 and 2. </p>
-	
+  
         <p>This specification is a product of extended deliberations by the
         members of the RDFcore Working Group and the RDF and RDF Schema Working Group.</p>
-		
+    
         <p>The following people provided valuable contributions to the document:</p>
 
         <ul>
@@ -3524,56 +3596,56 @@
     <h2>Changes since 2004 Recommendation</h2>
         <p>Changes for RDF 1.1 Recommendation</p>
           <ul>
-	    <li>No changes.</li>
-	  </ul>
-	<p>Changes for RDF 1.1 Proposed Edited Recommendation:</p>
-	<ol>
-	  <li>Conversion to ReSpec.</li>
-	  <li>RDF 2004 errata handling:
-	    <ol>
-	      <li>Replaced hard-coded reference to XML and Unicode versions
-	      (<a href="http://www.w3.org/2011/rdf-wg/wiki/TF-RDF-XML#Change_2:_hard_coded_reference_to_XML_and_Unicode_versions">background info</a>)</li>
-	      <li>Corrected the resolve action with the signature resolve(e, s)
-	      (<a href="http://www.w3.org/2011/rdf-wg/wiki/TF-RDF-XML#Change_3:_signature_resolve.28e.2C_s.29">background info</a>)</li>
-	      <li>Added parent accessor to element events
-	      (<a href="http://www.w3.org/2011/rdf-wg/wiki/TF-RDF-XML#Change_4:_missing_parent_accessor">background info</a>)</li>
-	      <li>Allow datatyped empty literals
-	      (<a href="http://www.w3.org/2011/rdf-wg/wiki/TF-RDF-XML#Change_5:_datatyped_empty_literals">background info</a>)</li>
-	      <li>Removed ID and datatype exclusion on literal property
-	      (<a href="http://www.w3.org/2011/rdf-wg/wiki/TF-RDF-XML#Change_6:_ID_and_datatype_exclusion_on_literal_property">background info</a>)</li>
-	    </ol></li>
-	  <li>Adapted and shortened introduction to reflect RDF 1.1</li>
-	  <li>Updated references to RDF 1.1 documents</li>
-	  <li>Replaced "(RDF) URI reference" with "IRI"</li>
-	  <li>Removed Section on embedding RDF/XML into HTML</li>
-	  <li>Removed "Specification" from the title to bring it in
-	  line with other RDF 1.1 document titles</li>
-	  <li>Updated references to other documents</li>
-	  <li>Changed links in Sec. 2 examples from relative URI to
-	absolute URI; same for RELAX schema in Appendix.</li>
-	  <li>Added note to section on plain-literal event</li>
-	  <li>Updated link to QName definition in XML-NAMES</li>
-	  <li>Added diff with 2004 Recommendation</li>
-	  <li>Sections concerning <code>rdf:XMLLiteral</code>
-	  (<a href="#section-Syntax-XML-literals">Sec. 2.8</a>
-	  and <a href="#parseTypeLiteralPropertyElt">Sec. 7.2.17</a>)
-	  marked as non-normative.</li>
-	  <li>Adapted  <a
-	href="#parseTypeLiteralPropertyElt">Production
-	parseTypeLiteralPropertyElt</a> to cater for the non-normative
-	status of <code>rdf:XMLLiteral</code>.</li>
-	  <li>Improved version of Figs. 1 and 2 (with same
-	content)</li>
-	<li>Removed old changes section</li>
-	<lI>Informative notes at start of Sec. 5.1 removed, as these
-	have become irrelevant.</li>
-	<li>Added new datatype <code>rdf:HTML</code> to the list of things that
-	cannot be serialized in RDF/XML.</li>
-	<li>Replaced the link to 2004 N-Triples <code>nodeID</code> production to
-	the RDF 1.1 N-Triples <code>BLANK_NODE_LABEL</code>
-	production.</li>
+      <li>No changes.</li>
+    </ul>
+  <p>Changes for RDF 1.1 Proposed Edited Recommendation:</p>
+  <ol>
+    <li>Conversion to ReSpec.</li>
+    <li>RDF 2004 errata handling:
+      <ol>
+        <li>Replaced hard-coded reference to XML and Unicode versions
+        (<a href="http://www.w3.org/2011/rdf-wg/wiki/TF-RDF-XML#Change_2:_hard_coded_reference_to_XML_and_Unicode_versions">background info</a>)</li>
+        <li>Corrected the resolve action with the signature resolve(e, s)
+        (<a href="http://www.w3.org/2011/rdf-wg/wiki/TF-RDF-XML#Change_3:_signature_resolve.28e.2C_s.29">background info</a>)</li>
+        <li>Added parent accessor to element events
+        (<a href="http://www.w3.org/2011/rdf-wg/wiki/TF-RDF-XML#Change_4:_missing_parent_accessor">background info</a>)</li>
+        <li>Allow datatyped empty literals
+        (<a href="http://www.w3.org/2011/rdf-wg/wiki/TF-RDF-XML#Change_5:_datatyped_empty_literals">background info</a>)</li>
+        <li>Removed ID and datatype exclusion on literal property
+        (<a href="http://www.w3.org/2011/rdf-wg/wiki/TF-RDF-XML#Change_6:_ID_and_datatype_exclusion_on_literal_property">background info</a>)</li>
+      </ol></li>
+    <li>Adapted and shortened introduction to reflect RDF 1.1</li>
+    <li>Updated references to RDF 1.1 documents</li>
+    <li>Replaced "(RDF) URI reference" with "IRI"</li>
+    <li>Removed Section on embedding RDF/XML into HTML</li>
+    <li>Removed "Specification" from the title to bring it in
+    line with other RDF 1.1 document titles</li>
+    <li>Updated references to other documents</li>
+    <li>Changed links in Sec. 2 examples from relative URI to
+  absolute URI; same for RELAX schema in Appendix.</li>
+    <li>Added note to section on plain-literal event</li>
+    <li>Updated link to QName definition in XML-NAMES</li>
+    <li>Added diff with 2004 Recommendation</li>
+    <li>Sections concerning <code>rdf:XMLLiteral</code>
+    (<a href="#section-Syntax-XML-literals">Sec. 2.8</a>
+    and <a href="#parseTypeLiteralPropertyElt">Sec. 7.2.17</a>)
+    marked as non-normative.</li>
+    <li>Adapted  <a
+  href="#parseTypeLiteralPropertyElt">Production
+  parseTypeLiteralPropertyElt</a> to cater for the non-normative
+  status of <code>rdf:XMLLiteral</code>.</li>
+    <li>Improved version of Figs. 1 and 2 (with same
+  content)</li>
+  <li>Removed old changes section</li>
+  <lI>Informative notes at start of Sec. 5.1 removed, as these
+  have become irrelevant.</li>
+  <li>Added new datatype <code>rdf:HTML</code> to the list of things that
+  cannot be serialized in RDF/XML.</li>
+  <li>Replaced the link to 2004 N-Triples <code>nodeID</code> production to
+  the RDF 1.1 N-Triples <code>BLANK_NODE_LABEL</code>
+  production.</li>
       </ol> 
-	  
+    
      </section>
  
     <!-- TWELVETH PART : Syntax Schemas -->
