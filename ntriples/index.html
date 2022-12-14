@@ -7,19 +7,6 @@
   <script src="https://www.w3.org/Tools/respec/respec-w3c" class="remove"></script>
   <script class='remove'>
     var respecConfig = {
-    //localBiblio: localBibliography,
-      localBiblio: {
-        "EBNF-NOTATION": {
-          id: "EBNF-NOTATION",
-          title: "EBNF Notation",
-          editors: ["Tim Bray", "Jean Paoli", "C. M. Sperberg-McQueen", "Eve Maler", "François Yergeau"],
-          date: "2008-11-26",
-          href: "http://www.w3.org/TR/REC-xml/#sec-notation",
-          status: "REC",
-          publisher: "W3C"
-        }
-      },
-
       // specification status (e.g. WD, LCWD, NOTE, etc.). If in doubt use ED.
       specStatus:              "ED",
       edDraftURI:              "https://w3c.github.io/n-triples12/",
@@ -60,7 +47,9 @@
       authors:  [
         { name: "David Beckett", url: "http://www.dajobe.org/", }
       ],
-    
+
+      xref: ["RDF11-CONCEPTS"],
+
       github: "https://github.com/gkellogg/rdf11-wg/",
 
       // name of the WG
@@ -165,7 +154,7 @@
     </pre>
 
     <p>
-      N-Triples triples are also Turtle <a href="#simple-triples">simple triples</a>, but Turtle includes other representations of RDF terms and <a href="http://www.w3.org/TR/turtle/#predicate-lists">abbreviations of RDF Triples</a>. When parsed by a Turtle parser, data in the N-Triples format will produce exactly the same triples as a parser for the N-triples language.
+      N-Triples triples are also Turtle <a href="#simple-triples">simple triples</a>, but Turtle includes other representations of RDF terms and <a data-cite="TURTLE#predicate-lists">abbreviations of RDF Triples</a>. When parsed by a Turtle parser, data in the N-Triples format will produce exactly the same triples as a parser for the N-triples language.
     </p>
 
     <p>The RDF graph represented by an N-Triples document contains
@@ -195,7 +184,7 @@
       <h3>IRIs</h3>
 
       <p>
-        <a data-cite="RDF11-CONCEPTS#dfn-iri">IRIs</a> may be written only as absolute IRIs.
+        <a>IRIs</a> may be written only as absolute IRIs.
         IRIs are enclosed in '<code>&lt;</code>' and '<code>&gt;</code>'
         and may contain numeric escape sequences (described below).
         For example <code>&lt;http://example.org/#green-goblin&gt;</code>.
@@ -205,7 +194,7 @@
     <section id="sec-literals">
       <h3>RDF Literals</h3>
 
-      <p><a data-cite="RDF11-CONCEPTS#dfn-literal">Literals</a>
+      <p><a>Literals</a>
         are used to identify values such as strings, numbers,
         dates.</p>
 
@@ -214,9 +203,9 @@
         The representation of the lexical form consists of an
         initial delimiter <code>&quot;</code> (<span class="codepoint">U+0022</span>), a sequence of permitted
         characters or numeric escape sequence or string escape sequence, and a final delimiter. Literals may not contain the characters <code>&quot;</code>, <code title="LINE FEED"><sub>LF</sub></code>, <code title="CARRIAGE RETURN"><sub>CR</sub></code> except in their escaped forms. In addition '<code>\</code>' (<span class="codepoint">U+005C</span>) may not appear in any quoted literal except as part of an escape sequence.
-        The corresponding <a data-cite="RDF11-CONCEPTS#dfn-lexcical-form">RDF lexical form</a> is the characters between the delimiters, after processing any escape sequences.
-        If present, the <a data-cite="RDF11-CONCEPTS#dfn-language-tagged-string">language tag</a> is preceded by a '<code>@</code>' (<span class="codepoint">U+0040</span>).
-        If there is no language tag, there may be a <a data-cite="RDF11-CONCEPTS#dfn-datatype-iri">datatype IRI</a>, preceded by '<code>^^</code>' (<span class="codepoint">U+005E</span> <span class="codepoint">U+005E</span>). If there is no datatype IRI and no language tag it is a <a data-cite="RDF11-CONCEPTS#dfn-simple-literal">simple literal</a> and the datatype is <code>http://www.w3.org/2001/XMLSchema#string</code>.
+        The corresponding <a data-lt="lexical form">RDF lexical form</a> is the characters between the delimiters, after processing any escape sequences.
+        If present, the <a>language tag</a> is preceded by a '<code>@</code>' (<span class="codepoint">U+0040</span>).
+        If there is no language tag, there may be a <a>datatype IRI</a>, preceded by '<code>^^</code>' (<span class="codepoint">U+005E</span> <span class="codepoint">U+005E</span>). If there is no datatype IRI and no language tag it is a <a>simple literal</a> and the datatype is <code>http://www.w3.org/2001/XMLSchema#string</code>.
       </p>
 
 
@@ -236,7 +225,7 @@
     <section id="BNodes">
       <h3>RDF Blank Nodes</h3>
       <p>
-        <a data-cite="RDF11-CONCEPTS#dfn-blank-node">RDF blank nodes</a> in N-Triples are expressed as <code>_:</code> followed by a blank node label which is a series of name characters.
+        <a data-lt="blank node">RDF blank nodes</a> in N-Triples are expressed as <code>_:</code> followed by a blank node label which is a series of name characters.
         The characters in the label are built upon <a href="#grammar-production-PN_CHARS_BASE">PN_CHARS_BASE</a>, liberalized as follows:
       </p>
       <ul>
@@ -467,7 +456,7 @@
     <h2>Parsing</h2>
     <p>Parsing N-Triples requires a state of one item:</p>
     <ul>
-      <li id="bnodeLabels">Map[string -&gt; <a data-cite="RDF11-CONCEPTS#dfn-blank-node">blank node</a>] <code class="dfn">bnodeLabels</code> — A mapping from string to blank node.</li>
+      <li id="bnodeLabels">Map[string -&gt; <a>blank node</a>] <code class="dfn">bnodeLabels</code> — A mapping from string to blank node.</li>
     </ul>
 
     <section id="sec-parsing-terms">
@@ -478,11 +467,11 @@
           <tr><th>production</th><th>type</th><th>procedure</th></tr>
         </thead>
         <tbody>
-          <tr id="handle-IRIREF"><td style="text-align:left;"><a href="#grammar-production-IRIREF" class="type IRI">IRIREF               </a></td><td><a data-cite="RDF11-CONCEPTS#dfn-iri">      IRI         </a></td><td>The characters between &quot;&lt;&quot; and &quot;&gt;&quot; are taken, with escape sequences unescaped, to form the unicode string of the IRI.</td></tr>
-          <tr id="handle-STRING_LITERAL_QUOTE"><td style="text-align:left;"><a href="#grammar-production-STRING_LITERAL_QUOTE" class="type lexicalForm">STRING_LITERAL_QUOTE      </a></td><td><a data-cite="RDF11-CONCEPTS#dfn-lexical-form">                         lexical form</a></td><td>The characters between the outermost '&quot;'s   are taken, with escape sequences unescaped, to form the unicode string of a lexical form.</td></tr>
-          <tr id="handle-LANGTAG"><td style="text-align:left;"><a href="#grammar-production-LANGTAG" class="type langTag">LANGTAG              </a></td><td><a data-cite="RDF11-CONCEPTS#dfn-language-tag">language tag</a></td><td>The characters following the <code>@</code> form the unicode string of the language tag.</td></tr>
-          <tr id="handle-literal"><td style="text-align:left;"><a href="#grammar-production-literal" class="type literal">literal           </a></td><td><a data-cite="RDF11-CONCEPTS#dfn-literal">            literal     </a></td><td>The literal has a lexical form of the first rule argument, <code>   STRING_LITERAL_QUOTE</code>, and either a language tag of <code>LANGTAG</code> or a datatype IRI of <code>iri</code>, depending on which rule matched the input.  If the <code>LANGTAG</code> rule matched, the datatype is <code>rdf:langString</code> and the language tag is <code>LANGTAG</code>. If neither a language tag nor a datatype IRI is provided, the literal has a datatype of <code>xsd:string</code>.</td></tr>
-          <tr id="handle-BLANK_NODE_LABEL"><td style="text-align:left;"><a href="#grammar-production-BLANK_NODE_LABEL" class="type bNode">BLANK_NODE_LABEL     </a></td><td><a data-cite="RDF11-CONCEPTS#dfn-blank-node">         blank node  </a></td><td>The string after '<code>_:</code>', is a key in <a href="#bnodeLabels">bnodeLabels</a>. If there is no corresponding blank node in the map, one is allocated.</td></tr>
+          <tr id="handle-IRIREF"><td style="text-align:left;"><a href="#grammar-production-IRIREF" class="type IRI">IRIREF</a></td><td><a>IRI</a></td><td>The characters between &quot;&lt;&quot; and &quot;&gt;&quot; are taken, with escape sequences unescaped, to form the unicode string of the IRI.</td></tr>
+          <tr id="handle-STRING_LITERAL_QUOTE"><td style="text-align:left;"><a href="#grammar-production-STRING_LITERAL_QUOTE" class="type lexicalForm">STRING_LITERAL_QUOTE</a></td><td><a>lexical form</a></td><td>The characters between the outermost '&quot;'s   are taken, with escape sequences unescaped, to form the unicode string of a lexical form.</td></tr>
+          <tr id="handle-LANGTAG"><td style="text-align:left;"><a href="#grammar-production-LANGTAG" class="type langTag">LANGTAG</a></td><td><a>language tag</a></td><td>The characters following the <code>@</code> form the unicode string of the language tag.</td></tr>
+          <tr id="handle-literal"><td style="text-align:left;"><a href="#grammar-production-literal" class="type literal">literal</a></td><td><a>literal</a></td><td>The literal has a lexical form of the first rule argument, <code>   STRING_LITERAL_QUOTE</code>, and either a language tag of <code>LANGTAG</code> or a datatype IRI of <code>iri</code>, depending on which rule matched the input.  If the <code>LANGTAG</code> rule matched, the datatype is <code>rdf:langString</code> and the language tag is <code>LANGTAG</code>. If neither a language tag nor a datatype IRI is provided, the literal has a datatype of <code>xsd:string</code>.</td></tr>
+          <tr id="handle-BLANK_NODE_LABEL"><td style="text-align:left;"><a href="#grammar-production-BLANK_NODE_LABEL" class="type bNode">BLANK_NODE_LABEL</a></td><td><a>blank node</a></td><td>The string after '<code>_:</code>', is a key in <a href="#bnodeLabels">bnodeLabels</a>. If there is no corresponding blank node in the map, one is allocated.</td></tr>
         </tbody>
       </table>
     </section>
@@ -508,7 +497,7 @@
   <section id="changes-between-proposed-recommendation-and-recommendation">
     <h3>Changes between Proposed Recommendation and Recommendation</h3>
     <ul>
-      <li><a href="http://lists.w3.org/Archives/Public/public-rdf-comments/2014Feb/0009.html">Bug in grammar rule [6]</a> concerning language-typed literals fixed.</li>
+      <li><a href="https://lists.w3.org/Archives/Public/public-rdf-comments/2014Feb/0009.html">Bug in grammar rule [6]</a> concerning language-typed literals fixed.</li>
     </ul>
   </section>
 
@@ -546,8 +535,8 @@ N-Triples document</a>.
     <dd>Eric Prud'hommeaux</dd>
     <dt>See also:</dt>
 
-    <dd><a href="http://www.w3.org/2002/06/registering-mediatype">How to Register a Media Type for a <abbr title="World Wide Web Consortium">W3C</abbr> Specification</a></dd>
-    <dd><a href="http://www.w3.org/2001/tag/2002/0129-mime">Internet Media Type registration, consistency of use</a><br />TAG Finding 3 June 2002 (Revised 4 September 2002)</dd>
+    <dd><a href="https://www.w3.org/2002/06/registering-mediatype">How to Register a Media Type for a <abbr title="World Wide Web Consortium">W3C</abbr> Specification</a></dd>
+    <dd><a href="https://www.w3.org/2001/tag/2002/0129-mime">Internet Media Type registration, consistency of use</a><br />TAG Finding 3 June 2002 (Revised 4 September 2002)</dd>
   </dl>
   <p>The Internet Media Type / MIME Type for N-Triples is &quot;application/n-triples&quot;.</p>
   <p>It is recommended that N-Triples files have the extension &quot;.nt&quot; (all lowercase) on all platforms.</p>
@@ -618,4 +607,5 @@ N-Triples document</a>.
     <dd>The N-Triples specification is the product of the RDF WG. The <abbr title="World Wide Web Consortium">W3C</abbr> reserves change control over this specifications.</dd>
   </dl>
 </section>
+<section id="index"></section>
 </body></html>
