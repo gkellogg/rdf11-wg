@@ -191,6 +191,7 @@ table.FAndOTable .token:visited		{ color: #a0c; }
 .gRuleLabel	{ font-family: monospace ; }
 
 .code		{ font-family: monospace; font-size: 100%; }
+code {color: #ff4500;}  /* Old W3C Style */
 pre.code	{ font-family: monospace; font-size: 100%; margin: 0 ; }
 
 /* Table of Contents */

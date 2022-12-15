@@ -54,6 +54,8 @@
             company: "W3C"}
         ],
 
+        xref: [ "RDF11-CONCEPTS" ],
+
         github: "https://github.com/gkellogg/rdf11-wg/",
 
         // name of the WG
@@ -78,31 +80,31 @@
 <section id="sotd">
   <section id="may-be">
     <h4>May Be Superseded</h4>
-    <p><em>This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications and the latest revision of this technical report can be found in the <a href="http://www.w3.org/TR/">W3C technical reports index</a> at http://www.w3.org/TR/.</em></p>
+    <p><em>This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications and the latest revision of this technical report can be found in the <a href="https://www.w3.org/TR/">W3C technical reports index</a> at http://www.w3.org/TR/.</em></p>
   </section>
 
   <section id="related">
     <h4>Set of Documents</h4>
-    <p>This document is one of eleven SPARQL 1.1 Recommendations produced by the <a href="http://www.w3.org/2001/sw/DataAccess/">SPARQL Working Group</a>:</p>
+    <p>This document is one of eleven SPARQL 1.1 Recommendations produced by the <a href="https://www.w3.org/2001/sw/DataAccess/">SPARQL Working Group</a>:</p>
     <ol>
-      <li><a href="http://www.w3.org/TR/2013/REC-sparql11-overview-20130321">SPARQL 1.1 Overview</a></li>
-      <li><a href="http://www.w3.org/TR/2013/REC-sparql11-query-20130321">SPARQL 1.1 Query Language</a></li>
-      <li><a href="http://www.w3.org/TR/2013/REC-sparql11-update-20130321">SPARQL 1.1 Update</a> (this document)</li>
-      <li><a href="http://www.w3.org/TR/2013/REC-sparql11-service-description-20130321">SPARQL1.1 Service Description</a></li>
-      <li><a href="http://www.w3.org/TR/2013/REC-sparql11-federated-query-20130321">SPARQL 1.1 Federated Query</a></li>
-      <li><a href="http://www.w3.org/TR/2013/REC-sparql11-results-json-20130321">SPARQL 1.1 Query Results JSON Format</a></li>
-      <li><a href="http://www.w3.org/TR/2013/REC-sparql11-results-csv-tsv-20130321">SPARQL 1.1 Query Results CSV and TSV Formats</a></li>
-      <li><a href="http://www.w3.org/TR/2013/REC-rdf-sparql-XMLres-20130321">SPARQL Query Results XML Format (Second Edition)</a></li>
-      <li><a href="http://www.w3.org/TR/2013/REC-sparql11-entailment-20130321">SPARQL 1.1 Entailment Regimes</a></li>
-      <li><a href="http://www.w3.org/TR/2013/REC-sparql11-protocol-20130321">SPARQL 1.1 Protocol</a></li>
-      <li><a href="http://www.w3.org/TR/2013/REC-sparql11-http-rdf-update-20130321">SPARQL 1.1 Graph Store HTTP Protocol</a></li>
+      <li>[[[SPARQL11-OVERVIEW]]]</li>
+      <li>[[[SPARQL11-QUERY]]]</li>
+      <li>[[[SPARQL11-UPDATE]]] (this document)</li>
+      <li>[[[SPARQL11-SERVICE-DESCRIPTION]]]</li>
+      <li>[[[SPARQL11-FEDERATED-QUERY]]]</li>
+      <li>[[[SPARQL11-RESULTS-JSON]]]</li>
+      <li>[[[SPARQL11-RESULTS-CSV-TSV]]]</li>
+      <li>[[[RDF-SPARQL-XMLRES]]]</li>
+      <li>[[[SPARQL11-ENTAILMENT]]]</li>
+      <li>[[[SPARQL11-PROTOCOL]]]</li>
+      <li>[[[SPARQL11-HTTP-RDF-UPDATE]]]</li>
     </ol>
   </section>
 
   <section id="status-changes">
     <h4>No Substantive Changes</h4>
     <p>There have been no substantive changes to this document since the
-      <a href="http://www.w3.org/TR/2012/PR-sparql11-query-20121108/">previous version</a>.
+      <a href="https://www.w3.org/TR/2012/PR-sparql11-query-20121108/">previous version</a>.
       Minor editorial changes, if any, are detailed in the
       <a href="#changes-since-pr">change log</a> and visible in the
       <a href="diff">color-coded diff</a>.</p>
@@ -636,7 +638,7 @@
         removes data (see <code><a href="#delete">DELETE</a></code>). The
         grammar does not permit both <code>DELETE</code> and
         <code>INSERT</code> to be omitted in the same operation.</p>
-      <p>The <a id="defUSING"><code>USING</code></a> and
+      <p>The <code id="defUSING">USING</code> and
         <code>USING NAMED</code> clauses affect the <a
         data-cite="SPARQL11-QUERY#rdfDataset">RDF Dataset</a> used while
         evaluating the <code>WHERE</code> clause. This describes a dataset in
@@ -1676,7 +1678,7 @@ The <code><a href="#add">ADD</a></code> operation reproduces all data from one g
             </p>
             <p>Dataset(<em>QuadPattern</em>,  μ, DS, GS )
               is the Dataset consisting of only a default graph composed by all
-              <a data-cite="RDF11-CONCEPTS#dfn-rdf-triple">valid RDF triples</a>
+              <a data-lt="rdf triple">valid RDF triples</a>
               obtained from substituting the variables in
               sk<sub>μ</sub>(<code><a data-cite="SPARQL11-QUERY#rTriplesTemplate">TriplesTemplate</a></code>)
               according to μ and combining these triples into a single
@@ -2244,3 +2246,5 @@ on all platforms.</p>
     </ul>
   </section>
 </section>
+<section id="index"></section>
+</body></html>
