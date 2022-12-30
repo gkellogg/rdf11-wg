@@ -4,30 +4,21 @@
   <title>SPARQL 1.2 Update</title>
   <meta charset="utf-8"/>
   <script src="https://www.w3.org/Tools/respec/respec-w3c" class="remove"></script>
+  <script src="../local-biblio.js" class="remove"></script>
+  <script src="../fixup.js" class="remove"></script>
   <script class='remove'>
     var respecConfig = {
-        // specification status (e.g. WD, LCWD, NOTE, etc.). If in doubt use ED.
-        specStatus:        "ED",
-        testSuiteURI:      "https://w3c.github.io/rdf-tests/sparql11/", 
-        shortName:         "sparql12-update",
-        edDraftURI:        "https://w3c.github.io/sparql12-update/",
+        localBiblio:          localBibliography,
+        specStatus:           "ED",
+        testSuiteURI:         "https://w3c.github.io/rdf-tests/sparql11/", 
+        shortName:            "sparql12-update",
+        edDraftURI:           "https://w3c.github.io/sparql12-update/",
+        copyrightStart:       "2012",
 
-        // if you wish the publication date to be other than today, set this
-        //publishDate:  "2014-02-25",
-        // prEnd:        "2014-02-09",
-
-        // if the specification's copyright date is a range of years, specify
-        // the start date here:
-        copyrightStart: "2012",
-
-        // if there is a previously published draft, uncomment this and set its YYYY-MM-DD date
-        // and its maturity status
         previousPublishDate:  "2014-02-25",
-        previousMaturity:  "REC",
-        prevRecShortname: "trig",
+        previousMaturity:     "REC",
+        prevRecShortname:     "trig",
 
-        // editors, add as many as you like
-        // only "name" is required
         editors:  [
           { name: "Steve Harris",
             company: "Garlik, a part of Experian" },
@@ -69,23 +60,7 @@
     <p><em>This section describes the status of this document at the time of its publication. Other documents may supersede this document. A list of current W3C publications and the latest revision of this technical report can be found in the <a href="https://www.w3.org/TR/">W3C technical reports index</a> at http://www.w3.org/TR/.</em></p>
   </section>
 
-  <section id="related">
-    <h4>Set of Documents</h4>
-    <p>This document is one of eleven SPARQL 1.1 Recommendations produced by the <a href="https://www.w3.org/2001/sw/DataAccess/">SPARQL Working Group</a>:</p>
-    <ol>
-      <li>[[[SPARQL11-OVERVIEW]]]</li>
-      <li>[[[SPARQL11-QUERY]]]</li>
-      <li>[[[SPARQL11-UPDATE]]] (this document)</li>
-      <li>[[[SPARQL11-SERVICE-DESCRIPTION]]]</li>
-      <li>[[[SPARQL11-FEDERATED-QUERY]]]</li>
-      <li>[[[SPARQL11-RESULTS-JSON]]]</li>
-      <li>[[[SPARQL11-RESULTS-CSV-TSV]]]</li>
-      <li>[[[RDF-SPARQL-XMLRES]]]</li>
-      <li>[[[SPARQL11-ENTAILMENT]]]</li>
-      <li>[[[SPARQL11-PROTOCOL]]]</li>
-      <li>[[[SPARQL11-HTTP-RDF-UPDATE]]]</li>
-    </ol>
-  </section>
+  <section id="related" data-include="../related.html"></section>
 
   <section id="status-changes">
     <h4>No Substantive Changes</h4>

@@ -5,35 +5,22 @@
   <meta charset="utf-8"/>
     
   <script src="https://www.w3.org/Tools/respec/respec-w3c" class="remove"></script>
+  <script src="../local-biblio.js" class="remove"></script>
+  <script src="../fixup.js" class="remove"></script>
   <script class='remove'>
     var respecConfig = {
-      // specification status (e.g. WD, LCWD, NOTE, etc.). If in doubt use ED.
-      specStatus:              "ED",
-      edDraftURI:              "https://w3c.github.io/rdf12-n-triples/",
-      testSuiteURI:            "https://w3c.github.io/rdf-tests/ntriples/", 
-
-      // the specification's short name, as in http://www.w3.org/TR/short-name/
+      localBiblio:          localBibliography,
+      specStatus:           "ED",
+      edDraftURI:           "https://w3c.github.io/rdf12-n-triples/",
+      testSuiteURI:         "https://w3c.github.io/rdf-tests/ntriples/", 
       shortName:            "rdf12-n-triples",
+      subtitle   :          "A line-based syntax for an RDF graph",
+      copyrightStart:       "2008",
 
-      // if your specification has a subtitle that goes below the main
-      // formal title, define it here
-      subtitle   :  "A line-based syntax for an RDF graph",
-
-      // if you wish the publication date to be other than today, set this
-      //publishDate:  "2014-02-25",
-
-      // if the specification's copyright date is a range of years, specify
-      // the start date here:
-      copyrightStart: "2008",
-
-      // if there is a previously published draft, uncomment this and set its YYYY-MM-DD date
-      // and its maturity status
       previousPublishDate:  "2014-02-25",
-      previousMaturity:  "REC",
-      prevRecShortname: "n-triples",
+      previousMaturity:     "REC",
+      prevRecShortname:     "n-triples",
 
-      // editors, add as many as you like
-      // only "name" is required
       editors:  [
         { name: "Gavin Carothers", url: "http://gavin.carothers.name/",
                 company: "Lex Machina, Inc", companyURL: "http://lexmachina.com/"},
@@ -51,42 +38,6 @@
       doJsonLd:     true,
       wgPublicList: "public-rdf-star-wg"    
     };
-  </script>
-  <script>
-    require(["core/pubsubhub"], (respecEvents) => {
-      respecEvents.sub('end-all', (documentElement) => {
-        // Add highlighting and remove comment from pre elements
-        for (const pre of document.querySelectorAll("pre")) {
-          // First pre element of aside
-          const content = pre.innerHTML
-            .replace(/\*\*\*\*([^*]*)\*\*\*\*/g, '<span class="hl-bold">$1</span>')
-            .replace(/####([^#]*)####/g, '<span class="comment">$1</span>');
-          pre.innerHTML = content;
-        }
-      });
-    });
-
-    function _esc(s) {
-      return s.replace(/&/g,'&amp;')
-        .replace(/>/g,'&gt;')
-        .replace(/"/g,'&quot;')
-        .replace(/</g,'&lt;');
-    }
-
-    function updateExample(doc, content) {
-      // perform transformations to make it render and prettier
-      return _esc(unComment(doc, content));
-    }
-
-    function unComment(doc, content) {
-      // perform transformations to make it render and prettier
-      return content
-        .replace(/<!--/, '')
-        .replace(/-->/, '')
-        .replace(/< !\s*-\s*-/g, '<!--')
-        .replace(/-\s*- >/g, '-->')
-        .replace(/-\s*-\s*&gt;/g, '--&gt;');
-    }
   </script>
   <style>
   /* Style Turtle script blocks to be visable */
@@ -113,6 +64,8 @@
     <p>This document is a part of the RDF 1.1 document suite. The
     document defines Turtle, the Terse RDF Triple Language, a concrete
     syntax for RDF [[RDF11-CONCEPTS]].  </p>
+
+    <section id="related" data-include="../related.html"></section>
   </section>
 
   <section id="sec-intro" class="informative">

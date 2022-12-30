@@ -3,20 +3,22 @@
 <head>
   <title>RDF 1.2 Turtle</title>
   <meta charset="utf-8"/>
+  <script src="../local-biblio.js" class="remove"></script>
   <script src="https://www.w3.org/Tools/respec/respec-w3c" class="remove"></script>
+  <script src="../fixup.js" class="remove"></script>
   <script class='remove'>
     var respecConfig = {
-      specStatus:              "ED",
-      edDraftURI:              "https://w3c.github.io/rdf12-turtle/",
-      testSuiteURI:            "https://w3c.github.io/rdf-tests/turtle/",
-      shortName:               "rdf12-turtle",
-      subtitle   :             "Terse RDF Triple Language",
-
-      copyrightStart: "2008",
+      localBiblio:          localBibliography,
+      specStatus:           "ED",
+      edDraftURI:           "https://w3c.github.io/rdf12-turtle/",
+      testSuiteURI:         "https://w3c.github.io/rdf-tests/turtle/",
+      shortName:            "rdf12-turtle",
+      subtitle   :          "Terse RDF Triple Language",
+      copyrightStart:       "2008",
 
       previousPublishDate:  "2014-02-25",
-      previousMaturity:  "REC",
-      prevRecShortname: "turtle",
+      previousMaturity:     "REC",
+      prevRecShortname:     "turtle",
 
       // editors, add as many as you like
       // only "name" is required
@@ -46,43 +48,6 @@
       doJsonLd:     true,
       wgPublicList: "public-rdf-star-wg"
     };
-  </script>
-
-  <script>
-    require(["core/pubsubhub"], (respecEvents) => {
-      respecEvents.sub('end-all', (documentElement) => {
-        // Add highlighting and remove comment from pre elements
-        for (const pre of document.querySelectorAll("pre")) {
-          // First pre element of aside
-          const content = pre.innerHTML
-            .replace(/\*\*\*\*([^*]*)\*\*\*\*/g, '<span class="hl-bold">$1</span>')
-            .replace(/####([^#]*)####/g, '<span class="comment">$1</span>');
-          pre.innerHTML = content;
-        }
-      });
-    });
-
-    function _esc(s) {
-      return s.replace(/&/g,'&amp;')
-        .replace(/>/g,'&gt;')
-        .replace(/"/g,'&quot;')
-        .replace(/</g,'&lt;');
-    }
-
-    function updateExample(doc, content) {
-      // perform transformations to make it render and prettier
-      return _esc(unComment(doc, content));
-    }
-
-    function unComment(doc, content) {
-      // perform transformations to make it render and prettier
-      return content
-        .replace(/<!--/, '')
-        .replace(/-->/, '')
-        .replace(/< !\s*-\s*-/g, '<!--')
-        .replace(/-\s*- >/g, '-->')
-        .replace(/-\s*-\s*&gt;/g, '--&gt;');
-    }
   </script>
 
   <style>
@@ -127,7 +92,9 @@
 <section id='sotd'>
   <p>This document is a part of the RDF 1.1 document suite. The
   document defines Turtle, the Terse RDF Triple Language, a concrete
-  syntax for RDF [[RDF11-CONCEPTS]].  </p>
+  syntax for RDF [[RDF11-CONCEPTS]].</p>
+
+  <section id="related" data-include="../related.html"></section>
 </section>
 
 <section id="sec-intro" class="informative">
