@@ -37,7 +37,7 @@
           company: "Freie Universität Berlin", companyURL: "http://www.fu-berlin.de/" },
       ],
 
-      xref: [ "RDF11-CONCEPTS", "TURTLE" ],
+      xref: [ "RDF11-CONCEPTS", "TURTLE" ], // Fixme: change to RDF12-CONCEPTS and RDF12-TURTLE
       github: "https://github.com/gkellogg/rdf11-wg/",
       group:           "rdf-star",
       doJsonLd:     true,
@@ -66,17 +66,17 @@
   that allows an RDF dataset to be completely written in a compact and
   natural text form, with abbreviations for common usage patterns and
   datatypes. TriG is an extension of the
-  Turtle [[TURTLE]] format.
+  Turtle [[RDF12-TURTLE]] format.
   </p>
 </section>
 
 <section id='sotd'>
-  <p>This document is part of the RDF 1.1 document suite.
+  <p>This document is part of the RDF 1.2 document suite.
   TriG is intended the meet the charter requirement of the
   RDF Working Group to
   define an RDF syntax for multiple graphs. TriG is an extension of the
   Turtle
-  syntax for RDF [[TURTLE]]. The current document is based on
+  syntax for RDF [[RDF12-TURTLE]]. The current document is based on
   the original proposal by Chris Bizer and Richard Cyganiak.</p>
 
   <section id="related" data-include="../related.html"></section>
@@ -86,8 +86,8 @@
   <h2>Introduction</h2>
   <p>This document defines TriG, a concrete syntax for RDF as defined in the
   RDF Concepts and Abstract Syntax document
-  [[!RDF11-CONCEPTS]]. TriG is an extension of
-  Turtle [[TURTLE]], extended
+  [[!RDF12-CONCEPTS]]. TriG is an extension of
+  Turtle [[RDF12-TURTLE]], extended
   to support representing a complete RDF Dataset.
 </section>
 
@@ -502,11 +502,11 @@
       [[!EBNF-NOTATION]].
       Production labels consisting of a number and a final 'g' are unique to TriG.
       All Production labels consisting of only a number reference the production
-      with that number in the Turtle grammar [[TURTLE]].
+      with that number in the Turtle grammar [[RDF12-TURTLE]].
       Production labels consisting of a number and a final 's',
-      e.g. [<a data-cite="SPARQL11-QUERY#rRDFLiteral"><span class="prodNo">60s</span></a>],
+      e.g. [<a data-cite="SPARQL12-QUERY#rRDFLiteral"><span class="prodNo">60s</span></a>],
       reference the production with that number in the document
-      [[[SPARQL11-QUERY]]] [[SPARQL11-QUERY]].
+      [[[SPARQL12-QUERY]]] [[SPARQL12-QUERY]].
     </p>
 
     <div>
@@ -579,7 +579,7 @@
 
 <section id="sec-parsing">
   <h2>Parsing</h2>
-  <p>The RDF Concepts and Abstract Syntax [[!RDF11-CONCEPTS]]
+  <p>The RDF Concepts and Abstract Syntax [[!RDF12-CONCEPTS]]
     specification defines three types of <em>RDF Term</em>:
 
     <a>IRIs</a>,
@@ -780,7 +780,7 @@
    defined in this document, and earlier forms.
    <ul>
     <li>Syntax is aligned to the
-      Turtle [[TURTLE]] recommendation
+      Turtle [[RDF12-TURTLE]] recommendation
       for RDF terms.</li>
     <li>Graph labels can be blank nodes.</li>
     <li>The default graph, or sections of the default graph, do not
@@ -792,7 +792,7 @@
       for that graph to be included in the resulting graph.
       Sections with the same label are combined by set union.</li>
     <li>Keywords <code>BASE</code>,
-      <code>PREFIX</code> as in [[TURTLE]].</li>
+      <code>PREFIX</code> as in [[RDF12-TURTLE]].</li>
     <li>The optional <code>GRAPH</code> keyword is allowed to aid
       SPARQL alignment.
   </ul>

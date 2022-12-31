@@ -59,21 +59,22 @@
     where the elements may be IRIs, blank nodes, or datatyped literals. They
     are used to express descriptions of resources. RDF datasets are used
     to organize collections of RDF graphs, and comprise a default graph
-    and zero or more named graphs. RDF&nbsp;1.1 Concepts and Abstract Syntax
-    also introduces key concepts and terminology, and discusses
+    and zero or more named graphs.
+    [[[RDF12-CONCEPTS]]] also introduces key concepts and terminology, and discusses
     datatyping and the handling of <a>fragment identifiers</a> in IRIs within
     RDF graphs.</p>
 </section>
 
 <section id="sotd">
-  <p>This document is part of the RDF 1.1 document suite. It is the central
-    RDF 1.1 specification and defines the core RDF concepts. A new concept in
-    RDF 1.1 is the notion of an RDF dataset to represent multiple
-    graphs. Test suites and implementation reports of a number of RDF 1.1
+  <p>This document is part of the RDF 1.2 document suite. It is the central
+    RDF 1.2 specification and defines the core RDF concepts.
+    Test suites and implementation reports of a number of RDF 1.2
     specifications that build on this document are available through the  
     [[[RDF11-TESTCASES]]] document [[RDF11-TESTCASES]].
     There have been no changes to this document since its publication as
     Proposed Recommendation.</p>
+
+  <p class="ednote">Determine how to reference 1.2 test cases.</p>
 
   <section id="related" data-include="../related.html"></section>
 </section>
@@ -89,14 +90,14 @@
   including:</p>
 
   <ul>
-    <li>the <a data-cite="rdf11-mt#">formal model-theoretic semantics for RDF</a> [[RDF11-MT]];</li>
+    <li>the formal model-theoretic semantics for RDF [[RDF12-MT]];</li>
 
-    <li>serialization syntaxes for storing and exchanging RDF such as [[[TURTLE]]] [[TURTLE]]
+    <li>serialization syntaxes for storing and exchanging RDF such as [[[RDF12-TURTLE]]] [[RDF12-TURTLE]]
       and [[[JSON-LD11]]] [[JSON-LD11]];</li>
 
-    <li>the [[[SPARQL11-QUERY]]] [[SPARQL11-OVERVIEW]];</li>
+    <li>the [[[SPARQL12-QUERY]]] [[SPARQL12-OVERVIEW]];</li>
 
-    <li>the [[[RDF-SCHEMA]]] [[RDF-SCHEMA]].</li>
+    <li>the [[[RDF12-SCHEMA]]] [[RDF12-SCHEMA]].</li>
   </ul>
 
   <section id="data-model">
@@ -129,7 +130,7 @@
     <dfn data-lt="resource">resources</dfn>. Anything can be a resource,
     including physical things, documents, abstract concepts, numbers
     and strings; the term is synonymous with "entity" as it is used in
-    the RDF Semantics specification [[RDF11-MT]].
+    the RDF Semantics specification [[RDF12-MT]].
     The resource denoted by an IRI is called its <a>referent</a>, and the
     resource denoted by a literal is called its
     <a>literal value</a>. Literals have
@@ -220,10 +221,10 @@
 
     <p>An <dfn data-lt="vocabulary">RDF vocabulary</dfn> is a collection of <a>IRIs</a>
       intended for use in <a>RDF graphs</a>. For example,
-      the IRIs documented in [[RDF-SCHEMA]] are the RDF Schema vocabulary.
+      the IRIs documented in [[RDF12-SCHEMA]] are the RDF Schema vocabulary.
       RDF Schema can itself be used to define and document additional
       RDF vocabularies. Some such vocabularies are mentioned in the
-      Primer [[RDF11-PRIMER]].</p>
+      Primer [[RDF12-PRIMER]].</p>
 
     <p>The <a>IRIs</a> in an <a>RDF vocabulary</a> often begin with
       a common substring known as a <dfn>namespace IRI</dfn>.
@@ -239,11 +240,11 @@
       </tr>
       <tr>
         <td>rdf</td>
-        <td><a data-cite="RDF-SYNTAX#"><code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code></a></td>
+        <td><a href="http://www.w3.org/1999/02/22-rdf-syntax-ns#"><code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code></a></td>
         <td>The RDF built-in vocabulary [[RDF-SYNTAX]]</td>
       </tr>
       <tr><td>rdfs</td>
-        <td><a data-cite="RDF-SCHEMA#"><code>http://www.w3.org/2000/01/rdf-schema#</code></a></td>
+        <td><a href="http://www.w3.org/2000/01/rdf-schema#"><code>http://www.w3.org/2000/01/rdf-schema#</code></a></td>
         <td>The RDF Schema vocabulary [[RDF-SCHEMA]]</td>
       </tr>
       <tr><td>xsd</td>
@@ -342,7 +343,7 @@
       simple <dfn class="export">logical expression</dfn>, or claim about the world.
       An <a>RDF graph</a> is the conjunction (logical <em>AND</em>) of
       its triples.   The precise details of this meaning of RDF triples and graphs are
-      the subject of the RDF Semantics specification [[RDF11-MT]], which yields the
+      the subject of the RDF Semantics specification [[RDF12-MT]], which yields the
       following relationships between <a>RDF graph</a>s:</p>
 
     <dl>
@@ -366,7 +367,7 @@
         of the world that would make the expression true.</dd>
     </dl>
 
-    <p>An <dfn>entailment regime</dfn> [[RDF11-MT]] is a specification that
+    <p>An <dfn>entailment regime</dfn> [[RDF12-MT]] is a specification that
       defines precise conditions that make these relationships hold.
       RDF itself recognizes only some basic cases of entailment, <a>equivalence</a>
       and inconsistency. Other specifications, such as
@@ -380,7 +381,7 @@
       <a>entailment regimes</a>.
       Implementations may or may not detect
       <a>inconsistencies</a>, and may make all,
-      some or no <a>entailed</a> information
+      some or no <a data-cite="RDF12-MT#dfn-entailment">entailed</a> information
       available to users.</p>
   </section>
 
@@ -389,8 +390,8 @@
 
     <p>An <dfn>RDF document</dfn> is a document that encodes an
       <a>RDF graph</a> or <a>RDF dataset</a> in a <dfn>concrete RDF syntax</dfn>,
-      such as Turtle [[TURTLE]], RDFa [[RDFA-PRIMER]], JSON-LD [[JSON-LD]], or
-      TriG [[TRIG]]. RDF documents enable the exchange of RDF graphs and RDF
+      such as Turtle [[RDF12-TURTLE]], RDFa [[RDFA-PRIMER]], JSON-LD [[JSON-LD11]], or
+      TriG [[RDF12-TRIG]]. RDF documents enable the exchange of RDF graphs and RDF
       datasets between systems.</p>
 
     <p>A <a>concrete RDF syntax</a> may offer
@@ -746,7 +747,7 @@
       can avoid interoperability issues by not ascribing importance to
       the presence or absence of empty named graphs.</p>
 
-    <p>SPARQL 1.1 [[SPARQL11-OVERVIEW]] also defines the concept of an RDF
+    <p>SPARQL 1.2 [[SPARQL12-OVERVIEW]] also defines the concept of an RDF
 			Dataset.  The definition of an RDF Dataset in SPARQL 1.1 and this
 			specification differ slightly in that this specification allows RDF
 			Graphs to be identified using either an IRI or a blank node.  SPARQL 1.1
@@ -1088,8 +1089,8 @@
       (<code>xml:base</code>) desired in the XML content must be included
       explicitly in the XML literal. Note that some concrete RDF syntaxes
       may define mechanisms for inheriting them from the context (e.g.,
-      <a data-cite="RDF11-XML#parseTypeLiteralPropertyElt"><code>@parseType="literal"</code></a>
-      in RDF/XML [[RDF11-XML]].</p>
+      <a data-cite="RDF12-XML#parseTypeLiteralPropertyElt"><code>@parseType="literal"</code></a>
+      in RDF/XML [[RDF12-XML]].</p>
   </section>
 
   <section>
@@ -1116,7 +1117,7 @@
     <p class="note">Semantic extensions of RDF might choose to
       recognize other datatype IRIs
       and require them to refer to a fixed datatype.  See the RDF
-      Semantics specification [[RDF11-MT]] for more information on
+      Semantics specification [[RDF12-MT]] for more information on
       semantic extensions.</p>
 
     <p>RDF processors are not required to recognize datatype IRIs.
@@ -1253,8 +1254,15 @@
 <section class="appendix informative" id="changes">
   <h2>Changes between RDF 1.0 and RDF 1.1</h2>
 
-  <p>A detailed overview of the differences between RDF versions&nbsp;1.0
-    and&nbsp;1.1 can be found in [[[RDF11-NEW]]] [[RDF11-NEW]].</p>
+  <!-- p>A detailed overview of the differences between RDF versions&nbsp;1.0
+    and 1.1 can be found in [[[RDF11-NEW]]] [[RDF11-NEW]].</p -->
+</section>
+
+<section class="appendix informative" id="changes">
+  <h2>Changes between RDF 1.1 and RDF 1.2</h2>
+
+  <p>A detailed overview of the differences between RDF versions&nbsp;1.1
+    and 1.2 can be found in [[[RDF12-NEW]]] [[RDF12-NEW]].</p>
 </section>
 
 <section id="index"></section>

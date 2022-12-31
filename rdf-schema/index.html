@@ -55,12 +55,12 @@
 </section>
 
 <section id="sotd">
-  <p>This document is an edited version of the 2004 RDF
+  <p>This document is an edited version of the 2014 RDF
     Schema Recommendation. The purpose of this revision is to make this
-    document available as part of the RDF 1.1 document set. Changes are
+    document available as part of the RDF 1.2 document set. Changes are
     limited to errata, revised references, terminology updates, and adaptations to
-    the introduction. The title of the document was changed from "RDF
-    Vocabulary Description Language 1.0: RDF Schema" to "RDF Schema 1.1".
+    the introduction.
+    The title of the document was changed from [[[RDF11-SCHEMA]]] to [[[RDF12-SCHEMA]]].
     The technical content of the document is unchanged. Details of the changes
     are listed in the <a href="#PER-changes">Changes</a> section.
     Since the edits to this document do not constitute a technical
@@ -76,14 +76,14 @@
   <p>RDF Schema provides a data-modelling vocabulary for RDF data.
     It is complemented by several companion documents which
     describe the basic concepts and abstract syntax of RDF
-    [[RDF11-CONCEPTS]], the formal semantics of RDF [[RDF11-MT]], and
-    various concrete syntaxes for RDF, such as Turtle [[TURTLE]],
-    TriG, [[TRIG]], and JSON-LD [[JSON-LD]]. The RDF Primer
-    [[RDF11-PRIMER]] provides an informal introduction and
+    [[RDF12-CONCEPTS]], the formal semantics of RDF [[RDF12-MT]], and
+    various concrete syntaxes for RDF, such as Turtle [[RDF12-TURTLE]],
+    TriG, [[RDF12-TRIG]], and JSON-LD [[JSON-LD11]]. The RDF Primer
+    [[RDF12-PRIMER]] provides an informal introduction and
     examples of the use of the concepts specified in this document.</p>
   <p>This document is intended to provide a clear specification of RDF
     Schema to those who find the formal semantics
-    specification [[RDF11-MT]]
+    specification [[RDF12-MT]]
     daunting. Thus, this document duplicates material also specified in the
     RDF
     Semantics specification. Where there is disagreement between this
@@ -93,7 +93,7 @@
     be taken to be correct.</p>
 
   <p>
-    RDF Schema is a <a data-cite="RDF11-MT#semantic-extensions-and-entailment-regimes">semantic
+    RDF Schema is a <a data-cite="RDF12-MT#semantic-extensions-and-entailment-regimes">semantic
       extension</a> of RDF. It provides mechanisms for describing groups of
     related resources and the relationships between these resources. RDF
     Schema is written in RDF
@@ -166,7 +166,7 @@
   <p>Resources may be divided into groups called classes. The members of a
     class are known as <em>instances</em> of the class. Classes are
     themselves
-    resources. They are often identified by <a data-cite="RDF11-CONCEPTS#section-IRIs">IRIs</a>
+    resources. They are often identified by <a data-cite="RDF12-CONCEPTS#section-IRIs">IRIs</a>
     and
     may be described using RDF properties. The <code><a href="#ch_type">rdf:type</a></code>
     property may be used to state that a
@@ -202,8 +202,8 @@
     is a super-class of a class C, then all instances of C are also
     instances of C'.
   </p>
-  <p>The RDF Concepts and Abstract Syntax [[RDF11-CONCEPTS]] specification
-    defines the RDF concept of an <a data-cite="RDF11-CONCEPTS#section-Datatypes">RDF
+  <p>The RDF Concepts and Abstract Syntax [[RDF12-CONCEPTS]] specification
+    defines the RDF concept of an <a data-cite="RDF12-CONCEPTS#section-Datatypes">RDF
       datatype</a>. All datatypes are classes. The instances of a class that
     is a
     datatype are the members of the value space of the datatype.</p>
@@ -226,7 +226,7 @@
 
   <section id="ch_literal">
     <h3>rdfs:Literal</h3>
-    <p>The class <code>rdfs:Literal</code> is the class of <a data-cite="RDF11-CONCEPTS#section-Graph-Literal">literal</a>
+    <p>The class <code>rdfs:Literal</code> is the class of <a data-cite="RDF12-CONCEPTS#section-Graph-Literal">literal</a>
       values such as strings and integers. Property values such as textual
       strings are examples of RDF literals.</p>
     <p><code>rdfs:Literal</code> is an instance of <a href="#ch_class"><code>rdfs:Class</code></a>.
@@ -237,10 +237,10 @@
     <h3>rdfs:Datatype</h3>
     <p><code>rdfs:Datatype</code> is the class of datatypes. All instances
       of
-      <code>rdfs:Datatype</code> correspond to the <a data-cite="RDF11-CONCEPTS#section-Datatypes">RDF
+      <code>rdfs:Datatype</code> correspond to the <a data-cite="RDF12-CONCEPTS#section-Datatypes">RDF
 model
         of a datatype</a> described in the RDF Concepts specification
-      [[RDF11-CONCEPTS]].
+      [[RDF12-CONCEPTS]].
       <code>rdfs:Datatype</code> is
       both an instance of and a <a href="#def-subclass">subclass</a> of <a
         href="#ch_class"><code>rdfs:Class</code></a>. Each instance of <code>rdfs:Datatype</code>
@@ -250,7 +250,7 @@ model
   <section id="ch_langstring">
     <h3>rdf:langString</h3>
     <p>The class <code>rdf:langString</code> is the class of
-      <a data-cite="RDF11-CONCEPTS#dfn-language-tagged-string">language-tagged string values</a>. <code>rdf:langString</code> is an instance of
+      <a data-cite="RDF12-CONCEPTS#dfn-language-tagged-string">language-tagged string values</a>. <code>rdf:langString</code> is an instance of
       <code>rdfs:Datatype</code> and a <a href="#def-subclass">subclass</a>
       of <a href="#ch_literal"><code>rdfs:Literal</code></a>.</p>
   </section>
@@ -258,7 +258,7 @@ model
   <section id="ch_html" class="informative">
     <h3>rdf:HTML</h3>
     <p>The class <code>rdf:HTML</code> is the class of
-      <a data-cite="RDF11-CONCEPTS#section-html">HTML literal values</a>.
+      <a data-cite="RDF12-CONCEPTS#section-html">HTML literal values</a>.
       <code>rdf:HTML</code> is an instance of
       <code>rdfs:Datatype</code> and a <a href="#def-subclass">subclass</a>
       of <a href="#ch_literal"><code>rdfs:Literal</code></a>.</p>
@@ -267,7 +267,7 @@ model
   <section id="ch_xmlliteral" class="informative">
     <h3>rdf:XMLLiteral</h3>
     <p>The class <code>rdf:XMLLiteral</code> is the class of
-      <a data-cite="RDF11-CONCEPTS#section-XMLLiteral">XML literal values</a>.
+      <a data-cite="RDF12-CONCEPTS#section-XMLLiteral">XML literal values</a>.
       <code>rdf:XMLLiteral</code> is an instance of
       <code>rdfs:Datatype</code> and a <a href="#def-subclass">subclass</a>
       of <a href="#ch_literal"><code>rdfs:Literal</code></a>.</p>
@@ -282,7 +282,7 @@ model
 
 <section id="ch_properties">
   <h2>Properties</h2>
-  <p>The RDF Concepts and Abstract Syntax specification [[RDF11-CONCEPTS]]
+  <p>The RDF Concepts and Abstract Syntax specification [[RDF12-CONCEPTS]]
     describes the concept of an RDF property as a relation between subject
     resources and object resources.</p>
   <p id="def-subproperty">
@@ -433,7 +433,7 @@ model
       <code>rdfs:label</code> is <code><a href="#ch_resource">rdfs:Resource</a></code>.
       The <a href="#ch_range"><code>rdfs:range</code></a> of rdfs:label is
       <a href="#ch_literal"><code>rdfs:Literal</code></a>.</p>
-    <p>Multilingual labels are supported using the <a data-cite="RDF11-CONCEPTS#section-Graph-Literal">language
+    <p>Multilingual labels are supported using the <a data-cite="RDF12-CONCEPTS#section-Graph-Literal">language
         tagging</a> facility of RDF literals.</p>
   </section>
 
@@ -463,7 +463,7 @@ model
       vocabularies
       defined in other namespaces may be used to provide richer
       documentation.</p>
-    <p>Multilingual documentation is supported through use of the <a data-cite="RDF11-CONCEPTS#section-Graph-Literal">language
+    <p>Multilingual documentation is supported through use of the <a data-cite="RDF12-CONCEPTS#section-Graph-Literal">language
         tagging</a> facility of RDF literals.</p>
   </section>
 </section>
@@ -514,7 +514,7 @@ model
       once. Unlike containment in the physical world, a container may be
       contained in itself.</p>
     <p>Three different kinds of container are defined. Whilst the formal
-      semantics [[RDF11-MT]] of all three classes of container are
+      semantics [[RDF12-MT]] of all three classes of container are
       identical,
       different classes may be used to indicate informally further
       information. An rdf:Bag is used to indicate that the container is
@@ -633,7 +633,7 @@ model
       collection, i.e. one that can have no more members.</p>
     <p>A collection is represented as a list of items, a representation that
       will be familiar to those with experience of Lisp and similar
-      programming languages. There is a <a data-cite="TURTLE#collections">shorthand
+      programming languages. There is a <a data-cite="RDF12-TURTLE#collections">shorthand
         notation</a> in the Turtle syntax specification for representing
       collections.</p>
     <p class="note">
@@ -700,7 +700,7 @@ model
   <section id="ch_reificationvocab" class="informative">
     <h3>Reification Vocabulary</h3>
       <!--
-<p>The 1999 RDF Model and Syntax Specification [[RDF-SYNTAX-GRAMMAR-19990222]] defined a vocabulary for describing RDF statements without stating them. 
+<p>The 1999 RDF Model and Syntax Specification [[RDF12-XML-19990222]] defined a vocabulary for describing RDF statements without stating them. 
 The 2004 RDF specification did not assign a normative formal semantics to this vocabulary.  However, an intended meaning of 
 this vocabulary (which generally clarifies the intent of the RDF XML Syntax definition) is described here.
 An informal introduction to the reification vocabulary, with examples, may be found in the <a

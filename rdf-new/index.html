@@ -12,7 +12,7 @@
       specStatus:           "DNOTE",
       edDraftURI:           "https://w3c.github.io/rdf12-new/",
       noRecTrack:            true,
-      shortName:            "rdf11-new",
+      shortName:            "rdf12-new",
 
       previousPublishDate:  "2014-02-25",
       previousMaturity:     "NOTE",
@@ -42,13 +42,13 @@
 <section id="abstract">
 
   <p>This document provides the reader with a summary
-  of changes to RDF introduced in RDF version 1.1.
+  of changes to RDF introduced in RDF version 1.2.
   </p>
 </section>
 
 <section id="sotd">
   <p>This document is intended to provide the reader with a summary
-    of changes to RDF introduced in RDF version 1.1. </p>
+    of changes to RDF introduced in RDF version 1.2. </p>
 
   <section id="related" data-include="../related.html"></section>
 </section>
@@ -58,33 +58,32 @@
     <h2>Introduction</h2>
 
     <p>This document is informative in nature.  Its
-    purpose is to provide a summary of differences between RDF versions 1.0
-    and 1.1 and to introduce new additions in a very brief manner.
+    purpose is to provide a summary of differences between RDF versions 1.1
+    and 1.2 and to introduce new additions in a very brief manner.
     </p>
 
-    <p>Readers new to RDF should start with the RDF 1.1 Primer
-    [[RDF11-PRIMER]] and then move on to the specifications in which they are
-    most interested.  This document is meant to serve as a guide for those
-    already familiar with RDF 1.0 who wish to understand changes in version
-    1.1.</p>
+    <p>Readers new to RDF should start with the [[[RDF12-PRIMER]]] [[RDF12-PRIMER]]
+      and then move on to the specifications in which they are
+      most interested.  This document is meant to serve as a guide for those
+      already familiar with RDF 1.1 who wish to understand changes in version
+      1.2.</p>
 
     <p>Normative specifications of RDF can be found in the
     following documents: </p>
     <ul>
       <li>A document describing the basic concepts underlying RDF, as
-      well as abstract syntax ("RDF Concepts and Abstract Syntax")
-      [[RDF11-CONCEPTS]]</li>
+        well as abstract syntax ([[[RDF12-CONCEPTS]]]) [[RDF12-CONCEPTS]]</li>
       <li>A document describing the formal model-theoretic semantics
-      of RDF ("RDF Semantics") [[RDF11-MT]]</li>
+        of RDF ([[[RDF12-MT]]]) [[RDF12-MT]]</li>
       <li>Specifications of concrete syntaxes for RDF, such as Turtle
-      [[TURTLE]], TriG [[TRIG]], N-Triples [[N-TRIPLES]],
-      N-Quads [[N-QUADS]] and JSON-LD [[JSON-LD]].  RDFa [[RDFA-PRIMER]]
-      is also a concrete syntax for RDF, but it was not defined
-      by the RDF Working Group. The 2004 RDF/XML syntax
-    was updated to be in line with the RDF 1.1
-    specifications [[RDF11-XML]]. </li>
-      <li>A document describing RDF Schema [[RDF11-SCHEMA]], which
-    provides a data-modeling vocabulary for RDF data. </li>
+        [[RDF12-TURTLE]], TriG [[RDF12-TRIG]], N-Triples [[RDF12-N-TRIPLES]],
+        N-Quads [[RDF12-N-QUADS]] and JSON-LD [[JSON-LD11]].
+        RDFa [[RDFA-PRIMER]] is also a concrete syntax for RDF, but it was not defined
+        by the RDF Working Group.
+        The 2004 RDF/XML syntax was updated to be in line with the RDF 1.2
+        specifications [[RDF12-XML]]. </li>
+      <li>A document describing RDF Schema [[RDF12-SCHEMA]], which
+        provides a data-modeling vocabulary for RDF data. </li>
     </ul>
 
     <p>The following prefixes are used in this document:</p>
@@ -92,7 +91,7 @@
     <table class="simple">
           <caption>Prefixes and IRIs</caption>
           <tr><th>Namespace prefix</th><th>Namespace IRI</th><th>RDF vocabulary</th></tr>
-          <tr><td>rdf</td><td><a href="http://www.w3.org/1999/02/22-rdf-syntax-ns#"><code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code></a></td><td>The RDF built-in vocabulary [[RDF11-SCHEMA]]</td></tr>
+          <tr><td>rdf</td><td><a href="http://www.w3.org/1999/02/22-rdf-syntax-ns#"><code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code></a></td><td>The RDF built-in vocabulary [[RDF12-SCHEMA]]</td></tr>
           <tr><td>xsd</td><td><a
           href="http://www.w3.org/2001/XMLSchema#"><code>http://www.w3.org/2001/XMLSchema#</code></a></td><td>The
           RDF-compatible XML Schema datatypes</td></tr>
@@ -219,7 +218,7 @@ serialization formats.</p>
 <h3>Datasets</h3>
 
 <p>RDF 1.1 introduces the concept of RDF Datasets.  An RDF Dataset is a collection of RDF
-Graphs.  SPARQL 1.1 [[SPARQL11-OVERVIEW]] also defines the concept of an RDF Dataset, but
+Graphs.  SPARQL 1.2 [[SPARQL12-OVERVIEW]] also defines the concept of an RDF Dataset, but
 the definition in RDF 1.1 differs slightly in that RDF 1.1 allows RDF Graphs to be
 identified using either an IRI or a blank node. More information is available in
 RDF 1.1 Concepts and Abstract Syntax.</p>

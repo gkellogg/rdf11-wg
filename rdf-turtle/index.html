@@ -42,7 +42,7 @@
             company: "Lex Machina, Inc", companyURL: "http://lexmachina.com/"},
       ],
 
-      xref: [ "RDF11-CONCEPTS" ],
+      xref: [ "RDF11-CONCEPTS" ], // Fixme: change to RDF12-CONCEPTS
       github: "https://github.com/gkellogg/rdf11-wg/",
       group:           "rdf-star",
       doJsonLd:     true,
@@ -83,16 +83,16 @@
   that allows an RDF graph to be completely written in a compact and
   natural text form, with abbreviations for common usage patterns and
   datatypes.  Turtle provides levels of compatibility with the
-  N-Triples [[N-TRIPLES]]
+  N-Triples [[RDF12-N-TRIPLES]]
   format as well as the triple pattern syntax of
-  [[[SPARQL11-QUERY]]] W3C Recommendation.
+  [[[SPARQL12-QUERY]]] W3C Recommendation.
   </p>
 </section>
 
 <section id='sotd'>
-  <p>This document is a part of the RDF 1.1 document suite. The
+  <p>This document is a part of the RDF 1.2 document suite. The
   document defines Turtle, the Terse RDF Triple Language, a concrete
-  syntax for RDF [[RDF11-CONCEPTS]].</p>
+  syntax for RDF [[RDF12-CONCEPTS]].</p>
 
   <section id="related" data-include="../related.html"></section>
 </section>
@@ -102,7 +102,7 @@
 
   <p>
     This document defines Turtle, the Terse RDF
-    Triple Language, a concrete syntax for RDF [[RDF11-CONCEPTS]].
+    Triple Language, a concrete syntax for RDF [[RDF12-CONCEPTS]].
   </p>
 
   <p>
@@ -144,8 +144,8 @@
   <p>
     The Turtle grammar for
     <a href="#grammar-production-triples"><code>triples</code></a>
-    is a subset of [[[SPARQL11-QUERY]]] [[SPARQL11-QUERY]] grammar
-    for <a data-cite="SPARQL11-QUERY#rTriplesBlock"><code>TriplesBlock</code></a>.
+    is a subset of [[[SPARQL12-QUERY]]] [[SPARQL12-QUERY]] grammar
+    for <a data-cite="SPARQL12-QUERY#rTriplesBlock"><code>TriplesBlock</code></a>.
     The two grammars share production and terminal names where possible.
   </p>
 
@@ -643,7 +643,7 @@
     <h3>Collections</h3>
 
     <p>
-      RDF provides a <a data-cite="RDF11-MT#rdf-collections">Collection</a> [[RDF11-MT]]
+      RDF provides a <a data-cite="RDF12-MT#rdf-collections">Collection</a> [[RDF12-MT]]
       structure for lists of RDF nodes.
       The Turtle syntax for Collections is a possibly empty list of RDF terms enclosed by <code>()</code>.
       This collection represents an <code>rdf:first</code>/<code>rdf:rest</code>
@@ -677,8 +677,8 @@
   <h2>Examples</h2>
 
   <p>This example is a Turtle translation of
-  <a data-cite="RDF11-XML#example7">example 7</a>
-  in [[[RDF11-XML]]]
+  <a data-cite="RDF12-XML#example7">example 7</a>
+  in [[[RDF12-XML]]]
   (<a href="examples/example1.ttl">example1.ttl</a>):
   </p>
 
@@ -765,22 +765,22 @@
 <section  id="sec-diff-sparql" class="informative">
   <h3>Turtle compared to SPARQL</h3>
 
-  <p>The [[[SPARQL11-QUERY]]]
-    (<abbr title="SPARQL Protocol And RDF Query Language">SPARQL</abbr>) [[SPARQL11-QUERY]]
+  <p>The [[[SPARQL12-QUERY]]]
+    (<abbr title="SPARQL Protocol And RDF Query Language">SPARQL</abbr>) [[SPARQL12-QUERY]]
     uses a Turtle style syntax for its
-    <a data-cite="SPARQL11-QUERY#rTriplesBlock">TriplesBlock production</a>.
+    <a data-cite="SPARQL12-QUERY#rTriplesBlock">TriplesBlock production</a>.
     This production differs from the Turtle language in that:
   </p>
 
   <ol>
-    <li><a data-cite="SPARQL11-QUERY#rGraphTerm">SPARQL permits RDF Literals</a>
+    <li><a data-cite="SPARQL12-QUERY#rGraphTerm">SPARQL permits RDF Literals</a>
       as the subject of RDF triples.</li>
     <li>SPARQL permits variables (<code>?</code><em>name</em> or <code>$</code><em>name</em>)
       in any part of the triple of the form.</li>
     <li>Turtle allows <a href="#grammar-production-directive">prefix and base declarations</a>
       anywhere outside of a triple.
       In SPARQL, they are only allowed in the
-      <a data-cite="SPARQL11-QUERY#rPrologue">Prologue</a>
+      <a data-cite="SPARQL12-QUERY#rPrologue">Prologue</a>
       (at the start of the SPARQL query).</li>
     <li>SPARQL uses case insensitive keywords, except for '<code>a</code>'.
       Turtle's <code>@prefix</code> and <code>@base</code> declarations are case sensitive,
@@ -792,9 +792,9 @@
   </ol>
 
   <p>For further information see the
-  <a data-cite="SPARQL11-QUERY#QSynIRI">Syntax for IRIs</a>
-  and <a data-cite="SPARQL11-QUERY#grammar">SPARQL Grammar</a>
-  sections of the SPARQL query document [[SPARQL11-QUERY]].
+  <a data-cite="SPARQL12-QUERY#QSynIRI">Syntax for IRIs</a>
+  and <a data-cite="SPARQL12-QUERY#grammar">SPARQL Grammar</a>
+  sections of the SPARQL query document [[SPARQL12-QUERY]].
   </p>
 </section>
 
@@ -1043,9 +1043,9 @@
     <p>The <abbr title="Extended Backus–Naur Form">EBNF</abbr> used here is defined in XML 1.0
       [[!EBNF-NOTATION]].
       Production labels consisting of a number and a final 's', e.g.
-      [<a data-cite="SPARQL11-QUERY#rRDFLiteral"><span class="prodNo">60s</span></a>],
+      [<a data-cite="SPARQL12-QUERY#rRDFLiteral"><span class="prodNo">60s</span></a>],
       reference the production with that number in the
-      [[[SPARQL11-QUERY]]] [[SPARQL11-QUERY]].
+      [[[SPARQL12-QUERY]]] [[SPARQL12-QUERY]].
     </p>
 
     <div>
@@ -1117,7 +1117,7 @@
 <section id="sec-parsing">
   <h2>Parsing</h2>
 
-  <p>The RDF 1.1 Concepts and Abstract Syntax specification [[!RDF11-CONCEPTS]] defines three types of <em>RDF Term</em>:
+  <p>The RDF 1.2 Concepts and Abstract Syntax specification [[!RDF12-CONCEPTS]] defines three types of <em>RDF Term</em>:
     <a>IRIs</a>,
     <a>literals</a> and
     <a>blank nodes</a>.
@@ -1546,17 +1546,17 @@
     <h3>Changes from <a href="http://www.w3.org/TeamSubmission/2008/SUBM-turtle-20080114/">January 2008 Team Submission</a> to <a href="http://www.w3.org/TR/2011/WD-turtle-20110809/">First Public Working Draft</a></h3>
     <ul>
       <li>Adopted three additional string syntaxes from SPARQL:
-        <a data-cite="SPARQL11-QUERY#rSTRING_LITERAL2">STRING_LITERAL2</a>,
-        <a data-cite="SPARQL11-QUERY#rSTRING_LITERAL_LONG1">STRING_LITERAL_LONG1</a>,
-        <a data-cite="SPARQL11-QUERY#rSTRING_LITERAL_LONG2">STRING_LITERAL_LONG2</a>
+        <a data-cite="SPARQL12-QUERY#rSTRING_LITERAL2">STRING_LITERAL2</a>,
+        <a data-cite="SPARQL12-QUERY#rSTRING_LITERAL_LONG1">STRING_LITERAL_LONG1</a>,
+        <a data-cite="SPARQL12-QUERY#rSTRING_LITERAL_LONG2">STRING_LITERAL_LONG2</a>
       </li>
       <li>Adopted SPARQL's syntax for prefixed names
-        (see <a data-cite="SPARQL11-QUERY#rPrefixedName">editor's draft</a>):
+        (see <a data-cite="SPARQL12-QUERY#rPrefixedName">editor's draft</a>):
         <ul>
           <li>'.'s in names in all positions of a local name apart from the first or last,
             e.g. <code>ex:first.name</code>.</li>
           <li>digits in the first character of the
-            <a data-cite="SPARQL11-QUERY#rPN_LOCAL">PN_LOCAL</a> lexical token, e.g. <code>ex:7tm</code>.</li>
+            <a data-cite="SPARQL12-QUERY#rPN_LOCAL">PN_LOCAL</a> lexical token, e.g. <code>ex:7tm</code>.</li>
         </ul>
       </li>
       <li>adopted SPARQL's IRI resolution and prefix substitution text.</li>

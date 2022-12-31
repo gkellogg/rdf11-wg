@@ -31,7 +31,7 @@
         { name: "Dave Beckett"}
       ],
 
-      xref: [ "RDF11-CONCEPTS" ],
+      xref: [ "RDF11-CONCEPTS" ], // Fixme: change to RDF12-CONCEPTS
       github: "https://github.com/gkellogg/rdf11-wg/",
       group:           "rdf-star",
       doJsonLd:     true,
@@ -62,12 +62,12 @@
   <p>This document is an edited version of the 2004 RDF XML Syntax
     Specification Recommendation. The purpose of this revision is
     to make this
-    document available as part of the RDF 1.1 document set. Changes are
+    document available as part of the RDF 1.2 document set. Changes are
     limited to revised references, terminology updates, and adaptations to
     the introduction.
     The technical content of the document is unchanged, except for
     the fact that the datatype XMLLiiteral is marked as
-    non-normative in RDF 1.1. The (non-normative) algorithm for
+    non-normative in RDF 1.2. The (non-normative) algorithm for
     parsing XMLLiteral
     (<a href="#parseTypeLiteralPropertyElt">Sec. 7.2.17</a>)
     has been updated to be in line with
@@ -90,21 +90,18 @@
     forms of empty elements.  This allows the grammar to be more
     precisely recorded and the mapping from the XML syntax to the RDF
     Graph more clearly shown.  The mapping to the RDF graph is done by
-    emitting statements in the N-Triples [[N-TRIPLES]] format. </p>
-
-  <p>This document is part of the suite of RDF 1.1
-    documents. Other documents in this suite are: </p>
+    emitting statements in the N-Triples [[RDF12-N-TRIPLES]] format. </p>
 
   <ul>
     <li>A document describing the basic concepts underlying RDF, as
       well as abstract syntax ("RDF Concepts and Abstract Syntax")
-      [[RDF11-CONCEPTS]]</li>
+      [[RDF12-CONCEPTS]]</li>
     <li>A document describing the formal model-theoretic semantics
-      of RDF ("RDF Semantics") [[RDF11-MT]]</li>
+      of RDF ("RDF Semantics") [[RDF12-MT]]</li>
     <li>Specifications of concrete syntaxes for RDF:
       <ul>
-        <li>Turtle [[TURTLE]] and TriG [[TRIG]]</li>
-        <li>JSON-LD [[JSON-LD]] (JSON based)</li>
+        <li>Turtle [[RDF12-TURTLE]] and TriG [[RDF12-TRIG]]</li>
+        <li>JSON-LD [[JSON-LD11]] (JSON based)</li>
         <li>RDFa [[RDFA-PRIMER]] (for HTML embedding)</li>
         <li>N-Triples [N-TRIPLES] and N-Quads [N-QUADS] (line-based exchange formats)</li>
       </ul>
@@ -137,10 +134,10 @@
   <section id="section-Syntax-intro">
     <h3>Introduction</h3>
 
-    <p>The RDF Concepts and Abstract Syntax document [[RDF11-CONCEPTS]]
+    <p>The RDF Concepts and Abstract Syntax document [[RDF12-CONCEPTS]]
     defines the RDF Graph data model and the
     RDF Graph abstract syntax.
-    Along with the RDF Semantics [[RDF11-MT]]
+    Along with the RDF Semantics [[RDF12-MT]]
     this provides an abstract syntax with a formal semantics for it.
     The RDF graph has <em>nodes</em>
     and labeled directed <em>arcs</em>
@@ -312,7 +309,7 @@
       </rdf:Description>
 
       <rdf:Description rdf:about="http://www.w3.org/TR/rdf-syntax-grammar">
-        <dc:title>RDF 1.1 XML Syntax</dc:title>
+        <dc:title>RDF 1.2 XML Syntax</dc:title>
       </rdf:Description>
       -->
     </pre>
@@ -354,7 +351,7 @@
             <ex:fullName>Dave Beckett</ex:fullName>
           </rdf:Description>
         </ex:editor>
-        <dc:title>RDF 1.1 XML Syntax</dc:title>
+        <dc:title>RDF 1.2 XML Syntax</dc:title>
       </rdf:Description>
       -->
     </pre>
@@ -392,7 +389,7 @@
             <ex:fullName>Dave Beckett</ex:fullName>
           </rdf:Description>
         </ex:editor>
-        <dc:title>RDF 1.1 XML Syntax</dc:title>
+        <dc:title>RDF 1.2 XML Syntax</dc:title>
       </rdf:Description>
        -->
     </pre>
@@ -431,7 +428,7 @@
          title="Replacing property elements with string literal content into property attributes">
       <!--
       <rdf:Description rdf:about="http://www.w3.org/TR/rdf-syntax-grammar"
-                 dc:title="RDF 1.1 XML Syntax">
+                 dc:title="RDF 1.2 XML Syntax">
         <ex:editor>
           <rdf:Description ex:fullName="Dave Beckett">
             <ex:homePage rdf:resource="http://purl.org/net/dajobe/"/>
@@ -483,7 +480,7 @@
                    xmlns:ex="http://example.org/stuff/1.0/">
 
          <rdf:Description rdf:about="http://www.w3.org/TR/rdf-syntax-grammar"
-                    dc:title="RDF1.1 XML Syntax">
+                    dc:title="RDF 1.2 XML Syntax">
            <ex:editor>
              <rdf:Description ex:fullName="Dave Beckett">
                <ex:homePage rdf:resource="http://purl.org/net/dajobe/" />
@@ -535,9 +532,9 @@
                  xmlns:dc="http://purl.org/dc/elements/1.1/">
 
           <rdf:Description rdf:about="http://www.w3.org/TR/rdf-syntax-grammar">
-            <dc:title>RDF 1.1 XML Syntax</dc:title>
-            <dc:title xml:lang="en">RDF 1.1 XML Syntax</dc:title>
-            <dc:title xml:lang="en-US">RDF 1.1 XML Syntax</dc:title>
+            <dc:title>RDF 1.2 XML Syntax</dc:title>
+            <dc:title xml:lang="en">RDF 1.2 XML Syntax</dc:title>
+            <dc:title xml:lang="en-US">RDF 1.2 XML Syntax</dc:title>
           </rdf:Description>
 
           <rdf:Description rdf:about="http://example.org/buecher/baum" xml:lang="de">
@@ -557,7 +554,7 @@
   <section id="section-Syntax-XML-literals" class="informative">
     <h3>XML Literals: <code>rdf:parseType="Literal"</code></h3>
 
-    <p>RDF allows XML literals [RDF11-CONCEPTS]
+    <p>RDF allows XML literals [RDF12-CONCEPTS]
     to be given as the object node of a predicate.
     These are written in RDF/XML as content of a property element (not
     a property attribute) and indicated using the
@@ -690,7 +687,7 @@
                     xmlns:ex="http://example.org/stuff/1.0/">
 
           <rdf:Description rdf:about="http://www.w3.org/TR/rdf-syntax-grammar"
-                     dc:title="RDF 1.1 XML Syntax">
+                     dc:title="RDF 1.2 XML Syntax">
             <ex:editor rdf:nodeID="abc"/>
           </rdf:Description>
 
@@ -736,7 +733,7 @@
                   xmlns:dc="http://purl.org/dc/elements/1.1/"
                   xmlns:ex="http://example.org/stuff/1.0/">
         <rdf:Description rdf:about="http://www.w3.org/TR/rdf-syntax-grammar"
-                         dc:title="RDF 1.1 XML Syntax">
+                         dc:title="RDF 1.2 XML Syntax">
           <ex:editor rdf:parseType="Resource">
             <ex:fullName>Dave Beckett</ex:fullName>
             <ex:homePage rdf:resource="http://purl.org/net/dajobe/"/>
@@ -788,7 +785,7 @@
                   xmlns:ex="http://example.org/stuff/1.0/"&gt;
 
         &lt;rdf:Description rdf:about="http://www.w3.org/TR/rdf-syntax-grammar"
-                  dc:title="RDF 1.1 XML Syntax"&gt;
+                  dc:title="RDF 1.2 XML Syntax"&gt;
           &lt;ex:editor ex:fullName="Dave Beckett" /&gt;
                   &lt;!-- Note the ex:homePage property has been ignored for this example --&gt;
         &lt;/rdf:Description&gt;
@@ -1190,7 +1187,7 @@
     <section id="section-Identifiers">
     <h3>Identifiers</h3>
 
-    <p>The RDF Concepts document [[RDF11-CONCEPTS]]
+    <p>The RDF Concepts document [[RDF12-CONCEPTS]]
     defines the three types of RDF data that can act as node
     and/or predicate:</p>
 
@@ -1201,7 +1198,7 @@
 <p>IRIs can act as node (both subject and object) and as
     predicate. </p>
 
-    <p><a data-cite="RDF11-CONCEPTS#dfn-iri">IRIs</a> can be either:</p>
+    <p><a data-cite="RDF12-CONCEPTS#dfn-iri">IRIs</a> can be either:</p>
     <ul>
     <li>given as XML attribute values interpreted as relative
     IRIs that are resolved against the in-scope base URI
@@ -1418,7 +1415,7 @@
     <p>The grammar productions may include actions which fire when the
     production is recognized.  Taken together these actions define a
     transformation from any syntactically well-formed RDF/XML sequence of
-    events into an RDF graph represented in the N-Triples [[N-TRIPLES]]
+    events into an RDF graph represented in the N-Triples [[RDF12-N-TRIPLES]]
     language.</p>
 
     <p>The model given here illustrates one way to create a representation of
@@ -1431,7 +1428,7 @@
     <ul>
     <li>This specification permits any
 representation of an RDF graph;
-    in particular, it does not require the use of N-Triples [[N-TRIPLES]].</li>
+    in particular, it does not require the use of N-Triples [[RDF12-N-TRIPLES]].</li>
     <li>This specification does not require the use of
     [[XPATH]] or [[SAX]]</li>
     <li>This specification places no constraints on the order in which
@@ -1622,7 +1619,7 @@ representation of an RDF graph;
     <a href="#eventterm-element-URI" class="termref"><span
     class="arrow">·</span>URI<span class="arrow">·</span></a>
     accessor uses the N-Triples escapes for
-    IRIs [[N-TRIPLES]].
+    IRIs [[RDF12-N-TRIPLES]].
     </p>
 
       </dd>
@@ -1741,7 +1738,7 @@ representation of an RDF graph;
     <a href="#eventterm-attribute-URI" class="termref"><span
     class="arrow">·</span>URI<span class="arrow">·</span></a>
     accessor uses the N-Triples escapes for
-    IRIs [[N-TRIPLES]].
+    IRIs [[RDF12-N-TRIPLES]].
     </p>
       </dd>
 
@@ -1791,7 +1788,7 @@ representation of an RDF graph;
         class="termref"><span
         class="arrow">·</span>identifier<span
         class="arrow">·</span></a> accessor value
-        uses the N-Triples escapes for IRIs [[N-TRIPLES]]. </p>
+        uses the N-Triples escapes for IRIs [[RDF12-N-TRIPLES]]. </p>
 
      </dd>
 
@@ -1850,7 +1847,7 @@ representation of an RDF graph;
     <section id="section-literal-node">
     <h3>Plain Literal Event</h3>
 
-    <p class="note">RDF/XML plain literals are in RDF 1.1 treated as
+    <p class="note">RDF/XML plain literals are in RDF 1.2 treated as
     syntactic sugar for a literal with datatype
     <code>xsd:string</code> (in case no language tag is present)
     or as a literal with datatype <code>rdf:langString</code> (in
@@ -1899,7 +1896,7 @@ representation of an RDF graph;
      href="#eventterm-literal-literal-value" class="termref"><span
      class="arrow">·</span>literal-value<span
      class="arrow">·</span></a> accessor value uses the N-Triples
-      escapes for strings as described in [[N-TRIPLES]]
+      escapes for strings as described in [[RDF12-N-TRIPLES]]
       for escaping certain characters such as &quot;. </p>
       </dd>
     </dl>
@@ -1958,14 +1955,14 @@ representation of an RDF graph;
       class="arrow">·</span>literal-value<span
       class="arrow">·</span></a> accessor value
       uses the N-Triples
-      escapes for strings [[N-TRIPLES]]
+      escapes for strings [[RDF12-N-TRIPLES]]
       for escaping certain characters such as &quot;.
       The escaping of the <a
       href="#eventterm-typedliteral-literal-datatype"
       class="termref"><span
       class="arrow">·</span>literal-datatype<span
       class="arrow">·</span></a> accessor value
-      must use the N-Triples escapes for IRI [[N-TRIPLES]].</p>
+      must use the N-Triples escapes for IRI [[RDF12-N-TRIPLES]].</p>
 
     </dd>
     </dl>
@@ -2053,7 +2050,7 @@ representation of an RDF graph;
     using notation given in the following sections.
     The number is used for reference purposes.
     The grammar <em>action</em> may include generating
-    new triples to the graph, written in N-Triples [[N-TRIPLES]]
+    new triples to the graph, written in N-Triples [[RDF12-N-TRIPLES]]
     format.
     </p>
 
@@ -3376,7 +3373,7 @@ to this sequence to give an xsd:string <em>x</em>.</li>
     <h2>Serializing an RDF Graph to RDF/XML</h2>
 
     <p>There are some RDF Graphs as defined in
-    [[RDF11-CONCEPTS]]that cannot be serialized in RDF/XML. These are those that:</p>
+    [[RDF12-CONCEPTS]]that cannot be serialized in RDF/XML. These are those that:</p>
 
     <dl>
       <dt>Use property names that cannot be turned into XML namespace-qualified names.<br /></dt>
@@ -3401,8 +3398,7 @@ to this sequence to give an xsd:string <em>x</em>.</li>
       </dd>
 
       <dt>Use the <code>rdf:HTML</code> datatype</dt>
-      <dd>This datatype as introduced in RDF 1.1
-      [[RDF11-CONCEPTS]]. </dd>
+      <dd>This datatype as introduced in RDF 1.2 [[RDF12-CONCEPTS]].</dd>
 
     </dl>
 

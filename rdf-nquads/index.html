@@ -25,7 +25,7 @@
             company: "Lex Machina, Inc", companyURL: "https://lexmachina.com/" },
       ],
 
-      xref: ["RDF11-CONCEPTS"],
+      xref: ["RDF11-CONCEPTS"], // Fixme: change to RDF12-CONCEPTS
       github: "https://github.com/gkellogg/rdf11-wg/",
       group:           "rdf-star",
       doJsonLd:     true,
@@ -54,9 +54,9 @@
 </section>
 
 <section id='sotd'>
-  <p>This document is part of the RDF 1.1 document suit.
+  <p>This document is part of the RDF 1.2 document suit.
   The N-Quads format is a line-based RDF syntax with a similar flavor as N-Triples
-  [[N-TRIPLES]]. The main distinction is that N-Quads allows encoding
+  [[RDF12-N-TRIPLES]]. The main distinction is that N-Quads allows encoding
   multiple graphs. </p>
 
   <section id="related" data-include="../related.html"></section>
@@ -68,8 +68,8 @@
   <p>
     This document defines N-Quads, an easy to parse, line-based,
     concrete syntax for
-    <a data-cite="RDF11-CONCEPTS#section-dataset">RDF Datasets</a>
-    [[!RDF11-CONCEPTS]].
+    <a data-cite="RDF12-CONCEPTS#section-dataset">RDF Datasets</a>
+    [[!RDF12-CONCEPTS]].
   </p>
 
   <p>N-quads statements are a sequence of RDF terms representing the subject, predicate, object and graph label
@@ -225,7 +225,7 @@
   <p>The <abbr title="Extended Backus–Naur Form">EBNF</abbr> used here is defined in XML 1.0
     [[!EBNF-NOTATION]].</p>
 
-  <p>Escape sequence rules are the same as Turtle [[TURTLE]].
+  <p>Escape sequence rules are the same as Turtle [[RDF12-TURTLE]].
     However, as only the <a href="#grammar-production-STRING_LITERAL_QUOTE"><code>STRING_LITERAL_QUOTE</code></a> production
     is allowed new lines in literals MUST be escaped.</p>
 

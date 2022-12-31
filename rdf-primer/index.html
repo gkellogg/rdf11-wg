@@ -17,7 +17,7 @@
 
       previousPublishDate:  "2014-06-24",
       previousMaturity:     "WG-NOTE",
-      prevRecShortname:     "rdf11-primer",
+      prevRecShortname:     "rdf12-primer",
 
       editors:  [
           { name: "Guus Schreiber", url: "http://www.cs.vu.nl/~guus/",
@@ -35,7 +35,7 @@
         { name: "Brian McBride" }
       ],
 
-      xref: [ "RDF11-CONCEPTS", "RDF-SCHEMA" ],
+      xref: [ "RDF11-CONCEPTS", "RDF11-SCHEMA" ], // Fixme: change to RDF12-CONCEPTS and RDF12-SCHEMA
       github: "https://github.com/gkellogg/rdf11-wg/",
       group:           "rdf-star",
       doJsonLd:     true,
@@ -68,7 +68,7 @@
   informative note on the key concepts of RDF. For a normative
   specification of RDF 1.1 the reader is referred to the RDF
   1.1. Concepts and Abstract Syntax document
-  [[RDF11-CONCEPTS]]. This document contains some minor editorial
+  [[RDF12-CONCEPTS]]. This document contains some minor editorial
   <a href="#section-Changes">fixes</a> of the Februay 2014 version.</p>
 
   <section id="related" data-include="../related.html"></section>
@@ -79,7 +79,7 @@
 
   <p>The Resource Description Framework (RDF) is a framework for
   expressing information about
-  <a data-cite="RDF11-CONCEPTS#resources-and-statements">
+  <a data-cite="RDF12-CONCEPTS#resources-and-statements">
   resources</a>.
   Resources
   can be anything, including documents, people, physical objects, and abstract
@@ -113,17 +113,17 @@
   <ul>
     <li>A document describing the basic concepts underlying RDF, as
     well as abstract syntax ("RDF Concepts and Abstract Syntax")
-    [[RDF11-CONCEPTS]]</li>
+    [[RDF12-CONCEPTS]]</li>
     <li>A document describing the formal model-theoretic semantics
-    of RDF ("RDF Semantics") [[RDF11-MT]]</li>
+    of RDF ("RDF Semantics") [[RDF12-MT]]</li>
     <li>Specifications of serialization formats for RDF:
       <ul>
-        <li>Turtle [[TURTLE]] and TriG [[TRIG]]</li>
-        <li>JSON-LD [[JSON-LD]] (JSON based)</li>
+        <li>Turtle [[RDF12-TURTLE]] and TriG [[RDF12-TRIG]]</li>
+        <li>JSON-LD [[JSON-LD11]] (JSON based)</li>
         <li>RDFa [[RDFA-PRIMER]] (for HTML embedding)</li>
-        <li>N-Triples [[N-TRIPLES]] and N-Quads [[N-QUADS]]
+        <li>N-Triples [[RDF12-N-TRIPLES]] and N-Quads [[RDF12-N-QUADS]]
               (line-based exchange formats)</li>
-        <li>RDF/XML [[RDF-SYNTAX-GRAMMAR]] (the original 2004 syntax, updated
+        <li>RDF/XML [[RDF12-XML]] (the original 2004 syntax, updated
               for RDF 1.1)</li>
       </ul>
     </li>
@@ -163,7 +163,7 @@
       between databases.</li>
     <li>Interlinking various datasets within an organisation,
       enabling cross-dataset queries to
-      be performed using SPARQL [[SPARQL11-OVERVIEW]].</li>
+      be performed using SPARQL [[SPARQL12-OVERVIEW]].</li>
   </ul>
 </section>
 
@@ -231,7 +231,7 @@
       <figcaption>Informal graph of the sample triples</figcaption>
     </figure>
 
-   <p>Once you have a graph like this you can use SPARQL [[SPARQL11-OVERVIEW]] to
+   <p>Once you have a graph like this you can use SPARQL [[SPARQL12-OVERVIEW]] to
     query for e.g. people interested in paintings by Leonardo da
     Vinci.</p>
 
@@ -240,7 +240,7 @@
     particular concrete syntax (the syntax used to represent triples stored in
     text files).  Different concrete syntaxes may
     produce exactly the same graph from the perspective of the
-    abstract syntax. The semantics of RDF graphs [[RDF11-MT]] are defined in
+    abstract syntax. The semantics of RDF graphs [[RDF12-MT]] are defined in
     terms of this abstract syntax. Concrete RDF syntax is introduced
     later in <a href="#section-graph-syntax">Sec.&nbsp;5</a>.</p>
 
@@ -327,7 +327,7 @@
     <p>Literals may only appear in the <strong>object position</strong> of a triple.</p>
 
     <p>The RDF Concepts document provides a (non-exhaustive)
-    <a data-cite="RDF11-CONCEPTS#section-Datatypes">list of datatypes</a>.
+    <a data-cite="RDF12-CONCEPTS#section-Datatypes">list of datatypes</a>.
     This includes many datatypes defined by XML Schema, such as string, boolean, integer, decimal and date. </p>
   </section>
 
@@ -422,7 +422,7 @@
     need to rely on out-of-band knowledge, such as established
     community practice, to interpret the dataset
     in the intended way. Possible semantics of datasets are described in a separate note
-    [[RDF11-DATASETS]]. </p>
+    [[RDF12-DATASETS]]. </p>
 
     <figure id="fig3">
       <img class="graph" src="example-multiple-graphs.jpg"
@@ -576,7 +576,7 @@
 
   <p>For a formal specification of the semantics of the RDF Schema
   constructs the reader is referred to
-  the RDF Semantics document [[RDF11-MT]]. Users interested in more comprehensive
+  the RDF Semantics document [[RDF12-MT]]. Users interested in more comprehensive
   semantic modeling of RDF data might consider using OWL
   [[OWL2-OVERVIEW]]. OWL is an RDF vocabulary, so it can be
   used in combination with RDF Schema.</p>
@@ -624,7 +624,7 @@
     <section id="section-n-triples">
       <h4>N-Triples</h4>
 
-      <p>N-Triples [[N-TRIPLES]]  provides a simple line-based, plain-text way for serializing RDF
+      <p>N-Triples [[RDF12-N-TRIPLES]]  provides a simple line-based, plain-text way for serializing RDF
       graphs. The informal graph in <a
       href="#fig1">Fig.&nbsp;1</a> can be represented in N-Triples in the
       following way:</p>
@@ -680,7 +680,7 @@
     <section id="section-turtle">
       <h4>Turtle</h4>
 
-      <p>Turtle [[TURTLE]] is an <strong>extension of N-Triples</strong>.
+      <p>Turtle [[RDF12-TURTLE]] is an <strong>extension of N-Triples</strong>.
       In addition to the basic N-Triples syntax, Turtle
       introduces a number of syntactic shortcuts, such as
       support for namespace prefixes, lists and shorthands for datatyped
@@ -775,7 +775,7 @@
         subject. Lines starting with '#' represent
         comments. </p>
 
-        <p>For more details about the syntax of Turtle please consult the Turtle specification [[TURTLE]].</p>
+        <p>For more details about the syntax of Turtle please consult the Turtle specification [[RDF12-TURTLE]].</p>
       </section>
 
     </section>
@@ -784,7 +784,7 @@
       <h4>TriG</h4>
 
       <p>The syntax of Turtle supports only the specification of single
-      graphs without a means for "naming" them. TriG [[TRIG]] is an
+      graphs without a means for "naming" them. TriG [[RDF12-TRIG]] is an
       <strong>extension of Turtle</strong> enabling the specification of
       multiple graphs in the form of an RDF dataset.</p>
 
@@ -832,7 +832,7 @@
       placed in between matching curly braces (lines 9 &amp; 15, 18 &amp;
       25). Optionally you can precede the graph name with the keyword
       <code>GRAPH</code>. This may improve readability, but it is mainly
-      introduced for alignment with SPARQL Update [[SPARQL11-UPDATE]]. </p>
+      introduced for alignment with SPARQL Update [[SPARQL12-UPDATE]]. </p>
 
       <p>The syntax of the triples and of the directives at the top conforms to
       the Turtle syntax.</p>
@@ -853,7 +853,7 @@
     <section id="section-n-quads">
       <h4>N-Quads</h4>
 
-      <p>N-Quads [[N-QUADS]] is a simple extension to N-Triples to enable the exchange of RDF
+      <p>N-Quads [[RDF12-N-QUADS]] is a simple extension to N-Triples to enable the exchange of RDF
       datasets. N-Quads allows one to add a fourth element to a line, capturing
       the graph IRI of the triple described on that line.  Here is the
       N-Quads version of the TriG example above:</p>
@@ -887,7 +887,7 @@
   <section id="section-json-ld">
     <h3>JSON-LD</h3>
 
-    <p>JSON-LD [[JSON-LD]]
+    <p>JSON-LD [[JSON-LD11]]
     provides a JSON syntax for RDF graphs and datasets.
     JSON-LD can be used to transform JSON documents to RDF with
     minimal changes. JSON-LD offers universal identifiers for
@@ -1090,7 +1090,7 @@
   <section id="section-rdfxml">
     <h3>RDF/XML</h3>
 
-    <p>RDF/XML [[RDF-SYNTAX-GRAMMAR]] provides an XML syntax for RDF
+    <p>RDF/XML [[RDF12-XML]] provides an XML syntax for RDF
     graphs. When RDF was originally developed in the late 1990s, this was its
     only syntax, and some people still call this syntax "RDF". In 2001, a
     precursor to Turtle called "N3" was proposed, and gradually the other
@@ -1150,7 +1150,7 @@
     considered to have the datatype <code>xsd:string</code>.
 
     <p>The example shows the baseline syntax; please consult the RDF/XML
-    document [[RDF-SYNTAX-GRAMMAR]] for a more in-depth treatment of the syntax. It
+    document [[RDF12-XML]] for a more in-depth treatment of the syntax. It
     might seem strange that the attribute values contain full IRIs,
     despite the fact that for some of these namespace prefixes were
     defined. This is because these prefixes can only be used for XML
@@ -1181,7 +1181,7 @@
   </ol>
   <p>These notions,
   and others, are specified with mathematical precision in the RDF
-  Semantics document [[RDF11-MT]].</p>
+  Semantics document [[RDF12-MT]].</p>
 
   <p>One of the benefits of RDF having these declarative semantics
   is that systems can make logical inferences. That is, given a
@@ -1199,7 +1199,7 @@
   applications, it can be documented as an <a>entailment regime</a>.
   Several entailment regimes are specified in RDF Semantics.
   For technical descriptions of some other entailment regimes and how to
-  use these with SPARQL, see [[SPARQL11-ENTAILMENT]].
+  use these with SPARQL, see [[SPARQL12-ENTAILMENT]].
   Note that some
   entailment regimes are fairly easy to implement and reasoning can
   be done quickly, while others require sophisticated
@@ -1216,7 +1216,7 @@
     <code>ex:bob rdf:type foaf:Person .</code>
   </pre>
 
-  <p>The derivation above is an example of an RDF Schema entailment [[RDF11-MT]]. </p>
+  <p>The derivation above is an example of an RDF Schema entailment [[RDF12-MT]]. </p>
 
   <p>The semantics of RDF also tell us that the triple:</p>
 
@@ -1250,7 +1250,7 @@
 
   <p>The examples in this section are just meant to give the reader
     some feeling about what the RDF Semantics brings you. Please consult
-    [[RDF11-MT]] for a complete description.</p>
+    [[RDF12-MT]] for a complete description.</p>
 
 </section>
 
@@ -1262,7 +1262,7 @@
   available as Linked
   Data [[LINKED-DATA]]. Datasets are being published and
   interlinked on the Web using RDF, and many of them offer a
-  querying facility through SPARQL [[SPARQL11-OVERVIEW]]. Examples
+  querying facility through SPARQL [[SPARQL12-OVERVIEW]]. Examples
   of such datasets used in the examples above include:</p>
 
   <ul>

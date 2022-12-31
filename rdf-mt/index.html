@@ -27,7 +27,7 @@
 
       ],
 
-      xref:   [ "RDF11-CONCEPTS" ],
+      xref:   [ "RDF11-CONCEPTS" ], // Fixme: change to RDF12-CONCEPTS
       github: "https://github.com/gkellogg/rdf11-wg/",
       group:           "rdf-star",
       doJsonLd:     true,
@@ -99,16 +99,16 @@
 <body>
 <section id='abstract'>
   <p>  This document describes a precise semantics for the
-    Resource Description Framework 1.1 [[RDF11-CONCEPTS]]
-    and RDF Schema [[RDF-SCHEMA]].
+    [[[RDF12-CONCEPTS]]] [[RDF12-CONCEPTS]]
+    and [[[RDF12-SCHEMA]]] [[RDF12-SCHEMA]].
     It defines a number of distinct entailment regimes and corresponding patterns of entailment.
-    It is part of a suite of documents which comprise the full specification of RDF 1.1.</p>
+    It is part of a suite of documents which comprise the full specification of RDF 1.2.</p>
 </section>
 
 <section id='sotd'>
-  <p>This document is part of RDF 1.1 document suite.
-    This is a revision of the 2004 Semantics specification for RDF
-    [[RDF-MT]] and supersedes that document.
+  <p>This document is part of RDF 1.2 document suite.
+    This is a revision of the 2014 Semantics specification for RDF
+    [[RDF11-MT]] and supersedes that document.
     For an informal summary of the substantive (non-editorial)
     changes since then,
     see <a href="http://www.w3.org/2011/rdf-wg/wiki/Entailment_Changes">Entailment
@@ -131,7 +131,7 @@ Changes</a>. </p>
     </section>
 
     <section id="conformance">
-      <p>This specification, <em>RDF 1.1 Semantics</em>,
+      <p>This specification, <em>RDF 1.2 Semantics</em>,
         is normative for RDF semantics and the validity of RDF inference processes.
         It is not normative for many aspects of RDF meaning which are not described
         or specified by this semantics,
@@ -154,7 +154,7 @@ Changes</a>. </p>
 
       <p>A particular such set of semantic assumptions is called a <dfn>semantic extension</dfn>.
         Each <a>semantic extension</a> defines an <dfn>entailment regime</dfn>
-        (used here in the same sense as in the SPARQL 1.1 Entailment Regime recommendation [[!SPARQL11-ENTAILMENT]] )
+        (used here in the same sense as in the [[[!SPARQL12-ENTAILMENT]]] recommendation [[!SPARQL12-ENTAILMENT]] )
         of entailments which are valid under that extension.
         RDFS, described later in this document, is one such <a>semantic extension</a>.
         We will refer to entailment regimes by names such as <em> RDFS entailment</em>,
@@ -184,21 +184,21 @@ Changes</a>. </p>
   <section id="notation">
     <h2>Notation and Terminology</h2>
 
-    <p>This document uses the following terminology for describing RDF graph syntax, all as defined in the companion RDF Concepts specification [[!RDF11-CONCEPTS]]:
-      <dfn data-cite="RDF11-CONCEPTS#dfn-iri">IRI</dfn>,
-      <dfn data-cite="RDF11-CONCEPTS#dfn-rdf-triple" data-lt="triple">RDF triple</dfn>,
-      <dfn data-cite="RDF11-CONCEPTS#dfn-rdf-graph" data-lt="graph">RDF graph</dfn>,
-      <dfn data-cite="RDF11-CONCEPTS#dfn-subject">subject</dfn>,
-      <dfn data-cite="RDF11-CONCEPTS#dfn-predicate">predicate</dfn>,
-      <dfn data-cite="RDF11-CONCEPTS#dfn-object">object</dfn>,
-      <dfn data-cite="RDF11-CONCEPTS#dfn-rdf-source">RDF source</dfn>,
-      <dfn data-cite="RDF11-CONCEPTS#dfn-node">node</dfn>,
-      <dfn data-cite="RDF11-CONCEPTS#dfn-blank-node">blank node</dfn>,
-      <dfn data-cite="RDF11-CONCEPTS#dfn-literal">literal</dfn>,
-      <dfn data-cite="RDF11-CONCEPTS#dfn-graph-isomorphism">isomorphic</dfn>, and
-      <dfn data-cite="RDF11-CONCEPTS#dfn-rdf-dataset" data-lt="dataset">RDF dataset</dfn>.
+    <p>This document uses the following terminology for describing RDF graph syntax, all as defined in the companion RDF Concepts specification [[!RDF12-CONCEPTS]]:
+      <dfn data-cite="RDF12-CONCEPTS#dfn-iri">IRI</dfn>,
+      <dfn data-cite="RDF12-CONCEPTS#dfn-rdf-triple" data-lt="triple">RDF triple</dfn>,
+      <dfn data-cite="RDF12-CONCEPTS#dfn-rdf-graph" data-lt="graph">RDF graph</dfn>,
+      <dfn data-cite="RDF12-CONCEPTS#dfn-subject">subject</dfn>,
+      <dfn data-cite="RDF12-CONCEPTS#dfn-predicate">predicate</dfn>,
+      <dfn data-cite="RDF12-CONCEPTS#dfn-object">object</dfn>,
+      <dfn data-cite="RDF12-CONCEPTS#dfn-rdf-source">RDF source</dfn>,
+      <dfn data-cite="RDF12-CONCEPTS#dfn-node">node</dfn>,
+      <dfn data-cite="RDF12-CONCEPTS#dfn-blank-node">blank node</dfn>,
+      <dfn data-cite="RDF12-CONCEPTS#dfn-literal">literal</dfn>,
+      <dfn data-cite="RDF12-CONCEPTS#dfn-graph-isomorphism">isomorphic</dfn>, and
+      <dfn data-cite="RDF12-CONCEPTS#dfn-rdf-dataset" data-lt="dataset">RDF dataset</dfn>.
       All the definitions in this document apply unchanged to
-      <a data-cite="RDF11-CONCEPTS#section-generalized-rdf">generalized RDF triples, graphs, and datasets</a>.</p>
+      <a data-cite="RDF12-CONCEPTS#section-generalized-rdf">generalized RDF triples, graphs, and datasets</a>.</p>
 
     <p>An <dfn class="export">interpretation</dfn> is a mapping from IRIs and literals into a set,
       together with some constraints upon the set and the mapping.
@@ -233,8 +233,8 @@ Changes</a>. </p>
     <p>Throughout this document, <a>RDF graph</a>s and other fragments of RDF abstract syntax
       are written using the notational conventions of the Turtle syntax [[!TURTLE]].
       The namespace prefixes <code>rdf:</code> <code>rdfs:</code> and <code>xsd:</code>
-      are used as in [[!RDF11-CONCEPTS]],
-      <a data-cite="RDF11-CONCEPTS#vocabularies">section 1.4</a>.
+      are used as in [[!RDF12-CONCEPTS]],
+      <a data-cite="RDF12-CONCEPTS#vocabularies">section 1.4</a>.
       When the exact IRI does not matter, the prefix <code>ex:</code> is used.
       When stating general rules or conditions we use three-character variables such as
       aaa, xxx, sss  to indicate arbitrary IRIs, literals,
@@ -272,7 +272,7 @@ Changes</a>. </p>
       is an <a>instance</a> in which a blank node has been replaced by a <a>name</a>, or two blank
       nodes in the graph have been mapped into the same node in the instance. </p>
 
-    <p>Two graphs are <a data-cite="RDF11-CONCEPTS#graph-isomorphism">isomorphic</a> when each maps into the other by a 1:1 mapping on blank nodes. Isomorphic graphs are mutual instances with an invertible instance
+    <p>Two graphs are <a data-cite="RDF12-CONCEPTS#graph-isomorphism">isomorphic</a> when each maps into the other by a 1:1 mapping on blank nodes. Isomorphic graphs are mutual instances with an invertible instance
       mapping. As blank nodes have no particular identity beyond their location in a graph, we will often treat isomorphic graphs as identical.</p>
 
     <p >An RDF graph is <dfn>lean</dfn> if it has no instance which is
@@ -321,14 +321,14 @@ Changes</a>. </p>
       For example, the two graphs represented  by the following texts:</p>
 
     <p><code>ex:a ex:p _:x . </code><br/><br/>
-      <img src="RDF11SemanticsDiagrams/example1.jpg" alt="Graph 1" /></p>
+      <img src="RDF12SemanticsDiagrams/example1.jpg" alt="Graph 1" /></p>
 
     <p><code>ex:b ex:q _:x . </code><br/><br/>
-      <img src="RDF11SemanticsDiagrams/example2.jpg" alt="Graph 2" ></p>
+      <img src="RDF12SemanticsDiagrams/example2.jpg" alt="Graph 2" ></p>
 
     <p>contain four nodes. Their union would therefore also contain four nodes:</p>
 
-    <p><img src="RDF11SemanticsDiagrams/example4.jpg" alt="Union Graph"></p>
+    <p><img src="RDF12SemanticsDiagrams/example4.jpg" alt="Union Graph"></p>
 
     <p>However, the document formed by simply concatenating these textual surface representations:</p>
 
@@ -337,7 +337,7 @@ Changes</a>. </p>
 
     <p>describes a graph containing three nodes:</p>
 
-    <p><img src="RDF11SemanticsDiagrams/example3.jpg" alt="Incorrect Union Graph"></p>
+    <p><img src="RDF12SemanticsDiagrams/example3.jpg" alt="Incorrect Union Graph"></p>
 
     <p> since the two occurrences of the blank node identifier "<code>_:x</code>" occurring in a common identifier scope identify the same blank node. The four-node union of these two graphs is more properly described by a surface form such as:</p>
 
@@ -361,11 +361,11 @@ Changes</a>. </p>
       The merge of <a>subgraphs</a> of a graph may be larger than the original graph.
       For example, the result of merging the two singleton subgraphs of the three-node graph</p>
 
-    <p><img src="RDF11SemanticsDiagrams/example3.jpg" alt="Three-node Graph"></p>
+    <p><img src="RDF12SemanticsDiagrams/example3.jpg" alt="Three-node Graph"></p>
 
     <p>is the four-node graph</p>
 
-    <p><img src="RDF11SemanticsDiagrams/example4.jpg" alt="Four-node Graph"></p>
+    <p><img src="RDF12SemanticsDiagrams/example4.jpg" alt="Four-node Graph"></p>
 
     <p>The union is always an instance of the merge. If graphs have no blank nodes in common, then their merge and union are identical. </p>
   </section>
@@ -685,7 +685,7 @@ Changes</a>. </p>
     which eliminates blank nodes by replacing them with "new" IRIs,
     which means IRIs which are coined for this purpose and are therefore guaranteed
     to not occur in any other RDF graph (at the time of creation).
-    See <a data-cite="RDF11-CONCEPTS#section-skolemization">Section 3.5</a> of [[!RDF11-CONCEPTS]]
+    See <a data-cite="RDF12-CONCEPTS#section-skolemization">Section 3.5</a> of [[!RDF12-CONCEPTS]]
     for a fuller discussion.</p>
 
   <p>Suppose G is a graph containing blank nodes and sk is a skolemization mapping
@@ -740,7 +740,7 @@ Changes</a>. </p>
     and should treat any literals with that IRI as their datatype IRI as unknown names.</p>
 
   <p>RDF literals and datatypes are fully described in
-    <a data-cite="RDF11-CONCEPTS#section-Datatypes">Section 5</a> of [[!RDF11-CONCEPTS]].
+    <a data-cite="RDF12-CONCEPTS#section-Datatypes">Section 5</a> of [[!RDF12-CONCEPTS]].
     In summary: with one exception, RDF literals combine a string and an IRI <a data-lt="identify">identifing</a> a datatype.
     The exception is <a>language-tagged strings</a>,
     which have two syntactic components, a string and a language tag,
@@ -765,7 +765,7 @@ Changes</a>. </p>
     <a data-lt="language-tagged string"><code>rdf:langString</code></a>
     and <a data-cite="XMLSCHEMA11-2#string"><code>xsd:string</code></a>,
     but when IRIs listed in 
-    a data-cite="RDF11-CONCEPTS#section-Datatypes">Section 5</a> of [[!RDF11-CONCEPTS]]
+    a data-cite="RDF12-CONCEPTS#section-Datatypes">Section 5</a> of [[!RDF12-CONCEPTS]]
     are <a>recognized</a>, they MUST be interpreted as described there, and when the IRI <code>rdf:PlainLiteral</code> is <a>recognized</a>, it MUST be interpreted to refer to the datatype defined in [[!RDF-PLAIN-LITERAL]]. RDF processors MAY recognize other datatype IRIs, but when other datatype IRIs are <a>recognized</a>, the mapping between the datatype IRI and the datatype it <a>refers to</a> MUST be specified unambiguously, and MUST be fixed during all RDF transformations or manipulations. In practice, this can be achieved by the IRI linking to an external specification of the datatype which describes both the components of the datatype itself and the fact that the IRI identifies the datatype, thereby fixing a value of the <a>datatype map</a> of this IRI.</p>
 
   <p>Literals with <a data-lt="language-tagged string"><code>rdf:langString</code></a>
@@ -914,7 +914,7 @@ Changes</a>. </p>
   <table>
     <tbody>
       <tr>
-        <td ><dfn data-cite="RDF11-CONCEPTS#dfn-rdf-vocabulary">RDF vocabulary</dfn></td>
+        <td ><dfn data-cite="RDF12-CONCEPTS#dfn-rdf-vocabulary">RDF vocabulary</dfn></td>
       </tr>
 
       <tr>
@@ -969,8 +969,8 @@ Changes</a>. </p>
     and <a data-cite="XMLSCHEMA11-2#string"><code>xsd:string</code></a>
     MUST be <a>recognized</a> by all RDF interpretations.</p>
 
-  <p>Two other datatypes <a data-cite="RDF11-CONCEPTS#section-XMLLiteral"><code>rdf:XMLLiteral</code></a>
-    and <a data-cite="RDF11-CONCEPTS#section-html"><code>rdf:HTML</code></a> are defined in [[!RDF11-CONCEPTS]].
+  <p>Two other datatypes <a data-cite="RDF12-CONCEPTS#section-XMLLiteral"><code>rdf:XMLLiteral</code></a>
+    and <a data-cite="RDF12-CONCEPTS#section-html"><code>rdf:HTML</code></a> are defined in [[!RDF12-CONCEPTS]].
     RDF-D interpretations MAY fail to <a>recognize</a> these datatypes.</p>
 
   <section id="rdf_entail">
@@ -1431,14 +1431,19 @@ Changes</a>. </p>
   <h2>RDF Datasets</h2>
 
   <!--
-  <p>An RDF <a data-cite="RDF11-CONCEPTS#section-dataset" class="externalDFN">dataset</a> (see [[!RDF11-CONCEPTS]]) is a finite set of RDF graphs each paired with an IRI or blank node called the <strong>graph name</strong>, plus a <strong>default graph</strong>, without a name. Graphs in a single dataset may share blank nodes. The association of graph name IRIs with graphs is used by SPARQL [[RDF-SPARQL-QUERY]] to allow queries to be directed against particular graphs.</p>
+  <p>An RDF <a data-cite="RDF12-CONCEPTS#section-dataset">dataset</a> (see [[!RDF12-CONCEPTS]])
+    is a finite set of RDF graphs each paired with an IRI or blank node called the <strong>graph name</strong>,
+    plus a <strong>default graph</strong>, without a name.
+    Graphs in a single dataset may share blank nodes.
+    The association of graph name IRIs with graphs is used by SPARQL [[SPARQL12-QUERY]]
+    to allow queries to be directed against particular graphs.</p>
   -->
 
-  <p><a data-cite="RDF11-CONCEPTS#section-dataset">RDF datasets</a>,
-    defined in RDF Concepts [[!RDF11-CONCEPTS]],
+  <p><a data-cite="RDF12-CONCEPTS#section-dataset">RDF datasets</a>,
+    defined in RDF Concepts [[!RDF12-CONCEPTS]],
     package up zero or more named RDF graphs along with a single unnamed, default RDF graph.
     The graphs in a single dataset may share blank nodes.
-    The association of graph name IRIs with graphs is used by SPARQL [[SPARQL11-QUERY]]
+    The association of graph name IRIs with graphs is used by SPARQL [[SPARQL12-QUERY]]
     to allow queries to be directed against particular graphs.</p>
 
   <p>Graph names in a dataset may refer to something other than the graph they are paired with.
@@ -1522,7 +1527,7 @@ Changes</a>. </p>
 
   <!--<p>Define a <dfn>generalized RDF triple</dfn> to be a triple &lt;x, y, z&gt; where x and z can be an IRI, a blank node or a literal, and y can be an IRI or a blank node; and extend this to the rest of RDF, so that a generalized RDF graph is a set of generalized RDF triples. -->
 
-  <p>Consider <a data-cite="RDF11-CONCEPTS#section-generalized-rdf">generalized RDF triples, graphs, and datasets</a>
+  <p>Consider <a data-cite="RDF12-CONCEPTS#section-generalized-rdf">generalized RDF triples, graphs, and datasets</a>
     instead of RDF triples, graphs and datasets (extending the generalization used in [[HORST04]]
     and following exactly the terms used in [[OWL2-PROFILES]]).
     The semantics described in this document applies to the generalization without change,

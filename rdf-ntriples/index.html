@@ -32,7 +32,7 @@
         { name: "David Beckett", url: "http://www.dajobe.org/", }
       ],
 
-      xref: ["RDF11-CONCEPTS"],
+      xref: ["RDF11-CONCEPTS"], // Fixme: change to RDF12-CONCEPTS
       github: "https://github.com/gkellogg/rdf11-wg/",
       group:           "rdf-star",
       doJsonLd:     true,
@@ -63,7 +63,7 @@
   <section id='sotd'>
     <p>This document is a part of the RDF 1.1 document suite. The
     document defines Turtle, the Terse RDF Triple Language, a concrete
-    syntax for RDF [[RDF11-CONCEPTS]].  </p>
+    syntax for RDF [[RDF12-CONCEPTS]].</p>
 
     <section id="related" data-include="../related.html"></section>
   </section>
@@ -73,9 +73,9 @@
     
     <p>
       This document defines N-Triples, a concrete syntax for 
-      RDF [[RDF11-CONCEPTS]].
+      RDF [[RDF12-CONCEPTS]].
       N-Triples is an easy to parse line-based subset of
-      Turtle [[TURTLE]].
+      Turtle [[RDF12-TURTLE]].
     </p>
 
     <p>The syntax is a revised version of N-Triples as originally defined in
@@ -288,8 +288,9 @@
       here is defined in XML 1.0
       [[EBNF-NOTATION]].</p>
 
-    <p>Escape sequence rules are the same as Turtle
-    [[TURTLE]]. However, as only the <a href="#grammar-production-STRING_LITERAL_QUOTE"><code>STRING_LITERAL_QUOTE</code></a> production is allowed new lines in literals MUST be escaped.</p>
+    <p>Escape sequence rules are the same as Turtle [[RDF12-TURTLE]].
+      However, as only the <a href="#grammar-production-STRING_LITERAL_QUOTE"><code>STRING_LITERAL_QUOTE</code></a>
+      production is allowed new lines in literals MUST be escaped.</p>
 
     <div data-include="ntriples-bnf.html"></div>
     
