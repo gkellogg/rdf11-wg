@@ -17,7 +17,7 @@
 
       previousPublishDate:  "2014-06-24",
       previousMaturity:     "WG-NOTE",
-      prevRecShortname:     "rdf12-primer",
+      prevRecShortname:     "rdf11-primer",
 
       editors:  [
           { name: "Guus Schreiber", url: "http://www.cs.vu.nl/~guus/",
@@ -59,8 +59,7 @@
   concepts of RDF and shows concrete examples of the use of RDF.
   Secs. 3-5 can be used as a minimalist introduction into the key
   elements of RDF. Changes between RDF 1.1
-  and RDF 1.0 (2004 version) are summarized in a separate document: "What's New in RDF
-  1.1" [[RDF11-NEW]].</p>
+  and RDF 1.2 are summarized in a separate document: [[[RDF12-NEW]]] [[RDF12-NEW]].</p>
 </section>
 
 <section id="sotd">
@@ -127,7 +126,7 @@
               for RDF 1.1)</li>
       </ul>
     </li>
-    <li>A document describing RDF Schema [[RDF-SCHEMA]], which
+    <li>A document describing RDF Schema [[RDF12-SCHEMA]], which
       provides a data-modeling vocabulary for RDF data. </li>
   </ul>
 
@@ -253,7 +252,7 @@
     <h3>IRIs</h3>
 
     <p>The abbreviation IRI is short for "International Resource
-    Identifier". An <a>IRI</a>
+    Identifier". An <a data-cite="RDF12-CONCEPTS#iri">IRI</a>
     identifies a resource. The URLs (Uniform Resource Locators) that
     people use as Web addresses are one form of IRI. Other forms of IRI
     provide an identifier for a resource without implying its location
@@ -301,13 +300,13 @@
 
     <h3>Literals</h3>
 
-    <p><a>Literals</a>
+    <p><a data-cite="RDF12-CONCEPTS#literal">Literals</a>
     are basic values that are not IRIs. Examples of literals include
     strings such as "La Joconde", dates such as "the 4th of July, 1990"
     and numbers such as "3.14159".
-    Literals are associated with a <a>datatype</a>
+    Literals are associated with a <a data-cite="RDF12-CONCEPTS#datatype">datatype</a>
     enabling such values to be parsed and interpreted correctly.
-    String literals can optionally be associated with a <a>language tag</a>.
+    String literals can optionally be associated with a <a data-cite="RDF12-CONCEPTS#language-tag">language tag</a>.
     For example, "Léonard de Vinci" could
     be associated with the "fr" language tag and "李奥纳多·达·文西"
     with the "zh" language tag.</p>
@@ -340,7 +339,7 @@
     identifier.  For example, we might want to state that the Mona
     Lisa painting has in its background an unidentified tree which
     we know to be a cypress tree. A resource without a global identifier, such as the
-    painting's cypress tree, can be represented in RDF by a <a>blank node</a>.
+    painting's cypress tree, can be represented in RDF by a <a data-cite="RDF12-CONCEPTS#blank-node">blank node</a>.
     Blank nodes are like simple variables in algebra;
     they represent some thing without saying what their value is.
     </p>
@@ -370,7 +369,7 @@
     multiple graphs that is closely aligned with SPARQL.</p>
 
     <p>Multiple graphs in
-    an RDF document constitute an <a>RDF dataset</a>.
+    an RDF document constitute an <a data-cite="RDF12-CONCEPTS#rdf-dataset">RDF dataset</a>.
     An RDF dataset may have multiple named graphs and
     at most one unnamed ("default") graph. </p>
 
@@ -388,7 +387,7 @@
     </pre>
 
     <p>The IRI associated with the graph is
-    called the <a>graph name</a>.</p>
+    called the <a data-cite="RDF12-CONCEPTS#graph-name">graph name</a>.</p>
 
     <p>A second graph could be provided by <a
     href="https://www.wikidata.org/">Wikidata</a>
@@ -422,7 +421,7 @@
     need to rely on out-of-band knowledge, such as established
     community practice, to interpret the dataset
     in the intended way. Possible semantics of datasets are described in a separate note
-    [[RDF12-DATASETS]]. </p>
+    [[RDF11-DATASETS]]. </p>
 
     <figure id="fig3">
       <img class="graph" src="example-multiple-graphs.jpg"
@@ -448,7 +447,7 @@
 
   <p>To support the definition of vocabularies RDF provides
   the RDF Schema language
-  [[RDF-SCHEMA]]. This language allows one to define semantic
+  [[RDF12-SCHEMA]]. This language allows one to define semantic
   characteristics of
   RDF data. For example, one can state that the IRI
   <code>http://www.example.org/friendOf</code> can be used as a property and that the
@@ -478,37 +477,37 @@
         <th>Description</th>
       </tr>
       <tr>
-        <td><a data-cite="RDF-SCHEMA#ch_classes">Class</a> (a class)</td>
+        <td><a data-cite="RDF12-SCHEMA#ch_classes">Class</a> (a class)</td>
         <td><strong>C</strong> <code>rdf:type rdfs:Class</code></td>
         <td><strong>C</strong> (a resource) is an RDF class</td>
       </tr>
       <tr>
-        <td><a data-cite="RDF-SCHEMA#ch_property">Property</a> (a class)</td>
+        <td><a data-cite="RDF12-SCHEMA#ch_property">Property</a> (a class)</td>
         <td><strong>P</strong> <code>rdf:type rdf:Property</code></td>
         <td><strong>P</strong> (a resource) is an RDF property</td>
       </tr>
       <tr>
-        <td><a data-cite="RDF-SCHEMA#ch_type">type</a> (a property)</td>
+        <td><a data-cite="RDF12-SCHEMA#ch_type">type</a> (a property)</td>
         <td><strong>I</strong> <code>rdf:type</code> <strong>C</strong></td>
         <td><strong>I</strong> (a resource) is an instance of <strong>C</strong> (a class)</td>
       </tr>
       <tr>
-        <td><a data-cite="RDF-SCHEMA#ch_subclassof">subClassOf</a> (a property)</td>
+        <td><a data-cite="RDF12-SCHEMA#ch_subclassof">subClassOf</a> (a property)</td>
         <td><strong>C1</strong> <code>rdfs:subClassOf</code> <strong>C2</strong></td>
         <td><strong>C1</strong> (a class) is a subclass of <strong>C2</strong> (a class)</td>
       </tr>
       <tr>
-        <td><a data-cite="RDF-SCHEMA#ch_subpropertyof">subPropertyOf</a> (a property)</td>
+        <td><a data-cite="RDF12-SCHEMA#ch_subpropertyof">subPropertyOf</a> (a property)</td>
         <td><strong>P1</strong> <code>rdfs:subPropertyOf</code> <strong>P2</strong></td>
         <td><strong>P1</strong> (a property) is a sub-property of <strong>P2</strong> (a property)</td>
      </tr>
       <tr>
-        <td><a data-cite="RDF-SCHEMA#ch_domain">domain</a> (a property)</td>
+        <td><a data-cite="RDF12-SCHEMA#ch_domain">domain</a> (a property)</td>
         <td><strong>P</strong> <code>rdfs:domain</code> <strong>C</strong></td>
         <td>domain of <strong>P</strong> (a property) is <strong>C</strong> (a class)</td>
       </tr>
       <tr>
-        <td><a data-cite="RDF-SCHEMA#ch_range">range</a> (a property)</td>
+        <td><a data-cite="RDF12-SCHEMA#ch_range">range</a> (a property)</td>
         <td><strong>P</strong> <code>rdfs:range</code> <strong>C</strong></td>
         <td>range of <strong>P</strong> (a property) is <strong>C</strong> (a class)</td>
       </tr>
@@ -1196,7 +1195,7 @@
   created when people want to use new concepts, there are many
   different kinds of reasoning one might want to do.  When a
   specific kind of reasoning seems to be useful in many different
-  applications, it can be documented as an <a>entailment regime</a>.
+  applications, it can be documented as an <a data-cite="RDF12-MT#entailment-regime">entailment regime</a>.
   Several entailment regimes are specified in RDF Semantics.
   For technical descriptions of some other entailment regimes and how to
   use these with SPARQL, see [[SPARQL12-ENTAILMENT]].
