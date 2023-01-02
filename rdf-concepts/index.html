@@ -124,7 +124,8 @@
   <section id="resources-and-statements">
     <h3>Resources and Statements</h3>
 
-    <p>Any <a>IRI</a> or <a>literal</a> <dfn data-lt="denoted">denotes</dfn>
+    <p>Any <a>IRI</a> or <a>literal</a> <dfn data-lt="denote" data-local-lt="denoted">denotes</dfn>
+      <span class="ednote">Should this be replaced with a reference to <a data-cite="RDF12-MT#denote">denote</a> in [[RDF12-MT]]?</span>
     something in the world (the "universe of discourse").
     These things are called
     <dfn data-lt="resource">resources</dfn>. Anything can be a resource,
@@ -352,22 +353,30 @@
         if every possible arrangement of the world
         that makes <em>A</em> true also makes <em>B</em> true. When <em>A</em>
         entails <em>B</em>, if the truth of <em>A</em> is presumed or demonstrated
-        then the truth of <em>B</em> is established.</dd>
+        then the truth of <em>B</em> is established.
+        <div class="ednote">Should this be a reference to, or replace
+          <a data-cite="RDF12-MT#entail">entail</a> in [[RDF12-MT]]?
+        </div>
+      </dd>
 
-      <dt><dfn data-lt="equivalent">Equivalence</dfn></dt>
+      <dt><dfn data-local-lt="equivalent">Equivalence</dfn></dt>
       <dd>Two <a>RDF graphs</a> <em>A</em> and <em>B</em>
         are equivalent if they make the same claim about the world.
         <em>A</em> is equivalent to <em>B</em> if and only if
         <em>A</em> <a data-lt="entailment">entails</a> <em>B</em> and
-        <em>B</em> entails <em>A</em>.</dd>
+        <em>B</em> entails <em>A</em>.
+        <div class="ednote">Should this be a reference to, or replace
+          <a data-cite="RDF12-MT#equivalent">equivalent</a> in [[RDF12-MT]]?
+        </div>
+      </dd>
 
-      <dt><dfn>Inconsistency</dfn></dt>
+      <dt><dfn data-lt="inconsistent">Inconsistency</dfn><span id="dfn-inconsistency"><!-- obsolete term --></span></dt>
       <dd>An <a>RDF graph</a> is inconsistent if it contains
         an internal contradiction. There is no possible arrangement
         of the world that would make the expression true.</dd>
     </dl>
 
-    <p>An <dfn>entailment regime</dfn> [[RDF12-MT]] is a specification that
+    <p>An <span id="dfn-entailment-regime"><!-- obsolete term --></span><dfn data-cite="RDF12-MT#entailment-regime">entailment regime</dfn> [[RDF12-MT]] is a specification that
       defines precise conditions that make these relationships hold.
       RDF itself recognizes only some basic cases of entailment, <a>equivalence</a>
       and inconsistency. Other specifications, such as
@@ -442,14 +451,14 @@
     <p>An RDF triple is conventionally written in the order subject,
       predicate, object.</p>
 
-    <p>The set of <dfn>nodes</dfn> of an <a>RDF graph</a>
+    <p>The set of <span id="dfn-nodes"><!-- obsolete term--></span><dfn data-lt="node">nodes</dfn> of an <a>RDF graph</a>
       is the set of subjects and objects of triples in the graph.
       It is possible for a predicate IRI to also occur as a node in
       the same graph.</p>
 
     <p><a>IRIs</a>, <a>literals</a> and
       <a>blank nodes</a> are collectively known as
-      <dfn>RDF terms</dfn>.</p>
+      <span id="dfn-rdf-terms"><!-- obsolete term--></span><dfn data-lt="rdf term">RDF terms</dfn>.</p>
 
     <p><a>IRIs</a>, <a>literals</a>
       and <a>blank nodes</a> are distinct and distinguishable.
@@ -494,7 +503,7 @@
 
       <p><strong>Relative IRIs:</strong>
         Some <a>concrete RDF syntaxes</a> permit
-        <dfn>relative IRIs</dfn> as a convenient shorthand
+        <span id="dfn-relative-iris"><!-- obsolete term--></span><dfn data-lt="relative iri">relative IRIs</dfn> as a convenient shorthand
         that allows authoring of documents independently from their final
         publishing location. Relative IRIs must be
         <a data-cite="rfc3986#section-5.2">resolved
@@ -627,7 +636,7 @@
       any internal structure of blank nodes.</p>
 
     <p class="note" id="note-bnode-id">
-      <dfn>Blank node identifiers</dfn>
+      <span id="dfn-blank-node-identifiers"><!-- obsolete term--></span><dfn data-lt="blank node identifier">Blank node identifiers</dfn>
       are local identifiers that are used in some
       <a>concrete RDF syntaxes</a>
       or RDF store implementations.
@@ -724,7 +733,7 @@
   <ul>
     <li>Exactly one <dfn>default graph</dfn>, being an <a>RDF graph</a>.
       The default graph does not have a name and MAY be empty.</li>
-    <li>Zero or more <dfn>named graphs</dfn>.
+    <li>Zero or more <span id="dfn-named-graphs"><!-- obsolete term--></span><dfn data-lt="named graph">named graphs</dfn>.
       Each named graph is a pair consisting of an <a>IRI</a> or a blank node
       (the <dfn>graph name</dfn>), and an <a>RDF graph</a>.
       Graph names are unique within an RDF dataset.</li>
@@ -1098,8 +1107,9 @@
 
     <p>Datatypes are identified by <a>IRIs</a>. If
       <var>D</var> is a set of IRIs which are used to refer to
-      datatypes, then the elements of <var>D</var> are called <dfn>recognized
-      datatype IRIs</dfn>. Recognized IRIs have fixed
+      datatypes, then the elements of <var>D</var> are called
+      <span id="dfn-recognized-datatype-iris"><!-- obsolete term--></span><dfn data-lt="recognized datatype IRI">recognized datatype IRIs</dfn>.
+      Recognized IRIs have fixed
       <a href="#referents">referents</a>. If any IRI of the form
       <code>http://www.w3.org/2001/XMLSchema#xxx</code> is recognized, it
       MUST refer to the RDF-compatible XSD type named <code>xsd:xxx</code> for
@@ -1147,7 +1157,9 @@
   <h2>Fragment Identifiers</h2>
 
   <p>RDF uses <a>IRIs</a>, which may include
-    <dfn>fragment identifiers</dfn>, as resource identifiers.
+    <span id="dfn-fragment-identifiers"><!-- obsolete term--></span>
+    <dfn data-lt="fragment identifier" class="no-export">fragment identifiers</dfn>,
+    as resource identifiers.
     The semantics of fragment identifiers is
     <a data-cite="rfc3986#section-3.5">defined in
     RFC 3986</a> [[RFC3986]]: They identify a secondary resource
@@ -1155,6 +1167,7 @@
     the primary resource, and the precise semantics depend on the set
     of representations that might result from a retrieval action
     on the primary resource.</p>
+  <p class="ednote">Should this instead be a reference to </p>
 
   <p>This section discusses the handling of fragment identifiers
     in representations that encode <a>RDF graphs</a>.</p>

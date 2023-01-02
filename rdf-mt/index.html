@@ -185,18 +185,18 @@ Changes</a>. </p>
     <h2>Notation and Terminology</h2>
 
     <p>This document uses the following terminology for describing RDF graph syntax, all as defined in the companion RDF Concepts specification [[!RDF12-CONCEPTS]]:
-      <dfn data-cite="RDF12-CONCEPTS#dfn-iri">IRI</dfn>,
-      <dfn data-cite="RDF12-CONCEPTS#dfn-rdf-triple" data-lt="triple">RDF triple</dfn>,
-      <dfn data-cite="RDF12-CONCEPTS#dfn-rdf-graph" data-lt="graph">RDF graph</dfn>,
-      <dfn data-cite="RDF12-CONCEPTS#dfn-subject">subject</dfn>,
-      <dfn data-cite="RDF12-CONCEPTS#dfn-predicate">predicate</dfn>,
-      <dfn data-cite="RDF12-CONCEPTS#dfn-object">object</dfn>,
-      <dfn data-cite="RDF12-CONCEPTS#dfn-rdf-source">RDF source</dfn>,
-      <dfn data-cite="RDF12-CONCEPTS#dfn-node">node</dfn>,
-      <dfn data-cite="RDF12-CONCEPTS#dfn-blank-node">blank node</dfn>,
-      <dfn data-cite="RDF12-CONCEPTS#dfn-literal">literal</dfn>,
-      <dfn data-cite="RDF12-CONCEPTS#dfn-graph-isomorphism">isomorphic</dfn>, and
-      <dfn data-cite="RDF12-CONCEPTS#dfn-rdf-dataset" data-lt="dataset">RDF dataset</dfn>.
+      <dfn data-cite="RDF12-CONCEPTS#dfn-iri">IRI</dfn><span id="dfn-iri"><!-- obsolete term --></span>,
+      <dfn data-cite="RDF12-CONCEPTS#dfn-rdf-triple" data-lt="triple">RDF triple</dfn><span id="dfn-rdf-triple"><!-- obsolete term --></span>,
+      <dfn data-cite="RDF12-CONCEPTS#dfn-rdf-graph" data-lt="graph">RDF graph</dfn><span id="dfn-rdf-graph"><!-- obsolete term --></span>,
+      <dfn data-cite="RDF12-CONCEPTS#dfn-subject">subject</dfn><span id="dfn-subject"><!-- obsolete term --></span>,
+      <dfn data-cite="RDF12-CONCEPTS#dfn-predicate">predicate</dfn><span id="dfn-predicate"><!-- obsolete term --></span>,
+      <dfn data-cite="RDF12-CONCEPTS#dfn-object">object</dfn><span id="dfn-object"><!-- obsolete term --></span>,
+      <dfn data-cite="RDF12-CONCEPTS#dfn-rdf-source">RDF source</dfn><span id="dfn-rdf-source"><!-- obsolete term --></span>,
+      <dfn data-cite="RDF12-CONCEPTS#dfn-node">node</dfn><span id="dfn-node"><!-- obsolete term --></span>,
+      <dfn data-cite="RDF12-CONCEPTS#dfn-blank-node">blank node</dfn><span id="dfn-blank-node"><!-- obsolete term --></span>,
+      <dfn data-cite="RDF12-CONCEPTS#dfn-literal">literal</dfn><span id="dfn-literal"><!-- obsolete term --></span>,
+      <dfn data-cite="RDF12-CONCEPTS#dfn-graph-isomorphism">isomorphic</dfn><span id="dfn-isomorphic"><!-- obsolete term --></span>, and
+      <dfn data-cite="RDF12-CONCEPTS#dfn-rdf-dataset" data-lt="dataset">RDF dataset</dfn><span id="dfn-rdf-dataset"><!-- obsolete term --></span>.
       All the definitions in this document apply unchanged to
       <a data-cite="RDF12-CONCEPTS#section-generalized-rdf">generalized RDF triples, graphs, and datasets</a>.</p>
 
@@ -210,14 +210,14 @@ Changes</a>. </p>
       any compatible kind of interpretation in general,
       but if clear from the context might refer to a specific kind of interpretation.</p>
 
-    <p>The words <dfn data-local-lt="denoted">denotes</dfn> and <dfn>refers to</dfn>
+    <p>The words <dfn data-lt="denote" data-local-lt="denoted">denotes</dfn> and <dfn>refers to</dfn>
       are used interchangeably as synonyms for the relationship between an <a>IRI</a> or <a>literal</a>
       and what it refers to in a given interpretation,
       itself called the <dfn class="export">denotation</dfn>
       or <dfn class="export">referent</dfn>.
       IRI meanings may also be determined by other constraints external to the RDF semantics;
       when we wish to refer to such an externally defined naming relationship,
-      we will use the word <dfn data-lt="identified">identify</dfn> and its cognates.
+      we will use the word <dfn data-local-lt="identified">identify</dfn> and its cognates.
       For example, the fact that the IRI <code>http://www.w3.org/2001/XMLSchema#decimal</code>
       is widely used as the name of a datatype described in the XML Schema document [[XMLSCHEMA11-2]]
       might be described by saying that the IRI <em>identifies</em> that datatype.
@@ -303,7 +303,7 @@ Changes</a>. </p>
       graph are the same as the blank nodes coming from other downloads of
       the same document or from the same <a>RDF source</a>.</p>
 
-    <p> RDF applications which manipulate concrete syntaxes for RDF which use <a class="lint-ignore">blank node identifiers</a>
+    <p> RDF applications which manipulate concrete syntaxes for RDF which use <a data-cite="RDF12-CONCEPTS#blank-node-identifier">blank node identifiers</a>
       should take care to keep track of the identity of the blank nodes they identify.
       Blank node identifiers often have a local scope,
       so when RDF from different sources is combined,
@@ -412,7 +412,7 @@ Changes</a>. </p>
       Usage has shown that it is important that every literal have a type.
       RDF 1.1 replaces plain literals without language tags by literals typed with
       the XML Schema <code>string</code> datatype,
-      and introduces the special type <a data-lt="language-tagged string"><code>rdf:langString</code></a>
+      and introduces the special type <a data-cite="RDF12-CONCEPTS#language-tagged-string"><code>rdf:langString</code></a>
       for language-tagged strings.
       The full semantics for typed literals is given in the next section.</p>
   </div>
@@ -562,7 +562,7 @@ Changes</a>. </p>
       E when I(E)=true, that E is (simply) <dfn>satisfiable</dfn>
       when a simple interpretation exists which <a>satisfies</a> it,
       otherwise (simply) <dfn>unsatisfiable</dfn>,
-      and that a graph G simply <dfn data-lt="simple entailment|entailment">entails</dfn>
+      and that a graph G simply <dfn data-lt="entail" data-local-lt="simple entailment|entailment">entails</dfn>
       a graph E when every interpretation which <a>satisfies</a> G also satisfies E.
       If two graphs E and F each entail the other then they are logically <dfn>equivalent</dfn>.</p>
 
@@ -580,7 +580,8 @@ Changes</a>. </p>
 
     <p>Any process which constructs a graph E from
       some other graph S is (simply) <dfn>valid</dfn> if S
-      <a>simply entails</a> E in every case, otherwise <dfn class="export">invalid</dfn>.</p>
+      <a>simply entails</a> E in every case,
+      otherwise <dfn class="export">invalid</dfn><span id="dfn-invalid.x"><!-- obsolete term --></span>.</p>
 
     <p>The fact that an inference is valid should not be understood as meaning
       that any RDF application is obliged or required to make the inference.
@@ -742,11 +743,13 @@ Changes</a>. </p>
   <p>RDF literals and datatypes are fully described in
     <a data-cite="RDF12-CONCEPTS#section-Datatypes">Section 5</a> of [[!RDF12-CONCEPTS]].
     In summary: with one exception, RDF literals combine a string and an IRI <a data-lt="identify">identifing</a> a datatype.
-    The exception is <a>language-tagged strings</a>,
+    The exception is <a data-cite="RDF12-CONCEPTS#language-tagged-string">language-tagged strings</a>,
     which have two syntactic components, a string and a language tag,
     and are assigned the type <code>rdf:langString</code>.
     A datatype is understood to define a partial mapping, 
-    alled the <dfn>lexical-to-value mapping</dfn>,
+    called the
+    <span id="dfn-lexical-to-value-mapping"><!-- obsolete term --></span>
+    <dfn data-cite="RDF12-CONCEPTS#dfn-lexical-to-value-mapping">lexical-to-value mapping</dfn>,
     from a lexical space (a set of character strings) to values.
     The function <dfn>L2V</dfn> maps datatypes to their lexical-to-value mapping.
     A literal with datatype d <a>denotes</a> the value obtained by applying this mapping
@@ -762,13 +765,13 @@ Changes</a>. </p>
     for that datatype.</p>
 
   <p>RDF processors are not required to <a>recognize</a> any datatype IRIs other than
-    <a data-lt="language-tagged string"><code>rdf:langString</code></a>
+    <a data-cite="RDF12-CONCEPTS#language-tagged-string"><code>rdf:langString</code></a>
     and <a data-cite="XMLSCHEMA11-2#string"><code>xsd:string</code></a>,
     but when IRIs listed in 
     a data-cite="RDF12-CONCEPTS#section-Datatypes">Section 5</a> of [[!RDF12-CONCEPTS]]
     are <a>recognized</a>, they MUST be interpreted as described there, and when the IRI <code>rdf:PlainLiteral</code> is <a>recognized</a>, it MUST be interpreted to refer to the datatype defined in [[!RDF-PLAIN-LITERAL]]. RDF processors MAY recognize other datatype IRIs, but when other datatype IRIs are <a>recognized</a>, the mapping between the datatype IRI and the datatype it <a>refers to</a> MUST be specified unambiguously, and MUST be fixed during all RDF transformations or manipulations. In practice, this can be achieved by the IRI linking to an external specification of the datatype which describes both the components of the datatype itself and the fact that the IRI identifies the datatype, thereby fixing a value of the <a>datatype map</a> of this IRI.</p>
 
-  <p>Literals with <a data-lt="language-tagged string"><code>rdf:langString</code></a>
+  <p>Literals with <a data-cite="RDF12-CONCEPTS#language-tagged-string"><code>rdf:langString</code></a>
     as their datatype are an exceptional case which are given a special treatment.
     The IRI <code>rdf:langString</code> is classified as a datatype IRI,
     and interpreted to refer to a datatype, even though no <a>L2V</a> mapping is defined for it.
@@ -820,7 +823,7 @@ Changes</a>. </p>
      literals with an unrecognized type IRI are not <a>ill-typed</a> and cannot give rise to
      a <a>D-unsatisfiable</a> graph.</p>
 
-    <p>The special datatype <a data-lt="language-tagged string"><code>rdf:langString</code></a>
+    <p>The special datatype <a data-cite="RDF12-CONCEPTS#language-tagged-string"><code>rdf:langString</code></a>
       has no <a>ill-typed</a> literals.
       Any syntactically legal literal with this type will denote a value in every
       D-interpretation where D includes <code>rdf:langString</code>.
@@ -965,7 +968,7 @@ Changes</a>. </p>
   <p>RDF imposes no particular normative meanings on the rest of the RDF vocabulary.
     <a href="#whatnot">Appendix D</a> describes the intended uses of some of this vocabulary.</p>
 
-  <p>The datatype IRIs <a data-lt="language-tagged string"><code>rdf:langString</code></a>
+  <p>The datatype IRIs <a data-cite="RDF12-CONCEPTS#language-tagged-string"><code>rdf:langString</code></a>
     and <a data-cite="XMLSCHEMA11-2#string"><code>xsd:string</code></a>
     MUST be <a>recognized</a> by all RDF interpretations.</p>
 
