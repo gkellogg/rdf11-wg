@@ -36,7 +36,7 @@ var localBibliography = {
     publisher: "W3C"
   },
   "RDF12-CONCEPTS": {aliasOf: "RDF11-CONCEPTS"},
-  "RDF12-MT": {aliasOf: "RDF11-MT"},
+  "RDF12-SEMANTICS": {aliasOf: "RDF11-MT"},
   "RDF12-N-QUADS": {aliasOf: "N-QUADS"},
   "RDF12-N-TRIPLES": {aliasOf: "N-TRIPLES"},
   "RDF12-NEW": {aliasOf: "RDF11-NEW"},

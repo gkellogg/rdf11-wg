@@ -114,7 +114,7 @@
     well as abstract syntax ("RDF Concepts and Abstract Syntax")
     [[RDF12-CONCEPTS]]</li>
     <li>A document describing the formal model-theoretic semantics
-    of RDF ("RDF Semantics") [[RDF12-MT]]</li>
+    of RDF ("RDF Semantics") [[RDF12-SEMANTICS]]</li>
     <li>Specifications of serialization formats for RDF:
       <ul>
         <li>Turtle [[RDF12-TURTLE]] and TriG [[RDF12-TRIG]]</li>
@@ -239,7 +239,7 @@
     particular concrete syntax (the syntax used to represent triples stored in
     text files).  Different concrete syntaxes may
     produce exactly the same graph from the perspective of the
-    abstract syntax. The semantics of RDF graphs [[RDF12-MT]] are defined in
+    abstract syntax. The semantics of RDF graphs [[RDF12-SEMANTICS]] are defined in
     terms of this abstract syntax. Concrete RDF syntax is introduced
     later in <a href="#section-graph-syntax">Sec.&nbsp;5</a>.</p>
 
@@ -575,7 +575,7 @@
 
   <p>For a formal specification of the semantics of the RDF Schema
   constructs the reader is referred to
-  the RDF Semantics document [[RDF12-MT]]. Users interested in more comprehensive
+  the RDF Semantics document [[RDF12-SEMANTICS]]. Users interested in more comprehensive
   semantic modeling of RDF data might consider using OWL
   [[OWL2-OVERVIEW]]. OWL is an RDF vocabulary, so it can be
   used in combination with RDF Schema.</p>
@@ -1180,7 +1180,7 @@
   </ol>
   <p>These notions,
   and others, are specified with mathematical precision in the RDF
-  Semantics document [[RDF12-MT]].</p>
+  Semantics document [[RDF12-SEMANTICS]].</p>
 
   <p>One of the benefits of RDF having these declarative semantics
   is that systems can make logical inferences. That is, given a
@@ -1195,7 +1195,7 @@
   created when people want to use new concepts, there are many
   different kinds of reasoning one might want to do.  When a
   specific kind of reasoning seems to be useful in many different
-  applications, it can be documented as an <a data-cite="RDF12-MT#entailment-regime">entailment regime</a>.
+  applications, it can be documented as an <a data-cite="RDF12-SEMANTICS#entailment-regime">entailment regime</a>.
   Several entailment regimes are specified in RDF Semantics.
   For technical descriptions of some other entailment regimes and how to
   use these with SPARQL, see [[SPARQL12-ENTAILMENT]].
@@ -1215,7 +1215,7 @@
     <code>ex:bob rdf:type foaf:Person .</code>
   </pre>
 
-  <p>The derivation above is an example of an RDF Schema entailment [[RDF12-MT]]. </p>
+  <p>The derivation above is an example of an RDF Schema entailment [[RDF12-SEMANTICS]]. </p>
 
   <p>The semantics of RDF also tell us that the triple:</p>
 
@@ -1249,7 +1249,7 @@
 
   <p>The examples in this section are just meant to give the reader
     some feeling about what the RDF Semantics brings you. Please consult
-    [[RDF12-MT]] for a complete description.</p>
+    [[RDF12-SEMANTICS]] for a complete description.</p>
 
 </section>
 

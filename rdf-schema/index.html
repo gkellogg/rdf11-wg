@@ -76,14 +76,14 @@
   <p>RDF Schema provides a data-modelling vocabulary for RDF data.
     It is complemented by several companion documents which
     describe the basic concepts and abstract syntax of RDF
-    [[RDF12-CONCEPTS]], the formal semantics of RDF [[RDF12-MT]], and
+    [[RDF12-CONCEPTS]], the formal semantics of RDF [[RDF12-SEMANTICS]], and
     various concrete syntaxes for RDF, such as Turtle [[RDF12-TURTLE]],
     TriG, [[RDF12-TRIG]], and JSON-LD [[JSON-LD11]]. The RDF Primer
     [[RDF12-PRIMER]] provides an informal introduction and
     examples of the use of the concepts specified in this document.</p>
   <p>This document is intended to provide a clear specification of RDF
     Schema to those who find the formal semantics
-    specification [[RDF12-MT]]
+    specification [[RDF12-SEMANTICS]]
     daunting. Thus, this document duplicates material also specified in the
     RDF
     Semantics specification. Where there is disagreement between this
@@ -93,7 +93,7 @@
     be taken to be correct.</p>
 
   <p>
-    RDF Schema is a <a data-cite="RDF12-MT#semantic-extensions-and-entailment-regimes">semantic
+    RDF Schema is a <a data-cite="RDF12-SEMANTICS#semantic-extensions-and-entailment-regimes">semantic
       extension</a> of RDF. It provides mechanisms for describing groups of
     related resources and the relationships between these resources. RDF
     Schema is written in RDF
@@ -514,7 +514,7 @@ model
       once. Unlike containment in the physical world, a container may be
       contained in itself.</p>
     <p>Three different kinds of container are defined. Whilst the formal
-      semantics [[RDF12-MT]] of all three classes of container are
+      semantics [[RDF12-SEMANTICS]] of all three classes of container are
       identical,
       different classes may be used to indicate informally further
       information. An rdf:Bag is used to indicate that the container is

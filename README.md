@@ -4,10 +4,11 @@ This GitHub repository is used by the [RDF-star WG](https://www.w3.org/groups/wg
 
 ### Active Editor's Drafts
 
-
 * [RDF 1.2 Concepts](rdf-concepts/index.html)
-* [RDF 1.2 Semantics](rdf-mt/index.html)
+* [RDF 1.2 N-Quads](rdf-nquads/index.html)
+* [RDF 1.2 N-Triples](rdf-ntriples/index.html)
 * [RDF 1.2 Schema](rdf-schema/index.html)
+* [RDF 1.2 Semantics](rdf-semantics/index.html)
 * [RDF 1.2 TriG](rdf-trig/index.html)
 * [RDF 1.2 Turtle](rdf-turtle/index.html)
 * [RDF 1.2 XML Syntax](rdf-xml/index.html)
@@ -23,7 +24,7 @@ This GitHub repository is used by the [RDF-star WG](https://www.w3.org/groups/wg
 Work happens in subdirectories like these:
 
     /rdf-concepts
-    /rdf-mt
+    /rdf-semantics
     /rdf-schema
     /rdf-primer
     /rdf-turtle
