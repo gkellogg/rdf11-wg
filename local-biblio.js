@@ -35,25 +35,241 @@ var localBibliography = {
     status: "Team Submission",
     publisher: "W3C"
   },
-  "RDF12-CONCEPTS": {aliasOf: "RDF11-CONCEPTS"},
-  "RDF12-SEMANTICS": {aliasOf: "RDF11-MT"},
-  "RDF12-N-QUADS": {aliasOf: "N-QUADS"},
-  "RDF12-N-TRIPLES": {aliasOf: "N-TRIPLES"},
-  "RDF12-NEW": {aliasOf: "RDF11-NEW"},
-  "RDF12-PRIMER": {aliasOf: "RDF11-PRIMER"},
-  "RDF12-SCHEMA": {aliasOf: "RDF11-SCHEMA"},
-  "RDF12-TRIG": {aliasOf: "TRIG"},
-  "RDF12-TURTLE": {aliasOf: "TURTLE"},
-  "RDF12-XML": {aliasOf: "RDF11-XML"},
-  "SPARQL12-OVERVIEW": {aliasOf: "SPARQL11-OVERVIEW"},
-  "SPARQL12-QUERY": {aliasOf: "SPARQL11-QUERY"},
-  "SPARQL12-UPDATE": {aliasOf: "SPARQL11-UPDATE"},
-  "SPARQL12-SERVICE-DESCRIPTION": {aliasOf: "SPARQL11-SERVICE-DESCRIPTION"},
-  "SPARQL12-FEDERATED-QUERY": {aliasOf: "SPARQL11-FEDERATED-QUERY"},
-  "SPARQL12-RESULTS-JSON": {aliasOf: "SPARQL11-RESULTS-JSON"},
-  "SPARQL12-RESULTS-CSV-TSV": {aliasOf: "SPARQL11-RESULTS-CSV-TSV"},
-  "SPARQL12-XMLRES": {aliasOf: "RDF-SPARQL-XMLRES"},
-  "SPARQL12-ENTAILMENT": {aliasOf: "SPARQL11-ENTAILMENT"},
-  "SPARQL12-PROTOCOL": {aliasOf: "SPARQL11-PROTOCOL"},
-  "SPARQL12-HTTP-RDF-UPDATE": {aliasOf: "SPARQL11-HTTP-RDF-UPDATE"},
+  "RDF12-CONCEPTS": {
+    "authors": [
+        "Richard Cyganiak",
+        "David Wood",
+        "Markus Lanthaler"
+    ],
+    "href": "https://w3c.github.io/rdf-concepts/spec/",
+    "title": "RDF 1.2 Concepts and Abstract Syntax",
+    "rawDate": "2022-01-01",
+    "status": "WD",
+    "publisher": "W3C"
+  },
+  "RDF12-SEMANTICS": {
+    "authors": [
+        "Patrick Hayes",
+        "Peter Patel-Schneider"
+    ],
+    "href": "https://w3c.github.io/rdf-semantics/spec/",
+    "title": "RDF 1.2 Semantics",
+    "rawDate": "2022-01-01",
+    "status": "WD",
+    "publisher": "W3C"
+  },
+  "RDF12-N-QUADS": {
+    "authors": [
+        "Gavin Carothers"
+    ],
+    "href": "https://w3c.github.io/rdf-n-quads/spec/",
+    "title": "RDF 1.2 N-Quads",
+    "rawDate": "2022-01-01",
+    "status": "WD",
+    "publisher": "W3C"
+  },
+  "RDF12-N-TRIPLES": {
+    "authors": [
+        "Gavin Carothers",
+        "Andy Seaborne"
+    ],
+    "href": "https://w3c.github.io/rdf-n-triples/spec/",
+    "title": "RDF 1.2 N-Triples",
+    "rawDate": "2022-01-01",
+    "status": "WD",
+    "publisher": "W3C"
+  },
+  "RDF12-NEW": {
+    "authors": [
+        "David Wood"
+    ],
+    "href": "https://w3c.github.io/rdf-new/spec/",
+    "title": "What’s New in RDF 1.2",
+    "rawDate": "2022-01-01",
+    "status": "DNOTE",
+    "publisher": "W3C"
+  },
+  "RDF12-PRIMER": {
+    "authors": [
+        "Guus Schreiber",
+        "Yves Raimond"
+    ],
+    "href": "https://w3c.github.io/rdf-primer/spec/",
+    "title": "RDF 1.2 Primer",
+    "rawDate": "2022-01-01",
+    "status": "DNOTE",
+    "publisher": "W3C"
+  },
+  "RDF12-SCHEMA": {
+    "authors": [
+        "Dan Brickley",
+        "Ramanathan Guha"
+    ],
+    "href": "https://w3c.github.io/rdf-schema/spec/",
+    "title": "RDF 1.2 Schema",
+    "rawDate": "2022-01-01",
+    "status": "WD",
+    "publisher": "W3C"
+  },
+  "RDF12-TRIG": {
+    "authors": [
+        "Gavin Carothers",
+        "Andy Seaborne"
+    ],
+    "href": "https://w3c.github.io/rdf-trig/spec/",
+    "title": "RDF 1.2 TriG",
+    "rawDate": "2022-01-01",
+    "status": "WD",
+    "publisher": "W3C"
+  },
+  "RDF12-TURTLE": {
+    "authors": [
+        "Eric Prud'hommeaux",
+        "Gavin Carothers"
+    ],
+    "href": "https://w3c.github.io/rdf-turtle/spec/",
+    "title": "RDF 1.2 Turtle",
+    "rawDate": "2022-01-01",
+    "status": "WD",
+    "publisher": "W3C"
+  },
+  "RDF12-XML": {
+    "authors": [
+        "Fabien Gandon",
+        "Guus Schreiber"
+    ],
+    "href": "https://w3c.github.io/rdf-xml/spec/",
+    "title": "RDF 1.2 XML Syntax",
+    "rawDate": "2022-01-01",
+    "status": "WD",
+    "publisher": "W3C"
+  },
+  "SPARQL12-NEW": {
+    "authors": [
+        "The W3C RDF-star Working Group"
+    ],
+    "href": "https://w3c.github.io/sparql-concepts/spec/",
+    "title": "What’s New in SPARQL 1.2",
+    "rawDate": "2022-01-01",
+    "status": "WD",
+    "publisher": "W3C"
+  },
+  "SPARQL12-CONCEPTS": {
+    "authors": [
+        "The W3C RDF-star Working Group"
+    ],
+    "href": "https://w3c.github.io/sparql-concepts/spec/",
+    "title": "SPARQL 1.2 Concepts",
+    "rawDate": "2022-01-01",
+    "status": "WD",
+    "publisher": "W3C"
+  },
+  "SPARQL12-QUERY": {
+    "authors": [
+        "Steven Harris",
+        "Andy Seaborne"
+    ],
+    "href": "https://w3c.github.io/sparql-query/spec/",
+    "title": "SPARQL 1.2 Query Language",
+    "rawDate": "2022-01-01",
+    "status": "WD",
+    "publisher": "W3C"
+  },
+  "SPARQL12-UPDATE": {
+    "authors": [
+        "Paula Gearon",
+        "Alexandre Passant",
+        "Axel Polleres"
+    ],
+    "href": "https://w3c.github.io/sparql-update/spec/",
+    "title": "SPARQL 1.2 Update",
+    "rawDate": "2022-01-01",
+    "status": "WD",
+    "publisher": "W3C"
+  },
+  "SPARQL12-SERVICE-DESCRIPTION": {
+    "authors": [
+        "Gregory Williams"
+    ],
+    "href": "https://w3c.github.iosparql-service-description/spec/",
+    "title": "SPARQL 1.2 Service Description",
+    "rawDate": "2022-01-01",
+    "status": "WD",
+    "publisher": "W3C"
+  },
+  "SPARQL12-FEDERATED-QUERY": {
+    "authors": [
+        "Eric Prud'hommeaux",
+        "Carlos Buil Aranda"
+    ],
+    "href": "https://w3c.github.iosparql-federated-query/spec/",
+    "title": "SPARQL 1.2 Federated Query",
+    "rawDate": "2022-01-01",
+    "status": "WD",
+    "publisher": "W3C"
+  },
+  "SPARQL12-RESULTS-JSON": {
+    "authors": [
+        "Andy Seaborne"
+    ],
+    "href": "https://w3c.github.iosparql-results-json/spec/",
+    "title": "SPARQL 1.2 Query Results JSON Format",
+    "rawDate": "2022-01-01",
+    "status": "WD",
+    "publisher": "W3C"
+  },
+  "SPARQL12-RESULTS-CSV-TSV": {
+    "authors": [
+        "Andy Seaborne"
+    ],
+    "href": "https://w3c.github.iosparql-results-csv-tsv/spec/",
+    "title": "SPARQL 1.2 Query Results CSV and TSV Formats",
+    "rawDate": "2022-01-01",
+    "status": "WD",
+    "publisher": "W3C"
+  },
+  "SPARQL12-RESULTS-XML": {
+    "authors": [
+        "Dave Beckett",
+        "Jeen Broekstra"
+    ],
+    "href": "https://www.w3.org/TRsparql-results-xml/spec/",
+    "rawDate": "2022-01-01",
+    "status": "WD",
+    "publisher": "W3C"
+  },
+  "SPARQL12-ENTAILMENT": {
+    "authors": [
+        "Birte Glimm",
+        "Chimezie Ogbuji"
+    ],
+    "href": "https://w3c.github.iosparql-entailment/spec/",
+    "title": "SPARQL 1.2 Entailment Regimes",
+    "rawDate": "2022-01-01",
+    "status": "WD",
+    "publisher": "W3C"
+  },
+  "SPARQL12-PROTOCOL": {
+    "authors": [
+        "Lee Feigenbaum",
+        "Gregory Williams",
+        "Kendall Clark",
+        "Elias Torres"
+    ],
+    "href": "https://w3c.github.iosparql-protocol/spec/",
+    "title": "SPARQL 1.2 Protocol",
+    "rawDate": "2022-01-01",
+    "status": "WD",
+    "publisher": "W3C"
+  },
+  "SPARQL12-GRAPH-STORE-PROTOCOL": {
+    "authors": [
+        "Chimezie Ogbuji"
+    ],
+    "href": "https://w3c.github.iosparql-http-rdf-update/spec/",
+    "title": "SPARQL 1.2 Graph Store HTTP Protocol",
+    "rawDate": "2022-01-01",
+    "status": "WD",
+    "publisher": "W3C"
+  },
 };
