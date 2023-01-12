@@ -148,7 +148,7 @@ var localBibliography = {
     "authors": [
         "The W3C RDF-star Working Group"
     ],
-    "href": "https://w3c.github.io/sparql-concepts/spec/",
+    "href": "https://w3c.github.io/sparql-new/spec/",
     "title": "What’s New in SPARQL 1.2",
     "rawDate": "2022-01-01",
     "status": "WD",
@@ -191,7 +191,7 @@ var localBibliography = {
     "authors": [
         "Gregory Williams"
     ],
-    "href": "https://w3c.github.iosparql-service-description/spec/",
+    "href": "https://w3c.github.io/sparql-service-description/spec/",
     "title": "SPARQL 1.2 Service Description",
     "rawDate": "2022-01-01",
     "status": "WD",
@@ -202,7 +202,7 @@ var localBibliography = {
         "Eric Prud'hommeaux",
         "Carlos Buil Aranda"
     ],
-    "href": "https://w3c.github.iosparql-federated-query/spec/",
+    "href": "https://w3c.github.io/sparql-federated-query/spec/",
     "title": "SPARQL 1.2 Federated Query",
     "rawDate": "2022-01-01",
     "status": "WD",
@@ -212,7 +212,7 @@ var localBibliography = {
     "authors": [
         "Andy Seaborne"
     ],
-    "href": "https://w3c.github.iosparql-results-json/spec/",
+    "href": "https://w3c.github.io/sparql-results-json/spec/",
     "title": "SPARQL 1.2 Query Results JSON Format",
     "rawDate": "2022-01-01",
     "status": "WD",
@@ -222,7 +222,7 @@ var localBibliography = {
     "authors": [
         "Andy Seaborne"
     ],
-    "href": "https://w3c.github.iosparql-results-csv-tsv/spec/",
+    "href": "https://w3c.github.io/sparql-results-csv-tsv/spec/",
     "title": "SPARQL 1.2 Query Results CSV and TSV Formats",
     "rawDate": "2022-01-01",
     "status": "WD",
@@ -230,10 +230,12 @@ var localBibliography = {
   },
   "SPARQL12-RESULTS-XML": {
     "authors": [
+        "Sandro Hawke",
         "Dave Beckett",
         "Jeen Broekstra"
     ],
-    "href": "https://www.w3.org/TRsparql-results-xml/spec/",
+    "href": "https://w3c.github.io/sparql-results-xml/spec/",
+    "title": "SPARQL 1.2 Query Results XML Formats",
     "rawDate": "2022-01-01",
     "status": "WD",
     "publisher": "W3C"
@@ -243,7 +245,7 @@ var localBibliography = {
         "Birte Glimm",
         "Chimezie Ogbuji"
     ],
-    "href": "https://w3c.github.iosparql-entailment/spec/",
+    "href": "https://w3c.github.io/sparql-entailment/spec/",
     "title": "SPARQL 1.2 Entailment Regimes",
     "rawDate": "2022-01-01",
     "status": "WD",
@@ -256,7 +258,7 @@ var localBibliography = {
         "Kendall Clark",
         "Elias Torres"
     ],
-    "href": "https://w3c.github.iosparql-protocol/spec/",
+    "href": "https://w3c.github.io/sparql-protocol/spec/",
     "title": "SPARQL 1.2 Protocol",
     "rawDate": "2022-01-01",
     "status": "WD",
@@ -266,7 +268,7 @@ var localBibliography = {
     "authors": [
         "Chimezie Ogbuji"
     ],
-    "href": "https://w3c.github.iosparql-http-rdf-update/spec/",
+    "href": "https://w3c.github.io/sparql-http-rdf-update/spec/",
     "title": "SPARQL 1.2 Graph Store HTTP Protocol",
     "rawDate": "2022-01-01",
     "status": "WD",
